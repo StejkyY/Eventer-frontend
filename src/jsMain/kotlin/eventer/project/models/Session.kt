@@ -21,6 +21,7 @@ data class Session(
     val startTime: LocalTime? = null,
     val duration: Int? = null,
     val description: String? = null,
+    val dayOrder: Int? = null,
     val type: Type? = null,
     val location: Location? = null,
     val eventId: Int? = null

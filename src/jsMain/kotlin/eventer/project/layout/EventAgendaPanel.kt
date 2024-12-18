@@ -301,9 +301,17 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         val daySessionsByLocation = formattedEventSessionsMap.value.get(selectedDate.value.getTime())?.toMutableMap() ?: mutableMapOf()
 
         val location = session.location
-        val sessionsInLocation = daySessionsByLocation[location]?.toMutableList() ?: mutableListOf()
+        var sessionsInLocation = mutableListOf<Session>()
+        var locationOrder: Int
+        if(daySessionsByLocation[location] == null){
+            locationOrder = daySessionsByLocation.keys.size + 1
+        } else {
+            sessionsInLocation = daySessionsByLocation[location]?.toMutableList()!!
+            locationOrder = daySessionsByLocation.keys.toList().indexOf(location) + 1
+        }
 
-        sessionsInLocation.add(session)
+
+        sessionsInLocation.add(session.copy(dayOrder = locationOrder))
         daySessionsByLocation[location!!] = sessionsInLocation
 
         val adjustedMap = formattedEventSessionsMap.value.toMutableMap().apply {
@@ -481,14 +489,15 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         return true
     }
 
-    override suspend fun save() {
-        saveSessionsState()
-//        Model.agendaStore.dispatch(AgendaAppAction.formattedEventSessionsLoaded(formattedEventSessionsMap.value))
-        ConduitManager.getSessionsForEvent(state.selectedEvent?.id!!)
-        ConduitManager.agendaStore.dispatch(AgendaAppAction.formattedEventSessionsLoaded(formattedEventSessionsMap.value))
+    override suspend fun save(): Boolean {
+        if(saveSessionsState()) {
+            ConduitManager.getSessionsForEvent(state.selectedEvent?.id!!)
+            ConduitManager.agendaStore.dispatch(AgendaAppAction.formattedEventSessionsLoaded(formattedEventSessionsMap.value))
+            return true
+        } else return false
     }
 
-    private suspend fun saveSessionsState() {
+    private suspend fun saveSessionsState(): Boolean {
         val defaultSessions = state.selectedEventSessions
         val currentSessions = formattedEventSessionsMap.value.flatMap { (_, sessionsByLocation) ->
             sessionsByLocation.flatMap { (_, sessions) -> sessions }
@@ -518,6 +527,6 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
                 }
             }
         }
-        ConduitManager.saveEventAgendaSessions(state.selectedEvent?.id!!, addedSessions, updatedSessions, deletedSessions)
+        return ConduitManager.saveEventAgendaSessions(state.selectedEvent?.id!!, addedSessions, updatedSessions, deletedSessions)
     }
 }

@@ -105,7 +105,6 @@ class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : S
                 gridPanel (
                     templateColumns = "1fr 1fr 1fr", alignItems = AlignItems.CENTER, justifyItems = JustifyItems.CENTER
                 ) {
-                    gridColumnGap = 200
 
                     add(hPanel {
                         add(eventPreviewButton)
@@ -167,15 +166,9 @@ class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : S
 
     private fun save() {
         AppScope.launch {
-            try {
-                if(childPanel.validate()) {
-                    childPanel.save()
-                    ConduitManager.showSuccessToast(io.kvision.i18n.tr("Event changes were saved succesfully."))
-                    saveButton.disabled = true
-                }
-            } catch (e: Exception) {
-                console.log(e)
-                ConduitManager.showErrorToast("Error while saving occured.")
+            if(childPanel.validate() && childPanel.save()) {
+                saveButton.disabled = true
+                ConduitManager.showSuccessToast(io.kvision.i18n.tr("Event changes were saved succesfully."))
             }
         }
     }

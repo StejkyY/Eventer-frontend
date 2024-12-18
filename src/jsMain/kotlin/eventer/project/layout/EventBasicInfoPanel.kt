@@ -211,7 +211,7 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
         else return basicInfoFormPanel.validate()
     }
 
-    override suspend fun save() {
+    override suspend fun save() : Boolean {
         val eventData = basicInfoFormPanel.getData()
         val event = state.selectedEvent!!.copy(
             name = eventData.name,
@@ -222,8 +222,7 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
             endTime = eventData.endTime,
             type = eventType,
             state = checkEventState(eventData.startDate!!, eventData.startTime))
-        ConduitManager.updateEvent(event)
-//        Model.eventPreviewLoad(state.previewEventState?.copy(event = event)!!)
+        return ConduitManager.updateEvent(event)
     }
 
     private fun checkEventState(eventStartDate: Date, eventStartTime: LocalTime?): EventState {

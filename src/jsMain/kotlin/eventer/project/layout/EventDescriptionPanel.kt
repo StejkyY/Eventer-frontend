@@ -47,9 +47,9 @@ class EventDescriptionPanel(val state: AgendaAppState) : EventChildPanel() {
         return descriptionFormPanel.validate()
     }
 
-    override suspend fun save() {
+    override suspend fun save(): Boolean {
         val event = state.selectedEvent?.copy(description = descriptionFormPanel.getData().description)
-        ConduitManager.updateEvent(event!!)
+        return ConduitManager.updateEvent(event!!)
 //        Model.eventPreviewLoad(state.previewEventState?.copy(event = event)!!)
     }
 }

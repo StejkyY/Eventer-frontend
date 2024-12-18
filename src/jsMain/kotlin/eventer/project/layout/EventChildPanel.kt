@@ -8,7 +8,7 @@ abstract class EventChildPanel : SimplePanel() {
     var changesMade = false
 
     abstract fun validate(): Boolean
-    abstract suspend fun save()
+    abstract suspend fun save() : Boolean
 
     fun setSaveButton(button: Button) {
         saveButton = button

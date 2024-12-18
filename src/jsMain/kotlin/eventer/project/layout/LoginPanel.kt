@@ -51,7 +51,7 @@ class LoginPanel: SimplePanel() {
                 add(Button(io.kvision.i18n.tr("Login")) {
                     marginTop = 20.px
                     onClick {
-                        processCredentials()
+                        this@LoginPanel.processCredentials()
                     }
                 })
 

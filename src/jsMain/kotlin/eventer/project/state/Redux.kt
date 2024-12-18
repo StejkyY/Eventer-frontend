@@ -40,7 +40,7 @@ sealed class AgendaAppAction: RAction {
     data class eventUpdated(val event: Event): AgendaAppAction()
     data class sessionTypesLoaded(val types: List<Type>): AgendaAppAction()
     data class eventSessionsLoaded(val sessions: List<Session>): AgendaAppAction()
-    data class eventLocationsLoaded(val locations: List<Location>): AgendaAppAction()
+    data class sessionLocationsLoaded(val locations: List<Location>): AgendaAppAction()
     data class profileLoaded(val profile: User): AgendaAppAction()
     data class formattedEventSessionsLoaded(val formattedEventSessions: Map<Double, Map<Location, List<Session>>>): AgendaAppAction()
     object googleAccountLinked: AgendaAppAction()
@@ -84,7 +84,7 @@ fun agendaAppReducer(state: AgendaAppState, action: AgendaAppAction): AgendaAppS
     is AgendaAppAction.eventUpdated -> {
         state.copy(selectedEvent = action.event)
     }
-    is AgendaAppAction.eventLocationsLoaded -> {
+    is AgendaAppAction.sessionLocationsLoaded -> {
         state.copy(selectedEventLocations = action.locations)
     }
     is AgendaAppAction.eventSessionsLoaded -> {

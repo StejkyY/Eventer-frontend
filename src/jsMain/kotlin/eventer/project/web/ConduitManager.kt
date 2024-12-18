@@ -13,13 +13,10 @@ import eventer.project.state.agendaAppReducer
 import eventer.project.web.RoutingManager.redirect
 import io.kvision.core.BsColor
 import io.kvision.i18n.I18n
-import io.kvision.navigo.Navigo
 import io.kvision.redux.createTypedReduxStore
 import io.kvision.rest.*
-import io.kvision.routing.Routing
 import io.kvision.toast.ToastContainer
 import io.kvision.toast.ToastContainerPosition
-import io.kvision.utils.Serialization.toObj
 import kotlinx.browser.localStorage
 import kotlinx.browser.window
 import kotlinx.coroutines.await
@@ -29,7 +26,6 @@ import org.w3c.dom.get
 import org.w3c.dom.set
 import org.w3c.fetch.RequestInit
 import web.http.Headers
-import kotlin.js.RegExp
 import kotlin.js.json
 
 //data class EditingEventState(val event: Event, val sessions: List<Session>, val locations: List<Location>) {
@@ -101,10 +97,10 @@ object ConduitManager {
         agendaStore.dispatch(AgendaAppAction.newEventPage)
     }
 
-    fun loadEvent(eventId: Int) {
+    fun loadEvent(eventId: Int, agendaLoad: Boolean = false) {
         AppScope.launch {
             val event = Api.getEvent(eventId)
-            if (agendaStore.getState().selectedEvent?.id != eventId) {
+            if (agendaLoad || agendaStore.getState().selectedEvent?.id != eventId) {
                 getSessionsForEvent(eventId)
                 getSessionTypes()
                 getSessionLocations(eventId)
@@ -125,7 +121,7 @@ object ConduitManager {
     }
 
     fun showEventAgendaPage(eventId: Int) {
-        loadEvent(eventId)
+        loadEvent(eventId, true)
         agendaStore.dispatch(AgendaAppAction.eventAgendaPage)
     }
 
@@ -162,14 +158,16 @@ object ConduitManager {
         }
     }
 
-    suspend fun updateEvent(event: Event) {
+    suspend fun updateEvent(event: Event): Boolean {
         try {
             Security.withAuth {
                 val receivedEvent = Api.updateEvent(event)
                 agendaStore.dispatch(AgendaAppAction.eventUpdated(receivedEvent))
             }
+            return true
         } catch (e: RemoteRequestException) {
             genericRequestExceptionHandler(e)
+            return false
         }
     }
 
@@ -267,13 +265,15 @@ object ConduitManager {
     suspend fun saveEventAgendaSessions(eventId: Int,
                                         addedSessions: List<Session>,
                                         updatedSessions: List<Session>,
-                                        deletedSessions: List<Session>) {
+                                        deletedSessions: List<Session>): Boolean {
         try {
             Security.withAuth {
                 Api.saveEventAgendaSessions(eventId, addedSessions, updatedSessions, deletedSessions)
             }
+            return true
         } catch (e: RemoteRequestException) {
             genericRequestExceptionHandler(e)
+            return false
         }
     }
 
@@ -284,7 +284,9 @@ object ConduitManager {
         val formattedSessionsMap = mutableMapOf<Double, Map<Location, List<Session>>>()
 
         for ((date, sessions) in allSessionsGroupedByDate) {
-            val sessionsGroupedByLocation = sessions.groupBy { it.location!! }
+            val sessionsGroupedByLocation = sessions.groupBy { it.location!! } .mapValues { (_, locationSessions) ->
+                locationSessions.sortedBy { it.dayOrder }
+            }
             formattedSessionsMap[date] = sessionsGroupedByLocation
         }
 
@@ -378,7 +380,7 @@ object ConduitManager {
         try {
             Security.withAuth {
                 val newLocations = Api.getSessionLocations(eventId)
-                agendaStore.dispatch(AgendaAppAction.eventLocationsLoaded(newLocations))
+                agendaStore.dispatch(AgendaAppAction.sessionLocationsLoaded(newLocations))
             }
         } catch (e: RemoteRequestException) {
             genericRequestExceptionHandler(e)

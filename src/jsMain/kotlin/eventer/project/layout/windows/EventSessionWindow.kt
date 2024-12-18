@@ -8,6 +8,7 @@ import eventer.project.components.lessThan
 import eventer.project.models.Location
 import eventer.project.models.Session
 import eventer.project.models.Type
+import eventer.project.state.AgendaAppAction
 import eventer.project.state.AgendaAppState
 import eventer.project.web.ConduitManager
 import io.kvision.core.*
@@ -127,8 +128,10 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
             }
         }
 
-        typeSelector.onChange {
-            if(typeSelector.getValue() != null && typesList[typeSelector.selectedIndex].name!! in listOf("Break", "Workshop", "Session", "Lecture")) {
+        typeSelector.onEvent {
+            if(typeSelector.getValue() != null &&
+                    typesList[typeSelector.selectedIndex].name!! in
+                        listOf("Break", "Workshop", "Session", "Lecture")) {
                 buttonRemoveType.hide()
             } else {
                 buttonRemoveType.show()
@@ -218,7 +221,10 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
             }
             validator = {
                 if(selectingLocationByList){
-                    !checkLocationSessionsOverlap( locationsList[locationSelector.selectedIndex], get(Session::startTime)!!, get(Session::duration)!!)
+                    !checkLocationSessionsOverlap(
+                        locationsList[locationSelector.selectedIndex],
+                        get(Session::startTime)!!,
+                        get(Session::duration)!!)
                 } else {
                     true
                 }
@@ -228,9 +234,6 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
     }
 
     private fun checkLocationSessionsOverlap(location: Location, formSessionStartTime: LocalTime, formSessionDuration: Int) : Boolean {
-        println(formSessionStartTime)
-        println(sessionDate)
-        println(sessionsMap)
         return sessionsMap?.get(sessionDate?.getTime())?.get(location)?.any{
             it != editingSession && checkFormSessionOverlap(it, formSessionStartTime, formSessionDuration)
         } ?: false
@@ -377,7 +380,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
     }
 
     private fun deleteSelectedType() {
-        if(typeSelector.getValue() != null) {
+        if(typeSelector.getValue() != null && typesList.size > 4) {
             AppScope.launch {
                 ConduitManager.deleteType(typesList[typeSelector.selectedIndex].id!!)
                 typesList.removeAt(typeSelector.selectedIndex)
@@ -387,7 +390,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
     }
 
     private fun deleteSelectedLocation() {
-        if(locationSelector.getValue() != null) {
+        if(locationSelector.getValue() != null && locationsList.size > 0) {
             AppScope.launch {
                 ConduitManager.deleteLocation(locationsList[locationSelector.selectedIndex].id!!)
                 locationsList.removeAt(locationSelector.selectedIndex)
@@ -398,6 +401,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
 
     suspend fun editSession(sessions: Map<Double, Map<Location, List<Session>>>, session: Session): Session? {
         sessionPanel.setData(session)
+        timeSelector.value = session.startTime
         editingSession = session
         editingId = session.id
         updateDurationOptions(session.startTime!!)
