@@ -1,6 +1,7 @@
 package eventer.project.layout
 
 import eventer.project.components.AgendaPrimaryButton
+import eventer.project.models.Event
 import eventer.project.state.AgendaAppState
 import eventer.project.web.ConduitManager
 import eventer.project.web.RoutingManager
@@ -10,17 +11,25 @@ import io.kvision.core.*
 import io.kvision.dropdown.Direction
 import io.kvision.dropdown.dropDown
 import io.kvision.form.text.Text
+import io.kvision.form.text.TextInput
 import io.kvision.html.*
 import io.kvision.i18n.I18n
 import io.kvision.panel.*
+import io.kvision.state.ObservableList
+import io.kvision.state.bind
+import io.kvision.state.observableListOf
 import io.kvision.table.*
 import io.kvision.utils.auto
 import io.kvision.utils.perc
 import io.kvision.utils.px
+import io.kvision.utils.syncWithList
+import web.html.HTML.body
 
 class EventsPanel(state: AgendaAppState) : SimplePanel() {
 
     private val newEventButton: Button
+
+    private var filteredEvents = observableListOf<Event>()
 
     init {
         width = 90.perc
@@ -29,6 +38,8 @@ class EventsPanel(state: AgendaAppState) : SimplePanel() {
         marginRight = auto
         padding = 20.px
         border = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
+
+        if(state.events != null ) filteredEvents.syncWithList(state.events)
 
         newEventButton = AgendaPrimaryButton(io.kvision.i18n.tr("Create new event")) {
             onClick {
@@ -56,14 +67,26 @@ class EventsPanel(state: AgendaAppState) : SimplePanel() {
             spacing = 5
         ) {
             paddingTop = 20.px
-            add(dropDown("My events", listOf(io.kvision.i18n.tr("Invited events") to "#/basic"), forDropDown = true) {
-                paddingRight = 30.px
-                paddingBottom = 15.px
-                direction = Direction.DROPDOWN
-            })
-            add(Text( ) {
+//            add(dropDown("My events", listOf(io.kvision.i18n.tr("Invited events") to "#/basic"), forDropDown = true) {
+//                paddingRight = 30.px
+//                paddingBottom = 15.px
+//                direction = Direction.DROPDOWN
+//            })
+            add(Text(InputType.SEARCH) {
+                input.autocomplete = Autocomplete.OFF
                 placeholder = "${I18n.tr("Search:")}"
-                width = 500.px
+                width = 50.perc
+                setEventListener<TextInput> {
+                    input = {
+                        val searchText = self.value?.lowercase() ?: ""
+                        filteredEvents.syncWithList(state.events.orEmpty().filter { event ->
+                            event.name?.lowercase()?.contains(searchText)!! ||
+                                    event.state.toString().lowercase().contains(searchText) ||
+                                    event.startDate?.toLocaleDateString()?.lowercase()?.contains(searchText) == true ||
+                                    event.endDate?.toLocaleDateString()?.lowercase()?.contains(searchText) == true
+                        }.toMutableList())
+                    }
+                }
             })
 
         }
@@ -75,38 +98,38 @@ class EventsPanel(state: AgendaAppState) : SimplePanel() {
             width = 100.perc
         }
 
-        table(types = setOf(TableType.BORDERLESS, TableType.HOVER)) {
+        table(types = setOf(TableType.BORDERLESS, TableType.HOVER)){
             height = 100.perc
             overflowY = Overflow.SCROLL
             marginTop = 20.px
-            addHeaderCell(this@EventsPanel.sortingHeaderCell(I18n.tr("Title"), Sort.FN))
-            addHeaderCell(this@EventsPanel.sortingHeaderCell(I18n.tr("Status"), Sort.LN))
-            addHeaderCell(this@EventsPanel.sortingHeaderCell(I18n.tr("Start date"), Sort.E))
-            addHeaderCell(this@EventsPanel.sortingHeaderCell("End date", Sort.F))
-            addHeaderCell(this@EventsPanel.sortingHeaderCell("", Sort.F))
 
-            if(!state.events.isNullOrEmpty()) {
-                state.events.forEach {event ->
-                    row {
-                        cell(event.name)
-                        cell(event.state.toString())
-                        cell(event.startDate?.toLocaleDateString()!!)
-                        cell(event.endDate?.toLocaleDateString()!!)
-                        if(event.userEventRole == null) cell("")
-                        else cell(event.userEventRole?.name.toString())
-                        border = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-                        onClick {
-                            RoutingManager.redirect("/event/${event.id}${View.EVENT_BASIC_INFO.url}")
+            addHeaderCell(HeaderCell(I18n.tr("Title")))
+            addHeaderCell(HeaderCell(I18n.tr("Status")))
+            addHeaderCell(HeaderCell(I18n.tr("Start date")))
+            addHeaderCell(HeaderCell(I18n.tr("End date")))
+            addHeaderCell(HeaderCell(""))
+
+            bind(filteredEvents) { events ->
+                if(!filteredEvents.isEmpty()) {
+                    filteredEvents.forEach {event ->
+                        row {
+                            cell(event.name)
+                            cell(event.state.toString())
+                            cell(event.startDate?.toLocaleDateString()!!)
+                            cell(event.endDate?.toLocaleDateString()!!)
+                            if(event.userEventRole == null) cell("")
+                            else cell(event.userEventRole?.name.toString()) {
+                                if(event.userEventRole?.name == "Owner") {
+                                    this.fontWeight = FontWeight.BOLD
+                                }
+                            }
+                            border = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
+                            onClick {
+                                RoutingManager.redirect("/event/${event.id}${View.EVENT_BASIC_INFO.url}")
+                            }
                         }
                     }
                 }
-            }
-        }
-    }
-
-    private fun sortingHeaderCell(title: String, sort: Sort) = HeaderCell(title) {
-        onEvent {
-            click = {
             }
         }
     }

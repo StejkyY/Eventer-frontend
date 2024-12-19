@@ -4,6 +4,7 @@ import eventer.project.components.AgendaPrimaryButton
 import eventer.project.AppScope
 import eventer.project.state.AgendaAppAction
 import eventer.project.web.ConduitManager
+import eventer.project.web.ExternalCalendarSessionsManager
 import eventer.project.web.Provider
 import io.kvision.core.AlignItems
 import io.kvision.core.BsColor
@@ -34,10 +35,10 @@ class AddToCalendarWindow : Modal(caption = "Add sessions to calendar") {
     private var statusLoggedMicrosoft: Button
 
     init {
-        statusLoggedGoogle = Button("Logged", style = ButtonStyle.SUCCESS) {
+        statusLoggedGoogle = Button("Synced", style = ButtonStyle.SUCCESS) {
             disabled = true
         }
-        statusLoggedMicrosoft = Button("Logged", style = ButtonStyle.SUCCESS) {
+        statusLoggedMicrosoft = Button("Synced", style = ButtonStyle.SUCCESS) {
             disabled = true
         }
         buttonAddToGoogleCalendar = AgendaPrimaryButton(tr("Add sessions")) {
@@ -45,10 +46,9 @@ class AddToCalendarWindow : Modal(caption = "Add sessions to calendar") {
             onClick {
                 try {
                     AppScope.launch {
-                        if(!ConduitManager.sendSessionsToExternalCalendar(Provider.GOOGLE)) {
-                            ConduitManager.showErrorToast(tr("Calendar is empty."))
+                        if(ExternalCalendarSessionsManager.sendEventSessionsToExternalCalendar(Provider.GOOGLE)) {
+                            ConduitManager.showSuccessToast(tr("Sessions were added succesfully to your calendar."))
                         }
-                        ConduitManager.showSuccessToast(tr("Sessions were added succesfully to your calendar."))
                     }
                 } catch (e: Exception) {
                     ConduitManager.showErrorToast(tr("Failed adding sessions to calendar."))
@@ -60,8 +60,9 @@ class AddToCalendarWindow : Modal(caption = "Add sessions to calendar") {
             onClick {
                 try {
                     AppScope.launch {
-                        ConduitManager.sendSessionsToExternalCalendar(Provider.MICROSOFT)
-                        ConduitManager.showSuccessToast(tr("Sessions were added succesfully to your calendar."))
+                        if(ExternalCalendarSessionsManager.sendEventSessionsToExternalCalendar(Provider.MICROSOFT)) {
+                            ConduitManager.showSuccessToast(tr("Sessions were added succesfully to your calendar."))
+                        }
                     }
                 } catch (e: Exception) {
                     ConduitManager.showErrorToast(tr("Failed adding sessions to calendar."))

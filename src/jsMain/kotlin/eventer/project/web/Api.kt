@@ -173,6 +173,16 @@ object Api {
         }.await().locations
     }
 
+    suspend fun getRefreshedAccessToken(provider: Provider): String? {
+        val provider = provider.toString().lowercase()
+       val response = restClient.requestDynamic("$API_URL/oauth/$provider/token-refresh") {
+            method = HttpMethod.GET
+            headers = ::authRequest
+       }.await()
+        val responseJson = response.unsafeCast<Map<String, Any>>()
+        return responseJson["access_token"] as? String
+    }
+
     suspend fun login(userCredentials: UserCredentials): User {
         return restClient.post<UserDTO, UserDTO>(
             "$API_URL/auth/login",

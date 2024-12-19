@@ -20,6 +20,7 @@ repositories {
 val kotlinVersion: String by System.getProperties()
 val kvisionVersion: String by System.getProperties()
 
+
 kotlin {
     js(IR) {
         browser {
