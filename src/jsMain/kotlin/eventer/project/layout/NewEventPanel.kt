@@ -160,12 +160,19 @@ class NewEventPanel(val state: AgendaAppState) : FormPanel<Event>() {
                     endTime
                 )
                 validator = {
-                    val dateResult = startDate.getValue()?.getTime()!! <= endDate.getValue()?.getTime()!!
-                    var timeResult = true
-                    if (startTime.getValue() != null && endTime.getValue() != null) {
-                        timeResult = startTime.getValue()?.getTime()!! <= endTime.getValue()?.getTime()!!
+                    val startDateValue = startDate.getValue()?.getTime()!!
+                    val endDateValue = endDate.getValue()?.getTime()!!
+                    if(startDateValue < endDateValue) {
+                        true
+                    } else if (startDateValue > endDateValue){
+                        false
+                    } else {
+                        var timeResult = true
+                        if (startTime.getValue() != null && endTime.getValue() != null) {
+                            timeResult = startTime.getValue()?.getTime()!! <= endTime.getValue()?.getTime()!!
+                        }
+                        timeResult
                     }
-                    dateResult && timeResult
                 }
                 validatorMessage = { io.kvision.i18n.tr("Event start has to be set before the event end") }
                 add(createEventButton)

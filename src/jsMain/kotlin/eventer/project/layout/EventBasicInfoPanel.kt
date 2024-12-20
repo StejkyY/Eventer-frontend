@@ -173,6 +173,7 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
                         endTime
                     )
                     add(vPanel(alignItems = AlignItems.START) {
+                        paddingBottom = 20.px
                         add(hPanel(spacing = 10){
                             marginTop = 10.px
                             add(inPersonEventButton)
@@ -187,16 +188,29 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
             basicInfoFormPanel.setData(state.selectedEvent)
             startDate.value = Date(state.selectedEvent.startDate?.getTime()!!)
             endDate.value = Date(state.selectedEvent.endDate?.getTime()!!)
+            if(state.selectedEvent.startTime != null) {
+                startTime.value = Date(state.selectedEvent.startTime.getTime())
+            }
+            if(state.selectedEvent.endTime != null) {
+                endTime.value = Date(state.selectedEvent.endTime.getTime())
+            }
         }
     }
 
     fun checkEventBeginBeforeEnd(): Boolean {
-        val dateResult = startDate.getValue()?.getTime()!! <= endDate.getValue()?.getTime()!!
-        var timeResult = true
-        if (startTime.getValue() != null && endTime.getValue() != null) {
-            timeResult = startTime.getValue()?.getTime()!! <= endTime.getValue()?.getTime()!!
+        val startDateValue = startDate.getValue()?.getTime()!!
+        val endDateValue = endDate.getValue()?.getTime()!!
+        if(startDateValue < endDateValue) {
+            return true
+        } else if (startDateValue > endDateValue){
+            return false
+        } else {
+            var timeResult = true
+            if (startTime.getValue() != null && endTime.getValue() != null) {
+                timeResult = startTime.getValue()?.getTime()!! <= endTime.getValue()?.getTime()!!
+            }
+            return timeResult
         }
-        return dateResult && timeResult
     }
 
     fun getData(): Event {

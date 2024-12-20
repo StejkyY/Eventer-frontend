@@ -213,16 +213,23 @@ object Api {
     }
 
 
-    suspend fun updateProfile(profile: User) {
-        restClient.call<UserDTO, UserDTO>("$API_URL/users/${profile.id}",
+    suspend fun updateProfile(profile: User): User {
+        return restClient.call<UserDTO, UserDTO>("$API_URL/users/${profile.id}",
             UserDTO(profile)) {
             method = HttpMethod.PUT
             headers = ::authRequest
-        }.await()
+        }.await().user
     }
 
     suspend fun updatePassword(currentPassword: String, newPassword: String)  {
-        restClient.post<UserPasswordDTO, UserPasswordDTO>("$API_URL/users/current/change-password",
+//        restClient.post<UserPasswordDTO, UserPasswordDTO>("$API_URL/users/current/change-password",
+//            UserPasswordDTO(
+//                UserPasswordChange(currentPassword, newPassword)
+//            )) {
+//            method = HttpMethod.POST
+//            headers = ::authRequest
+//        }.await()
+        restClient.requestDynamic("$API_URL/users/current/change-password",
             UserPasswordDTO(
                 UserPasswordChange(currentPassword, newPassword)
             )) {

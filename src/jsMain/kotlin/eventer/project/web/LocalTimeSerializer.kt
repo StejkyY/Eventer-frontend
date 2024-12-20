@@ -14,12 +14,16 @@ object LocalTimeSerializer : KSerializer<LocalTime> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("LocalTime", PrimitiveKind.STRING)
 
     override fun serialize(encoder: Encoder, value: LocalTime) {
-        val timeString = value.toTimeString().substring(0, 8)
+        val timeString = value.toTimeString().take(8)
         encoder.encodeString(timeString)
     }
 
     override fun deserialize(decoder: Decoder): LocalTime {
         val timeString = decoder.decodeString()
-        return Date("1970-01-01T$timeString")
+        if(timeString.length > 8){
+            return Date(timeString)
+        } else {
+            return Date("1970-01-01T$timeString")
+        }
     }
 }

@@ -96,8 +96,10 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
                 if(saveButton.disabled) {
                     ConduitManager.showPreviousPage()
                 } else {
-                    unsavedChangesConfirmWindow.show(io.kvision.i18n.tr("You have unsaved changes, are you sure you want to leave?"),
-                        yesCallback = { ConduitManager.showPreviousPage()})
+                    unsavedChangesConfirmWindow.show(
+                        io.kvision.i18n.tr("You have unsaved changes, are you sure you want to leave?"),
+                        yesCallback = {ConduitManager.showPreviousPage()}
+                    )
                 }
             }
         }
@@ -110,13 +112,15 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
         }
 
         passwordFormPanel = formPanel {
-            add(PasswordState::currentPassword, currentPasswordText)
+            add(PasswordState::currentPassword, currentPasswordText, required = true)
             add(
-                PasswordState::newPassword, newPasswordText,
+                PasswordState::newPassword, newPasswordText, required = true,
                 validatorMessage = { io.kvision.i18n.tr("Password does not meet criteria.") }) {
                 var result = false
                 if(it.getValue() != null) {
-                    result = it.getValue()!!.length >= 8 && it.getValue()?.any { it.isUpperCase() }!! && it.getValue()?.any { it.isDigit() }!!
+                    result = it.getValue()!!.length >= 8 &&
+                            it.getValue()?.any{it.isUpperCase()}!! &&
+                                    it.getValue()?.any{it.isDigit()}!!
                 }
                 result
             }
@@ -127,7 +131,11 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
         }
 
         vPanel {
-            gridPanel (templateColumns = "1fr 1fr 1fr", alignItems = AlignItems.CENTER, justifyItems = JustifyItems.CENTER)  {
+            gridPanel (
+                templateColumns = "1fr 1fr 1fr",
+                alignItems = AlignItems.CENTER,
+                justifyItems = JustifyItems.CENTER
+            ){
                 gridColumnGap = 50
                 add(backButton)
                 add(Label(io.kvision.i18n.tr("My profile")) {

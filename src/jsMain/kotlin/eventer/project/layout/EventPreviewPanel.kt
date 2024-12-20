@@ -36,6 +36,9 @@ class EventPreviewPanel(state: AgendaAppState) : SimplePanel() {
                     fontSize = 20.px
                 })
             }
+            add(Label(state.selectedEvent?.type.toString() + " event") {
+                fontSize = 18.px
+            })
             hPanel(spacing = 20) {
                 verticalAlign = VerticalAlign.BASELINE
                 alignItems = AlignItems.CENTER

@@ -187,7 +187,8 @@ object ConduitManager {
     suspend fun updateProfile(profile: User){
         try {
             Security.withAuth {
-                Api.updateProfile(profile)
+                val user = Api.updateProfile(profile)
+                saveLocalStorageToken(JWT_TOKEN, user.token!!)
             }
             readProfile()
         } catch (e: RemoteRequestException) {
