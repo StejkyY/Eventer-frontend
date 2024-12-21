@@ -14,6 +14,7 @@ import io.kvision.html.Button
 import io.kvision.html.Label
 import io.kvision.html.span
 import io.kvision.i18n.I18n
+import io.kvision.i18n.gettext
 import io.kvision.i18n.tr
 import io.kvision.modal.Alert
 import io.kvision.panel.*
@@ -52,21 +53,21 @@ class RegisterPanel: SimplePanel() {
             }
 
             vPanel (spacing = 10) {
-                add(User::firstName, Text(label = "${I18n.tr("First name")}"), required = true)
-                add(User::lastName, Text(label = "${I18n.tr("Last name")}"), required = true)
-                add(User::email, Text(label = "${I18n.tr("E-mail")}"), required = true,
-                    validatorMessage = { tr("E-mail address does not have correct syntax.") }) {
+                add(User::firstName, Text(label = tr("First name")), required = true)
+                add(User::lastName, Text(label = tr("Last name")), required = true)
+                add(User::email, Text(label = tr("E-mail")), required = true,
+                    validatorMessage = { gettext("E-mail address does not have correct syntax.") }) {
                     it.getValue()?.matches(Regex("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) ?: false
                 }
-                add(User::password, Password(label = "${I18n.tr("Password")}"), required = true,
+                add(User::password, Password(label = tr("Password")), required = true,
                     validatorMessage = { tr("Password does not meet criteria.") }) {
                     if(it.getValue() != null) {
                         it.getValue()!!.length >= 8 && it.getValue()?.any { it.isUpperCase() }!! && it.getValue()?.any { it.isDigit() }!!
                     }
                     true
                 }
-                add(User::password2, Password(label = "${I18n.tr("Password again")}"), required = true,
-                    validatorMessage = { tr("Password does not meet criteria.") }) {
+                add(User::password2, Password(label = tr("Password again")), required = true,
+                    validatorMessage = { gettext("Password does not meet criteria.") }) {
                     if (it.getValue() != null) {
                         it.getValue()!!.length >= 8 && it.getValue()?.any { it.isUpperCase() }!! && it.getValue()
                             ?.any { it.isDigit() }!!
@@ -86,8 +87,8 @@ class RegisterPanel: SimplePanel() {
                     val passwordsMatch = password == password2
 
                     if (!passwordsMatch) {
-                        form.getControl(User::password)?.validatorError = tr("Passwords are not the same")
-                        form.getControl(User::password2)?.validatorError = tr("Passwords are not the same")
+                        form.getControl(User::password)?.validatorError = gettext("Passwords are not the same")
+                        form.getControl(User::password2)?.validatorError = gettext("Passwords are not the same")
                     }
                     passwordsMatch
                 }
@@ -114,7 +115,7 @@ class RegisterPanel: SimplePanel() {
             val userData = registerFormPanel.getData()
             AppScope.launch {
                 if(ConduitManager.registerProfile(userData)) {
-                    Alert.show(text = I18n.tr("User registered. You can now log in.")) {
+                    Alert.show(text = tr("User registered. You can now log in.")) {
                         registerFormPanel.clearData()
                         RoutingManager.redirect(View.LOGIN)
                     }

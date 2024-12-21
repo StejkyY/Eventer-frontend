@@ -21,7 +21,7 @@ import org.w3c.files.Blob
 import org.w3c.files.BlobPropertyBag
 import web.dom.document
 
-class AgendaExportWindow : Modal(caption = "Agenda sessions export") {
+class AgendaExportWindow : Modal(caption = tr("Agenda sessions export")) {
     private val buttonJSONExport: Button
     private val buttonCSVExport: Button
     private var sessionsMap: Map<Double, Map<Location, List<Session>>>? = null
@@ -43,7 +43,7 @@ class AgendaExportWindow : Modal(caption = "Agenda sessions export") {
         vPanel {
             hPanel {
                 alignItems = AlignItems.CENTER
-                add(Label("JSON format") {
+                add(Label(tr("JSON format")) {
                     width = 100.px
                 })
                 add(buttonJSONExport)
@@ -51,7 +51,7 @@ class AgendaExportWindow : Modal(caption = "Agenda sessions export") {
             hPanel {
                 alignItems = AlignItems.CENTER
                 marginTop = 10.px
-                add(Label("CSV format") {
+                add(Label(tr("CSV format")) {
                     width = 100.px
                 })
                 add(buttonCSVExport)

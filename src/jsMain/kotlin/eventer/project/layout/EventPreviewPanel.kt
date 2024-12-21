@@ -4,6 +4,7 @@ import eventer.project.state.AgendaAppState
 import io.kvision.core.*
 import io.kvision.html.Icon
 import io.kvision.html.Label
+import io.kvision.i18n.I18n
 import io.kvision.i18n.tr
 import io.kvision.panel.SimplePanel
 import io.kvision.panel.hPanel
@@ -36,7 +37,7 @@ class EventPreviewPanel(state: AgendaAppState) : SimplePanel() {
                     fontSize = 20.px
                 })
             }
-            add(Label(state.selectedEvent?.type.toString() + " event") {
+            add(Label(state.selectedEvent?.type.toString() + " " + tr("event")) {
                 fontSize = 18.px
             })
             hPanel(spacing = 20) {

@@ -1,0 +1,458 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:44
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:58
+msgid "Add sessions"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:27
+msgid "Add sessions to calendar"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:77
+msgid "Add to calendar"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:66
+#: src/jsMain/kotlin/eventer/project/layout/EventPreviewPanel.kt:72
+msgid "Agenda"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/AgendaExportWindow.kt:24
+msgid "Agenda sessions export"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:98
+msgid "Already have an account?"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:283
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:251
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:338
+msgid "Are you sure?"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:108
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:162
+msgid "Back"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:64
+msgid "Basic info"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:110
+msgid "Close"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:100
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:117
+msgid "Confirm changes"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventPreviewWindow.kt:21
+msgid "Copy this link for event preview."
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:49
+msgid "Create"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:48
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:114
+msgid "Create new event"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:60
+msgid "Create new session"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/AgendaExportWindow.kt:54
+msgid "CSV format"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:69
+msgid "Current password"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:190
+msgid "Day"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:76
+msgid "Delete"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:83
+msgid "Delete account"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:84
+msgid "Delete event"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:124
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:155
+msgid "Delete selected"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:65
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:211
+msgid "Description"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:283
+msgid "Do you want to delete this event?"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:338
+msgid "Do you want to delete this session?"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:251
+msgid "Do you want to delete your account?"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:73
+msgid "Don't have an account yet?"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/AgendaExportWindow.kt:30
+#: src/jsMain/kotlin/eventer/project/layout/windows/AgendaExportWindow.kt:36
+msgid "Download"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:79
+msgid "Duplicate event"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:95
+msgid "Duration"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:51
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:64
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:58
+msgid "E-mail"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/models/EventState.kt:9
+msgid "Elapsed"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:109
+#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:113
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:89
+msgid "End date"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:134
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:98
+msgid "End time"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:86
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:91
+msgid "Enter date"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:290
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:303
+msgid "Error when saving session."
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/web/ConduitManager.kt:61
+msgid "Error with connection to the server. Please try again later."
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventPreviewPanel.kt:40
+msgid "event"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:180
+msgid "Event changes were saved succesfully."
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:146
+msgid "Event location"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:129
+msgid "Event name"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventPreviewWindow.kt:11
+msgid "Event preview"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:225
+msgid "Event start time and date has to be set before end."
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:286
+msgid "Event successfully deleted"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:55
+msgid "Events"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:68
+msgid "Export"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:70
+msgid "Facebook"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:54
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:68
+msgid "Failed adding sessions to calendar."
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:67
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:56
+msgid "First name"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:69
+msgid "Google"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:105
+msgid "Google Calendar:"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:53
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:58
+#: src/jsMain/kotlin/eventer/project/models/EventType.kt:9
+msgid "Hybrid"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:71
+msgid "Change email"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:77
+msgid "Change password"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:73
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:82
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:57
+msgid "Changes need to be saved first."
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:46
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:55
+msgid "In Person"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/models/EventState.kt:9
+msgid "In progress"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/models/EventType.kt:9
+msgid "In-person"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/AgendaExportWindow.kt:46
+msgid "JSON format"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:68
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:57
+msgid "Last name"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventPreviewWindow.kt:15
+msgid "Link"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:156
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:146
+msgid "Location"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:44
+#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:55
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:103
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:72
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:78
+msgid "Login"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:119
+msgid "Microsoft Outlook:"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:144
+msgid "My profile"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:148
+msgid "Name"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:151
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:169
+msgid "New location"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:70
+msgid "New password"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:288
+msgid "New session location added."
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:301
+msgid "New session type added."
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:104
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:115
+msgid "New type"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:443
+msgid "No description available"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:64
+msgid "Or you can use"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:33
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:62
+msgid "Password"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:69
+msgid "Password again"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:235
+msgid "Password is not correct."
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:78
+msgid "Password needs to be atleast 8 characters long, contain atleast one upper case and one number"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:90
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:91
+msgid "Passwords are not the same"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:52
+msgid "Preview"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/web/ExternalCalendarSessionsManager.kt:29
+msgid "Problem with access to the service occured, please log in the service again."
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:241
+msgid "Profile updated succesfully."
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:78
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:32
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:49
+msgid "Register"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:89
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:70
+msgid "Save"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:34
+msgid "Save changes"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:81
+msgid "Search:"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:323
+msgid "Session saved succesfully."
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:50
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:64
+msgid "Sessions were added succesfully to your calendar."
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:245
+msgid "Something went wrong."
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:92
+#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:112
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:84
+msgid "Start date"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:126
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:94
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:82
+msgid "Start time"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:111
+msgid "Status"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:38
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:41
+msgid "Synced"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:110
+msgid "Title"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:99
+msgid "Type"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:85
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:93
+msgid "Unlink"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/models/EventState.kt:9
+msgid "Upcoming"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:118
+msgid "User registered. You can now log in."
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:60
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:61
+#: src/jsMain/kotlin/eventer/project/models/EventType.kt:9
+msgid "Virtual"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:46
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:103
+msgid "You have unsaved changes, are you sure you want to leave?"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:74
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:83
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:92
+msgid "You have unsaved changes, do you want to leave the page?"
+msgstr ""
+
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:101
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:118
+msgid "You will lose all sessions on days you removed. Do you want to continue?"
+msgstr ""

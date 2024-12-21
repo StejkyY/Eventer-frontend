@@ -9,8 +9,12 @@ import io.kvision.form.FormPanel
 import io.kvision.form.formPanel
 import io.kvision.form.text.Password
 import io.kvision.form.text.Text
-import io.kvision.html.*
+import io.kvision.html.Autocomplete
+import io.kvision.html.Button
+import io.kvision.html.Label
+import io.kvision.html.span
 import io.kvision.i18n.I18n
+import io.kvision.i18n.tr
 import io.kvision.panel.SimplePanel
 import io.kvision.panel.vPanel
 import io.kvision.utils.auto
@@ -26,7 +30,7 @@ class LoginPanel: SimplePanel() {
     private val passwordInput: Password
 
     init {
-        passwordInput = Password(label = "${I18n.tr("Password")}")
+        passwordInput = Password(label = tr("Password"))
         loginFormPanel = this.formPanel {
             width = 400.px
             margin = 20.px
@@ -37,18 +41,18 @@ class LoginPanel: SimplePanel() {
             textAlign = TextAlign.CENTER
 
             vPanel {
-                add(Label(io.kvision.i18n.tr("Login")) {
+                add(Label(tr("Login")) {
                     fontSize = 28.px
                 })
                 paddingBottom = 20.px
             }
 
             vPanel (spacing = 10) {
-                add(UserCredentials::email, Text(label = "${I18n.tr("E-mail")}") {
+                add(UserCredentials::email, Text(label = tr("E-mail")) {
                     autocomplete = Autocomplete.OFF
                 }, required = true)
                 add(UserCredentials::password, passwordInput, required = true)
-                add(Button(io.kvision.i18n.tr("Login")) {
+                add(Button(tr("Login")) {
                     marginTop = 20.px
                     onClick {
                         this@LoginPanel.processCredentials()
@@ -57,21 +61,21 @@ class LoginPanel: SimplePanel() {
 
 
                 span {
-                    +io.kvision.i18n.tr("Or you can use")
+                    +tr("Or you can use")
                     fontSize = 14.px
                     paddingTop = 20.px
                 }
 
-                add(Button(io.kvision.i18n.tr("Google")))
-                add(Button(io.kvision.i18n.tr("Facebook")))
+                add(Button(tr("Google")))
+                add(Button(tr("Facebook")))
 
                 span {
-                    +io.kvision.i18n.tr("Don't have an account yet?")
+                    +tr("Don't have an account yet?")
                     fontSize = 14.px
                     paddingTop = 30.px
                 }
 
-                    add(Button(io.kvision.i18n.tr("Register")) {
+                    add(Button(tr("Register")) {
                         onClick {
                             this@LoginPanel.hide()
                             RoutingManager.redirect(View.REGISTER)

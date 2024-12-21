@@ -73,7 +73,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
                 saveSession()
             }
         }
-        deleteButton = Button(io.kvision.i18n.tr("Delete"), style = ButtonStyle.DANGER) {
+        deleteButton = Button(tr("Delete"), style = ButtonStyle.DANGER) {
                 width = 100.px
                 onClick {
                     deleteSession()
@@ -101,7 +101,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
             options = list.map { it.id.toString() to it.name!! }
         }
 
-        newTypeInputText = Text(label = "New type") {
+        newTypeInputText = Text(label = tr("New type")) {
             autocomplete = Autocomplete.OFF
         }
 
@@ -121,7 +121,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
             }
         }
 
-        buttonRemoveType = Button(io.kvision.i18n.tr("Delete selected"), style = ButtonStyle.DANGER) {
+        buttonRemoveType = Button(tr("Delete selected"), style = ButtonStyle.DANGER) {
             paddingTop = 5.px
             onClick {
                 deleteSelectedType()
@@ -148,11 +148,11 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
             options = list.map { it.id.toString() to it.name!! }
         }
 
-        newLocationInputText = Text(label = "New location") {
+        newLocationInputText = Text(label = tr("New location")) {
             autocomplete = Autocomplete.OFF
         }
 
-        buttonRemoveLocation = Button(io.kvision.i18n.tr("Delete selected"), style = ButtonStyle.DANGER) {
+        buttonRemoveLocation = Button(tr("Delete selected"), style = ButtonStyle.DANGER) {
             paddingTop = 5.px
             onClick {
                 deleteSelectedLocation()
@@ -181,7 +181,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
 
         sessionPanel = formPanel  {
             alignItems = AlignItems.CENTER
-            add(Session::name, Text(label = "${I18n.tr("Name")}:") {
+            add(Session::name, Text(label = "${tr("Name")}:") {
                 autocomplete = Autocomplete.OFF
             }, required = true)
             add(
@@ -229,7 +229,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
                     true
                 }
             }
-            validatorMessage = { io.kvision.i18n.tr("Session time in the location is overlapping.") }
+            validatorMessage = { tr("Session time in the location is overlapping.") }
         }
     }
 
@@ -285,9 +285,9 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
                         eventId = (state.selectedEvent?.id)))
                     if(location != null) {
                         locationsList.syncWithList(listOf(location) + locationsList)
-                        ConduitManager.showSuccessToast(io.kvision.i18n.tr("New session location added."))
+                        ConduitManager.showSuccessToast(tr("New session location added."))
                     } else {
-                        ConduitManager.showErrorToast(io.kvision.i18n.tr("Error when saving session."))
+                        ConduitManager.showErrorToast(tr("Error when saving session."))
                         close()
                     }
                 }
@@ -298,9 +298,9 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
                     type = ConduitManager.addType(Type(name = newTypeInputText.value))
                     if(type != null) {
                         typesList.syncWithList(listOf(type) + typesList)
-                        ConduitManager.showSuccessToast(io.kvision.i18n.tr("New session type added."))
+                        ConduitManager.showSuccessToast(tr("New session type added."))
                     } else {
-                        ConduitManager.showErrorToast(io.kvision.i18n.tr("Error when saving session."))
+                        ConduitManager.showErrorToast(tr("Error when saving session."))
                         close()
                     }
                 }
@@ -320,7 +320,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
                     )
                     setResult(session)
                 }
-                ConduitManager.showSuccessToast(io.kvision.i18n.tr("Session saved succesfully."))
+                ConduitManager.showSuccessToast(tr("Session saved succesfully."))
                 close()
             }
         }
@@ -335,7 +335,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
     }
 
     private fun deleteSession() {
-        Confirm.show("Are you sure?", "Do you want to delete this session?") {
+        Confirm.show(tr("Are you sure?"), tr("Do you want to delete this session?")) {
             AppScope.launch {
                 parentAgendaPanel.removeSession(editingSession!!)
                 close()

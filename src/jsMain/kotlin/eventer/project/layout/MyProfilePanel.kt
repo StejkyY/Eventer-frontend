@@ -12,7 +12,10 @@ import io.kvision.form.FormPanel
 import io.kvision.form.formPanel
 import io.kvision.form.text.Password
 import io.kvision.form.text.Text
-import io.kvision.html.*
+import io.kvision.html.Button
+import io.kvision.html.Label
+import io.kvision.i18n.I18n
+import io.kvision.i18n.tr
 import io.kvision.modal.Confirm
 import io.kvision.panel.*
 import io.kvision.toast.ToastContainer
@@ -58,32 +61,32 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
         padding = 20.px
         border = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
 
-        emailText = Text(label = io.kvision.i18n.tr("E-mail")) {
+        emailText = Text(label = tr("E-mail")) {
             disabled = true
         }
-        firstNameText = Text(label = io.kvision.i18n.tr("First name"))
-        lastNameText = Text(label = io.kvision.i18n.tr("Last name"))
-        currentPasswordText = Password(label = io.kvision.i18n.tr("Current password"))
-        newPasswordText = Password(label = io.kvision.i18n.tr("New password"))
-        changeEmailButton = Button(io.kvision.i18n.tr("Change email")){
+        firstNameText = Text(label = tr("First name"))
+        lastNameText = Text(label = tr("Last name"))
+        currentPasswordText = Password(label = tr("Current password"))
+        newPasswordText = Password(label = tr("New password"))
+        changeEmailButton = Button(tr("Change email")){
             width = 180.px
             onClick {
                 change(Changing.EMAIL)
             }
         }
-        changePasswordButton = Button(io.kvision.i18n.tr("Change password")){
+        changePasswordButton = Button(tr("Change password")){
             width = 180.px
             onClick {
                 change(Changing.PASSWORD)
             }
         }
-        deleteAccountButton = Button(io.kvision.i18n.tr("Delete account")){
+        deleteAccountButton = Button(tr("Delete account")){
             marginTop = 50.px
             onClick {
                 deleteAccount()
             }
         }
-        saveButton = Button(io.kvision.i18n.tr("Save")) {
+        saveButton = Button(tr("Save")) {
             disabled = true
             onClick {
                 save()
@@ -97,14 +100,14 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
                     ConduitManager.showPreviousPage()
                 } else {
                     unsavedChangesConfirmWindow.show(
-                        io.kvision.i18n.tr("You have unsaved changes, are you sure you want to leave?"),
+                        tr("You have unsaved changes, are you sure you want to leave?"),
                         yesCallback = {ConduitManager.showPreviousPage()}
                     )
                 }
             }
         }
 
-        closeButton = Button(io.kvision.i18n.tr("Close")) {
+        closeButton = Button(tr("Close")) {
             marginTop = 50.px
             onClick {
                 closeChanges()
@@ -115,7 +118,7 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
             add(PasswordState::currentPassword, currentPasswordText, required = true)
             add(
                 PasswordState::newPassword, newPasswordText, required = true,
-                validatorMessage = { io.kvision.i18n.tr("Password does not meet criteria.") }) {
+                validatorMessage = { tr("Password does not meet criteria.") }) {
                 var result = false
                 if(it.getValue() != null) {
                     result = it.getValue()!!.length >= 8 &&
@@ -138,7 +141,7 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
             ){
                 gridColumnGap = 50
                 add(backButton)
-                add(Label(io.kvision.i18n.tr("My profile")) {
+                add(Label(tr("My profile")) {
                     fontSize = 28.px
                     width = 150.px
                 })
@@ -229,23 +232,23 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
                     if(!ConduitManager.updatePassword(passwordFormPanel[PasswordState::currentPassword]!!,
                             passwordFormPanel[PasswordState::newPassword]!!)
                     ) {
-                        currentPasswordText.validatorError = io.kvision.i18n.tr("Password is not correct.")
+                        currentPasswordText.validatorError = tr("Password is not correct.")
                         return@launch
                     }
                 }
                 if(profileFormPanel.validate() && passwordFormPanel.validate()) {
                     ConduitManager.updateProfile(profileFormPanel.getData())
-                    toastContainer.showToast(io.kvision.i18n.tr("Profile updated succesfully."), color = BsColor.SUCCESSBG)
+                    toastContainer.showToast(tr("Profile updated succesfully."), color = BsColor.SUCCESSBG)
                 }
             }catch (e: Exception) {
                 console.log(e)
-                toastContainer.showToast(io.kvision.i18n.tr("Something went wrong."), color = BsColor.DANGERBG)
+                toastContainer.showToast(tr("Something went wrong."), color = BsColor.DANGERBG)
             }
         }
     }
 
     private fun deleteAccount() {
-        Confirm.show("Are you sure?", "Do you want to delete your account?") {
+        Confirm.show(tr("Are you sure?"), tr("Do you want to delete your account?")) {
             AppScope.launch {
                 ConduitManager.deleteProfile()
             }

@@ -11,8 +11,11 @@ import io.kvision.form.FormPanel
 import io.kvision.form.formPanel
 import io.kvision.form.text.Text
 import io.kvision.form.time.DateTime
-import io.kvision.html.*
+import io.kvision.html.Autocomplete
+import io.kvision.html.Button
+import io.kvision.html.ButtonStyle
 import io.kvision.i18n.I18n
+import io.kvision.i18n.tr
 import io.kvision.modal.Confirm
 import io.kvision.panel.*
 import io.kvision.types.LocalDate
@@ -40,21 +43,21 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
         overflowY = Overflow.AUTO
         marginLeft = 40.px
 
-        inPersonEventButton = Button(io.kvision.i18n.tr("In Person")){
+        inPersonEventButton = Button(tr("In Person")){
             width = 100.px
             onClick {
                 eventType = EventType.InPerson
                 newStateOnChange()
             }
         }
-        hybridEventButton = Button(io.kvision.i18n.tr("Hybrid")){
+        hybridEventButton = Button(tr("Hybrid")){
             width = 100.px
             onClick {
                 eventType = EventType.Hybrid
                 newStateOnChange()
             }
         }
-        virtualEventButton = Button(io.kvision.i18n.tr("Virtual")){
+        virtualEventButton = Button(tr("Virtual")){
             width = 100.px
             onClick {
                 eventType = EventType.Virtual
@@ -73,12 +76,12 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
         virtualEventButton.onClick {
             disableTypeButton(virtualEventButton, hybridEventButton, inPersonEventButton)
         }
-        duplicateEventButton = Button(io.kvision.i18n.tr("Duplicate event")){
+        duplicateEventButton = Button(tr("Duplicate event")){
             width = 100.px
             onClick {
             }
         }
-        deleteEventButton = Button(io.kvision.i18n.tr("Delete event"), style = ButtonStyle.DANGER){
+        deleteEventButton = Button(tr("Delete event"), style = ButtonStyle.DANGER){
             width = 150.px
             marginTop = 20.px
             onClick {
@@ -86,7 +89,7 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
             }
         }
 
-        startDate = DateTime(label = io.kvision.i18n.tr("Start date"), format = "YYYY-MM-DD") {
+        startDate = DateTime(label = tr("Start date"), format = "YYYY-MM-DD") {
             input.input.autocomplete = Autocomplete.OFF
             width = 150.px
             minDate = LocalDate()
@@ -94,8 +97,8 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
             onChange {
                 if(getValue()?.getTime()!! > state.selectedEvent?.startDate?.getTime()!!) {
                     Confirm.show(
-                        caption = "Confirm changes",
-                        text = "You will lose all sessions on days you removed. Do you want to continue?",
+                        caption = tr("Confirm changes"),
+                        text = tr("You will lose all sessions on days you removed. Do you want to continue?"),
                         noCallback = { setValue(Date(state.selectedEvent.startDate.getTime()))} ,
                         yesCallback = {newStateOnChange()})
                 } else {
@@ -103,7 +106,7 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
                 }
             }
         }
-        endDate = DateTime(label = io.kvision.i18n.tr("End date"), format = "YYYY-MM-DD") {
+        endDate = DateTime(label = tr("End date"), format = "YYYY-MM-DD") {
             input.input.autocomplete = Autocomplete.OFF
             width = 150.px
             minDate = LocalDate()
@@ -111,8 +114,8 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
             onChange {
                 if(getValue()?.getTime()!! < state.selectedEvent?.endDate?.getTime()!!) {
                     Confirm.show(
-                        caption = "Confirm changes",
-                        text = "You will lose all sessions on days you removed. Do you want to continue?",
+                        caption = tr("Confirm changes"),
+                        text = tr("You will lose all sessions on days you removed. Do you want to continue?"),
                         noCallback = { setValue(Date(state.selectedEvent.endDate.getTime())) },
                         yesCallback = {newStateOnChange()})
                 } else {
@@ -120,7 +123,7 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
                 }
             }
         }
-        startTime = DateTime(label = io.kvision.i18n.tr("Start time"), format = "HH:mm").apply {
+        startTime = DateTime(label = tr("Start time"), format = "HH:mm").apply {
             input.input.autocomplete = Autocomplete.OFF
             width = 150.px
             showToday = false
@@ -128,7 +131,7 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
                 newStateOnChange()
             }
         }
-        endTime = DateTime(label = io.kvision.i18n.tr("End time"), format = "HH:mm") {
+        endTime = DateTime(label = tr("End time"), format = "HH:mm") {
             input.input.autocomplete = Autocomplete.OFF
             width = 150.px
             showToday = false
@@ -142,7 +145,7 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
             width = 100.perc
                 vPanel {
                     add(Event::name,
-                        Text(label = "${I18n.tr("Name")}") {
+                        Text(label = tr("Name")) {
                             width = 250.px
                             marginTop = 10.px
                             onChange {
@@ -150,7 +153,7 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
                             }
                         })
                     add(Event::location,
-                        Text(label = "${I18n.tr("Location")}") {
+                        Text(label = tr("Location")) {
                             width = 250.px
                             onChange {
                                 newStateOnChange()
@@ -219,7 +222,7 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
 
     override fun validate(): Boolean {
         if(!checkEventBeginBeforeEnd()){
-            ConduitManager.showErrorToast("Event start time and date has to be set before end.")
+            ConduitManager.showErrorToast(tr("Event start time and date has to be set before end."))
             return false
         }
         else return basicInfoFormPanel.validate()
@@ -277,10 +280,10 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
     }
 
     private fun deleteEvent() {
-        Confirm.show("Are you sure?", "Do you want to delete this event?") {
+        Confirm.show(tr("Are you sure?"), tr("Do you want to delete this event?")) {
             AppScope.launch {
                 ConduitManager.deleteEvent(state.selectedEvent?.id!!)
-                ConduitManager.showSuccessToast("Event successfully deleted")
+                ConduitManager.showSuccessToast(tr("Event successfully deleted"))
                 ConduitManager.showEventsPage()
             }
         }

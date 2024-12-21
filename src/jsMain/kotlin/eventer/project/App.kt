@@ -10,6 +10,8 @@ import eventer.project.web.ConduitManager
 import eventer.project.web.RoutingManager
 import eventer.project.web.View
 import io.kvision.*
+import io.kvision.i18n.DefaultI18nManager
+import io.kvision.i18n.I18n
 import io.kvision.panel.root
 import io.kvision.panel.simplePanel
 import io.kvision.routing.Routing
@@ -19,27 +21,23 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 
 val AppScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-const val DEBUG = true
-
-fun debug(s: String, color: LogType? = null) {
-    if (DEBUG) {
-        console.log("%c $s", when (color) {
-            null -> ""
-            LogType.EVENT -> "background: #FF0; color: #000000"
-            LogType.ROUTING -> "background: #09F; color: #000000"
-        })
-    }
-}
-
-enum class LogType {
-    EVENT,
-    ROUTING
-}
 
 class App : Application() {
+    init {
+        ConduitManager.initialize()
+        if (I18n.language !in listOf("en", "cz")) {
+            I18n.language = "en"
+        }
+    }
 
     override fun start(state: Map<String, Any>) {
-        ConduitManager.initialize()
+        I18n.manager =
+            DefaultI18nManager(
+                mapOf(
+                    "cz" to require("i18n/messages-cz.json"),
+                    "en" to require("i18n/messages-en.json")
+                )
+            )
 
         root("eventer" ) {
             simplePanel().bind(ConduitManager.agendaStore) { state ->

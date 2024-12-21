@@ -12,8 +12,12 @@ import io.kvision.dropdown.Direction
 import io.kvision.dropdown.dropDown
 import io.kvision.form.text.Text
 import io.kvision.form.text.TextInput
-import io.kvision.html.*
+import io.kvision.html.Autocomplete
+import io.kvision.html.Button
+import io.kvision.html.InputType
+import io.kvision.html.Label
 import io.kvision.i18n.I18n
+import io.kvision.i18n.tr
 import io.kvision.panel.*
 import io.kvision.state.ObservableList
 import io.kvision.state.bind
@@ -41,14 +45,14 @@ class EventsPanel(state: AgendaAppState) : SimplePanel() {
 
         if(state.events != null ) filteredEvents.syncWithList(state.events)
 
-        newEventButton = AgendaPrimaryButton(io.kvision.i18n.tr("Create new event")) {
+        newEventButton = AgendaPrimaryButton(tr("Create new event")) {
             onClick {
                 RoutingManager.redirect(View.NEW_EVENT)
             }
         }
         gridPanel (templateColumns = "1fr 1fr 1fr", alignItems = AlignItems.CENTER, justifyItems = JustifyItems.CENTER)  {
             gridColumnGap = 300
-            add(Label(io.kvision.i18n.tr("Events")) {
+            add(Label(tr("Events")) {
                 fontSize = 28.px
             }, 2 ,1)
             add(newEventButton, 3, 1)
@@ -67,14 +71,14 @@ class EventsPanel(state: AgendaAppState) : SimplePanel() {
             spacing = 5
         ) {
             paddingTop = 20.px
-//            add(dropDown("My events", listOf(io.kvision.i18n.tr("Invited events") to "#/basic"), forDropDown = true) {
+//            add(dropDown("My events", listOf(tr("Invited events") to "#/basic"), forDropDown = true) {
 //                paddingRight = 30.px
 //                paddingBottom = 15.px
 //                direction = Direction.DROPDOWN
 //            })
             add(Text(InputType.SEARCH) {
                 input.autocomplete = Autocomplete.OFF
-                placeholder = "${I18n.tr("Search:")}"
+                placeholder = tr("Search:")
                 width = 50.perc
                 setEventListener<TextInput> {
                     input = {
@@ -103,10 +107,10 @@ class EventsPanel(state: AgendaAppState) : SimplePanel() {
             overflowY = Overflow.SCROLL
             marginTop = 20.px
 
-            addHeaderCell(HeaderCell(I18n.tr("Title")))
-            addHeaderCell(HeaderCell(I18n.tr("Status")))
-            addHeaderCell(HeaderCell(I18n.tr("Start date")))
-            addHeaderCell(HeaderCell(I18n.tr("End date")))
+            addHeaderCell(HeaderCell(tr("Title")))
+            addHeaderCell(HeaderCell(tr("Status")))
+            addHeaderCell(HeaderCell(tr("Start date")))
+            addHeaderCell(HeaderCell(tr("End date")))
             addHeaderCell(HeaderCell(""))
 
             bind(filteredEvents) { events ->

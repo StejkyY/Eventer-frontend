@@ -24,7 +24,7 @@ import web.timers.Interval
 import web.timers.clearInterval
 import web.timers.setInterval
 
-class AddToCalendarWindow : Modal(caption = "Add sessions to calendar") {
+class AddToCalendarWindow : Modal(caption = tr("Add sessions to calendar")) {
     private val buttonGoogleCalendarLogin: Button
     private val buttonOutlookLogin: Button
     private var buttonAddToGoogleCalendar: Button
@@ -35,10 +35,10 @@ class AddToCalendarWindow : Modal(caption = "Add sessions to calendar") {
     private var statusLoggedMicrosoft: Button
 
     init {
-        statusLoggedGoogle = Button("Synced", style = ButtonStyle.SUCCESS) {
+        statusLoggedGoogle = Button(tr("Synced"), style = ButtonStyle.SUCCESS) {
             disabled = true
         }
-        statusLoggedMicrosoft = Button("Synced", style = ButtonStyle.SUCCESS) {
+        statusLoggedMicrosoft = Button(tr("Synced"), style = ButtonStyle.SUCCESS) {
             disabled = true
         }
         buttonAddToGoogleCalendar = AgendaPrimaryButton(tr("Add sessions")) {
@@ -82,7 +82,7 @@ class AddToCalendarWindow : Modal(caption = "Add sessions to calendar") {
             }
         }
 
-        buttonUnlinkGoogleAccount = Button(io.kvision.i18n.tr("Unlink"), style = ButtonStyle.DANGER) {
+        buttonUnlinkGoogleAccount = Button(tr("Unlink"), style = ButtonStyle.DANGER) {
             marginLeft = 5.px
             onClick {
                 AppScope.launch {
@@ -90,7 +90,7 @@ class AddToCalendarWindow : Modal(caption = "Add sessions to calendar") {
                 }
             }
         }
-        buttonUnlinkMicrosoftAccount = Button(io.kvision.i18n.tr("Unlink"), style = ButtonStyle.DANGER) {
+        buttonUnlinkMicrosoftAccount = Button(tr("Unlink"), style = ButtonStyle.DANGER) {
             marginLeft = 5.px
             onClick {
                 AppScope.launch {
@@ -102,7 +102,7 @@ class AddToCalendarWindow : Modal(caption = "Add sessions to calendar") {
         vPanel().bind(ConduitManager.agendaStore) { state ->
             hPanel() {
                 alignItems = AlignItems.CENTER
-                add(Label("Google Calendar:") {
+                add(Label(tr("Google Calendar:")) {
                     width = 150.px
                 })
                 if(state.googleAccountSynced) {
@@ -116,7 +116,7 @@ class AddToCalendarWindow : Modal(caption = "Add sessions to calendar") {
             hPanel() {
                 alignItems = AlignItems.CENTER
                 marginTop = 10.px
-                add(Label("Microsoft Outlook:") {
+                add(Label(tr("Microsoft Outlook:")) {
                     width = 150.px
                 })
                 if(state.microsoftAccountSynced) {

@@ -3,13 +3,15 @@ package eventer.project.components
 import io.kvision.core.*
 import io.kvision.html.Button
 import io.kvision.html.ButtonStyle
+import io.kvision.i18n.I18n
 import io.kvision.modal.Confirm
 import io.kvision.utils.px
 
 class UnsavedChangesConfirm(): Confirm() {
 
     fun show(text: String, yesCallback: (() -> Unit)) {
-        show(io.kvision.i18n.tr("Unsaved changes"),
+        show(
+            io.kvision.i18n.tr("Unsaved changes"),
             text = text,
             yesTitle = io.kvision.i18n.tr("Leave"),
             noTitle = io.kvision.i18n.tr("Stay"),

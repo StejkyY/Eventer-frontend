@@ -13,6 +13,7 @@ import eventer.project.state.agendaAppReducer
 import eventer.project.web.RoutingManager.redirect
 import io.kvision.core.BsColor
 import io.kvision.i18n.I18n
+import io.kvision.i18n.tr
 import io.kvision.redux.createTypedReduxStore
 import io.kvision.rest.*
 import io.kvision.toast.ToastContainer
@@ -57,8 +58,8 @@ object ConduitManager {
     val toastContainer = ToastContainer(ToastContainerPosition.TOPRIGHT)
 
     private suspend fun genericRequestExceptionHandler(e: RemoteRequestException) {
-        if(e.code.toInt() == 0) showErrorToast("Error with connection to the server. Please try again later.")
-        else showErrorToast(I18n.tr(e.response?.text()?.await()!!))
+        if(e.code.toInt() == 0) showErrorToast(tr("Error with connection to the server. Please try again later."))
+        else showErrorToast(tr(e.response?.text()?.await()!!))
     }
 
 //    val events: ObservableList<Event> = observableListOf()

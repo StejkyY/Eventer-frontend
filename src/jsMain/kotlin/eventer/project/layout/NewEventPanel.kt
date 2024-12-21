@@ -11,11 +11,14 @@ import eventer.project.web.ConduitManager
 import eventer.project.web.RoutingManager
 import eventer.project.web.View
 import io.kvision.core.*
+import io.kvision.i18n.tr
 import io.kvision.form.FormPanel
 import io.kvision.form.formPanel
 import io.kvision.form.text.Text
 import io.kvision.form.time.DateTime
-import io.kvision.html.*
+import io.kvision.html.Autocomplete
+import io.kvision.html.Button
+import io.kvision.html.Label
 import io.kvision.i18n.I18n
 import io.kvision.modal.Alert
 import io.kvision.panel.*
@@ -43,19 +46,19 @@ class NewEventPanel(val state: AgendaAppState) : FormPanel<Event>() {
     private val newEventFormPanel: FormPanel<Event>
 
     init {
-        createEventButton = Button(io.kvision.i18n.tr("Create")){
+        createEventButton = Button(tr("Create")){
             width = 100.px
             onClick {
                 saveEvent()
             }
         }
-        inPersonEventButton = Button(io.kvision.i18n.tr("In Person")){
+        inPersonEventButton = Button(tr("In Person")){
             width = 100.px
         }
-        hybridEventButton = Button(io.kvision.i18n.tr("Hybrid")){
+        hybridEventButton = Button(tr("Hybrid")){
             width = 100.px
         }
-        virtualEventButton = Button(io.kvision.i18n.tr("Virtual")){
+        virtualEventButton = Button(tr("Virtual")){
             width = 100.px
         }
 
@@ -78,21 +81,21 @@ class NewEventPanel(val state: AgendaAppState) : FormPanel<Event>() {
             }
         }
 
-        startDate = DateTime(format = "YYYY-MM-DD", label = io.kvision.i18n.tr("Start date")).apply {
+        startDate = DateTime(format = "YYYY-MM-DD", label = tr("Start date")).apply {
             input.input.autocomplete = Autocomplete.OFF
-            placeholder = io.kvision.i18n.tr("Enter date")
+            placeholder = tr("Enter date")
             minDate = LocalDate()
         }
-        endDate = DateTime(format = "YYYY-MM-DD", label = io.kvision.i18n.tr("End date")).apply {
+        endDate = DateTime(format = "YYYY-MM-DD", label = tr("End date")).apply {
             input.input.autocomplete = Autocomplete.OFF
-            placeholder = io.kvision.i18n.tr("Enter date")
+            placeholder = tr("Enter date")
             minDate = LocalDate()
         }
-        startTime = DateTime(format = "HH:mm", label = io.kvision.i18n.tr("Start time")).apply {
+        startTime = DateTime(format = "HH:mm", label = tr("Start time")).apply {
             input.input.autocomplete = Autocomplete.OFF
             showToday = false
         }
-        endTime = DateTime(format = "HH:mm", label = io.kvision.i18n.tr("End time")).apply {
+        endTime = DateTime(format = "HH:mm", label = tr("End time")).apply {
             input.input.autocomplete = Autocomplete.OFF
             showToday = false
         }
@@ -108,7 +111,7 @@ class NewEventPanel(val state: AgendaAppState) : FormPanel<Event>() {
 
             gridPanel (templateColumns = "1fr 1fr 1fr", alignItems = AlignItems.CENTER, justifyItems = JustifyItems.CENTER) {
                 add(backButton, 1, 1)
-                add(Label(io.kvision.i18n.tr("Create new event")) {
+                add(Label(tr("Create new event")) {
                     fontSize = 28.px
                     width = 250.px
                 }, 2, 1)
@@ -123,7 +126,7 @@ class NewEventPanel(val state: AgendaAppState) : FormPanel<Event>() {
             }
 
             add(Event::name,
-                Text(label = "${I18n.tr("Event name")}") {
+                Text(label = tr("Event name")) {
                     paddingTop = 15.px
                     autocomplete = Autocomplete.OFF
                 }, required = true)
@@ -140,7 +143,7 @@ class NewEventPanel(val state: AgendaAppState) : FormPanel<Event>() {
 
             vPanel {
                 alignItems = AlignItems.CENTER
-                add(Event::location, Text(label = "${I18n.tr("Event location")}") {
+                add(Event::location, Text(label = tr("Event location")) {
                     autocomplete = Autocomplete.OFF
                 }, required = true)
                 add(
@@ -174,7 +177,7 @@ class NewEventPanel(val state: AgendaAppState) : FormPanel<Event>() {
                         timeResult
                     }
                 }
-                validatorMessage = { io.kvision.i18n.tr("Event start has to be set before the event end") }
+                validatorMessage = { tr("Event start has to be set before the event end") }
                 add(createEventButton)
             }
         }

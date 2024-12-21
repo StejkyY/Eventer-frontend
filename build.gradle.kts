@@ -62,6 +62,7 @@ kotlin {
         implementation("io.kvision:kvision-react:$kvisionVersion")
         implementation("io.kvision:kvision-state:$kvisionVersion")
         implementation("io.kvision:kvision-redux-kotlin:$kvisionVersion")
+        implementation("io.kvision:kvision-i18n:$kvisionVersion")
         api("io.kvision:kvision-server-ktor:$kvisionVersion")
     }
     sourceSets["jsTest"].dependencies {

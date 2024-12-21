@@ -8,6 +8,7 @@ import eventer.project.web.ConduitManager.MICROSOFT_ACCESS_TOKEN
 import eventer.project.web.ConduitManager.agendaStore
 import eventer.project.web.ConduitManager.getLocalStorageToken
 import io.kvision.i18n.I18n
+import io.kvision.i18n.tr
 import io.kvision.modal.Alert
 import io.kvision.rest.HTTP_UNAUTHORIZED
 import kotlinx.browser.window
@@ -25,8 +26,9 @@ object ExternalCalendarSessionsManager {
 
         if (!isAccessTokenValid(provider)) {
             if(!ConduitManager.getRefreshedAccessToken(provider)) {
-                Alert.show(text = I18n.tr("Problem with access to the service occured," +
-                        " please log in the service again."))
+                Alert.show(text = tr("Problem with access to the service occured," +
+                        " please log in the service again.")
+                )
                 return false
             }
         }
@@ -120,12 +122,20 @@ object ExternalCalendarSessionsManager {
     }
 
     private suspend fun isAccessTokenValid(provider: Provider): Boolean {
-        val testUrl = if (provider == Provider.GOOGLE) "https://www.googleapis.com/oauth2/v3/tokeninfo"
-                            else "https://graph.microsoft.com/v1.0/me"
+        val testUrl: String
+        if (provider == Provider.GOOGLE){
+            testUrl = "https://www.googleapis.com/oauth2/v3/tokeninfo"
+        } else {
+            testUrl = "https://graph.microsoft.com/v1.0/me"
+        }
 
         val headers = Headers()
-        val token = if (provider == Provider.GOOGLE) getLocalStorageToken(GOOGLE_ACCESS_TOKEN)
-            else getLocalStorageToken(MICROSOFT_ACCESS_TOKEN)
+        val token: String?
+        if (provider == Provider.GOOGLE){
+            token = getLocalStorageToken(GOOGLE_ACCESS_TOKEN)
+        } else {
+            token = getLocalStorageToken(MICROSOFT_ACCESS_TOKEN)
+        }
 
         headers.append("Authorization", "Bearer $token")
 

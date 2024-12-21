@@ -11,7 +11,10 @@ import eventer.project.layout.windows.AddToCalendarWindow
 import eventer.project.layout.windows.AgendaExportWindow
 import eventer.project.layout.windows.EventSessionWindow
 import io.kvision.core.*
-import io.kvision.html.*
+import io.kvision.html.Button
+import io.kvision.html.Label
+import io.kvision.i18n.I18n
+import io.kvision.i18n.tr
 import io.kvision.panel.*
 import io.kvision.state.*
 import io.kvision.types.LocalTime
@@ -54,7 +57,7 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         height = 100.perc
 
         if(mode == CalendarMode.EDIT) {
-            createNewSessionButton = AgendaPrimaryButton(io.kvision.i18n.tr("Create new session")) {
+            createNewSessionButton = AgendaPrimaryButton(tr("Create new session")) {
                 marginLeft = 100.px
                 onClick {
                     createSession()
@@ -62,21 +65,21 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
             }
         }
 
-        buttonExport = AgendaPrimaryButton(io.kvision.i18n.tr("Export")) {
+        buttonExport = AgendaPrimaryButton(tr("Export")) {
             onClick {
                 if(!changesMade) {
                     exportModalWindow.open(formattedEventSessionsMap.value)
                 } else {
-                    ConduitManager.showErrorToast("Changes need to be saved first.")
+                    ConduitManager.showErrorToast(tr("Changes need to be saved first."))
                 }
             }
         }
-        buttonAddToCalendar = AgendaPrimaryButton(io.kvision.i18n.tr("Add to calendar")) {
+        buttonAddToCalendar = AgendaPrimaryButton(tr("Add to calendar")) {
             onClick {
                 if(!changesMade) {
                     addToCalendarModalWindow.open()
                 } else {
-                    ConduitManager.showErrorToast("Changes need to be saved first.")
+                    ConduitManager.showErrorToast(tr("Changes need to be saved first."))
                 }
             }
         }
@@ -184,7 +187,7 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         dayTextButtonList.clear()
 
         for(i: Int in 0 until daysCount) {
-            val dayButton = AgendaTextButton(io.kvision.i18n.tr("Day") + " " + (i + 1)) {
+            val dayButton = AgendaTextButton(tr("Day") + " " + (i + 1)) {
                 onClick {
                     dayTextButtonList[selectedDayButtonIndex].enable()
                     disable()
@@ -437,7 +440,7 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
             } else {
                 enableTooltip(
                     TooltipOptions(
-                        title = session.description ?: "No description available",
+                        title = session.description ?: tr("No description available"),
                         placement = Placement.AUTO,
                         triggers = listOf(Trigger.HOVER)
                     )

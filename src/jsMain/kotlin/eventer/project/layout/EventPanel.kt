@@ -10,7 +10,10 @@ import eventer.project.web.ConduitManager
 import eventer.project.web.RoutingManager
 import eventer.project.web.View
 import io.kvision.core.*
-import io.kvision.html.*
+import io.kvision.html.Button
+import io.kvision.html.Label
+import io.kvision.i18n.I18n
+import io.kvision.i18n.tr
 import io.kvision.panel.*
 import io.kvision.utils.perc
 import io.kvision.utils.px
@@ -28,7 +31,7 @@ class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : S
     private val backButton: Button
 
     init {
-        saveButton = AgendaPrimaryButton(io.kvision.i18n.tr("Save changes")) {
+        saveButton = AgendaPrimaryButton(tr("Save changes")) {
             disabled = true
             onClick {
                 save()
@@ -40,48 +43,54 @@ class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : S
                 if(saveButton.disabled) {
                     RoutingManager.redirect(View.EVENTS)
                 } else {
-                    unsavedChangesConfirmWindow.show(io.kvision.i18n.tr("You have unsaved changes, are you sure you want to leave?"),
+                    unsavedChangesConfirmWindow.show(tr("You have unsaved changes, are you sure you want to leave?"),
                         yesCallback = { RoutingManager.redirect(View.EVENTS)})
                 }
             }
         }
 
-        eventPreviewButton = AgendaPrimaryButton(io.kvision.i18n.tr("Preview")) {
+        eventPreviewButton = AgendaPrimaryButton(tr("Preview")) {
             onClick {
                 if(!childPanel.changesMade) {
                     RoutingManager.redirect("/event/${state.selectedEvent?.id}${View.EVENT_PREVIEW.url}")
                 } else {
-                    ConduitManager.showErrorToast("Changes need to be saved first.")
+                    ConduitManager.showErrorToast(tr("Changes need to be saved first."))
                 }
             }
         }
 
         childPanel.setSaveButton(saveButton)
 
-        buttonBasicInfo = MenuTextButton(io.kvision.i18n.tr("Basic info"))
-        buttonDescription = MenuTextButton(io.kvision.i18n.tr("Description"))
-        buttonAgenda = MenuTextButton(io.kvision.i18n.tr("Agenda"))
+        buttonBasicInfo = MenuTextButton(tr("Basic info"))
+        buttonDescription = MenuTextButton(tr("Description"))
+        buttonAgenda = MenuTextButton(tr("Agenda"))
 
         disableSelectedButton()
         buttonBasicInfo.onClick {
             if(!childPanel.changesMade) {
                 goToBasicInfoPanel()
             }  else {
-                unsavedChangesConfirmWindow.show(io.kvision.i18n.tr("You have unsaved changes, do you want to leave the page?"), yesCallback = { goToBasicInfoPanel() })
+                unsavedChangesConfirmWindow.show(
+                    tr("You have unsaved changes, do you want to leave the page?"),
+                    yesCallback = { goToBasicInfoPanel() })
             }
         }
         buttonDescription.onClick {
             if(!childPanel.changesMade) {
                 goToDescriptionPanel()
             } else {
-                unsavedChangesConfirmWindow.show(io.kvision.i18n.tr("You have unsaved changes, do you want to leave the page?"), yesCallback = { goToDescriptionPanel() })
+                unsavedChangesConfirmWindow.show(
+                    tr("You have unsaved changes, do you want to leave the page?"),
+                    yesCallback = { goToDescriptionPanel() })
             }
         }
         buttonAgenda.onClick {
             if (!childPanel.changesMade) {
                 goToAgendaPanel()
             } else {
-                unsavedChangesConfirmWindow.show(io.kvision.i18n.tr("You have unsaved changes, do you want to leave the page?"), yesCallback = { goToAgendaPanel() })
+                unsavedChangesConfirmWindow.show(
+                    tr("You have unsaved changes, do you want to leave the page?"),
+                    yesCallback = { goToAgendaPanel() })
             }
         }
 
@@ -168,7 +177,7 @@ class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : S
         AppScope.launch {
             if(childPanel.validate() && childPanel.save()) {
                 saveButton.disabled = true
-                ConduitManager.showSuccessToast(io.kvision.i18n.tr("Event changes were saved succesfully."))
+                ConduitManager.showSuccessToast(tr("Event changes were saved succesfully."))
             }
         }
     }
