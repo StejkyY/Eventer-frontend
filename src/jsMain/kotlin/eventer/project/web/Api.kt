@@ -37,7 +37,7 @@ import kotlin.js.json
 
 object Api {
 
-    const val API_URL = "http://localhost:8080"
+    val API_URL: String = js("process.env.API_URL") as String? ?: "http://localhost:8080"
     private val restClient = RestClient()
 
     private fun authRequest(): List<StringPair> {
