@@ -39,8 +39,6 @@ object Api {
 
     val processEnv = js("PROCESS_ENV")
     val API_URL = processEnv.API_URL as String? ?: "http://localhost:8080"
-//    val API_URL: String = js("process.env.API_URL") as String? ?: "http://localhost:8080"
-//    val API_URL: String = "http://localhost:8080"
     private val restClient = RestClient()
 
     private fun authRequest(): List<StringPair> {

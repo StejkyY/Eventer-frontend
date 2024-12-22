@@ -72,13 +72,13 @@ class AddToCalendarWindow : Modal(caption = tr("Add sessions to calendar")) {
         buttonGoogleCalendarLogin = AgendaPrimaryButton(tr("Login")) {
             marginLeft = 5.px
             onClick {
-                googleCalendarAuthorize()
+                ExternalCalendarSessionsManager.googleCalendarAuthorize()
             }
         }
         buttonOutlookLogin = AgendaPrimaryButton(tr("Login")) {
             marginLeft = 5.px
             onClick {
-                microsoftOutlookAuthorize()
+                ExternalCalendarSessionsManager.microsoftOutlookAuthorize()
             }
         }
 
@@ -144,46 +144,6 @@ class AddToCalendarWindow : Modal(caption = tr("Add sessions to calendar")) {
             !ConduitManager.agendaStore.getState().microsoftAccountSynced) {
             ConduitManager.agendaStore.dispatch(AgendaAppAction.googleAccountLinked)
         }
-    }
-
-    private var messageListener: ((dynamic) -> Unit)? = null
-
-    private fun authorizeWindow(authURL: String, provider: Provider) {
-        val windowWidth = 600
-        val windowHeight = 700
-
-        val left = (window.screenX + (window.innerWidth - windowWidth) / 2)
-        val top = (window.screenY + (window.innerHeight - windowHeight) / 2)
-
-        window.open(authURL, "_blank", "width=$windowWidth,height=$windowHeight,top=$top,left=$left")
-
-        messageListener?.let { window.removeEventListener("message", it) }
-
-        messageListener = { event ->
-            val eventData = event.unsafeCast<MessageEvent>().data
-            val token = eventData as? String
-            if (!token.isNullOrEmpty()) {
-                AppScope.launch {
-                    if (provider == Provider.GOOGLE) {
-                        ConduitManager.googleAccountSynced(token)
-                    } else {
-                        ConduitManager.microsoftAccountSynced(token)
-                    }
-                }
-            }
-        }
-
-        window.addEventListener("message", messageListener)
-    }
-
-    private fun googleCalendarAuthorize() {
-        val authURL = "http://localhost:8080/oauth/google/login?redirectUrl=http://localhost:3000/google-oauth-logged"
-        authorizeWindow(authURL, Provider.GOOGLE)
-    }
-
-    private fun microsoftOutlookAuthorize() {
-        val authURL = "http://localhost:8080/oauth/microsoft/login?redirectUrl=http://localhost:3000/microsoft-oauth-logged"
-        authorizeWindow(authURL, Provider.MICROSOFT)
     }
 
 }

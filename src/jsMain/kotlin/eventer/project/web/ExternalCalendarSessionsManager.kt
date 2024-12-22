@@ -1,5 +1,6 @@
 package eventer.project.web
 
+import eventer.project.AppScope
 import eventer.project.components.addMinutesToJSDate
 import eventer.project.components.addTimeToJSDate
 import eventer.project.models.Session
@@ -13,13 +14,55 @@ import io.kvision.modal.Alert
 import io.kvision.rest.HTTP_UNAUTHORIZED
 import kotlinx.browser.window
 import kotlinx.coroutines.await
+import kotlinx.coroutines.launch
+import org.w3c.dom.MessageEvent
 import org.w3c.fetch.RequestInit
 import web.http.Headers
 import kotlin.js.json
 
-class ExternalCalendarAccessException(message: String?) : Throwable(message)
-
 object ExternalCalendarSessionsManager {
+
+    private var messageListener: ((dynamic) -> Unit)? = null
+
+    private fun authorizeWindow(authURL: String, provider: Provider) {
+        val windowWidth = 600
+        val windowHeight = 700
+
+        val left = (window.screenX + (window.innerWidth - windowWidth) / 2)
+        val top = (window.screenY + (window.innerHeight - windowHeight) / 2)
+
+        window.open(authURL, "_blank", "width=$windowWidth,height=$windowHeight,top=$top,left=$left")
+
+        messageListener?.let { window.removeEventListener("message", it) }
+
+        messageListener = { event ->
+            val eventData = event.unsafeCast<MessageEvent>().data
+            val token = eventData as? String
+            if (!token.isNullOrEmpty()) {
+                AppScope.launch {
+                    if (provider == Provider.GOOGLE) {
+                        ConduitManager.googleAccountSynced(token)
+                    } else {
+                        ConduitManager.microsoftAccountSynced(token)
+                    }
+                }
+            }
+        }
+
+        window.addEventListener("message", messageListener)
+    }
+
+    fun googleCalendarAuthorize() {
+
+        val authURL = "${Api.API_URL}/oauth/google/login?redirectUrl=http://localhost:3000/google-oauth-logged"
+        authorizeWindow(authURL, Provider.GOOGLE)
+    }
+
+    fun microsoftOutlookAuthorize() {
+        val authURL = "${Api.API_URL}/oauth/microsoft/login?redirectUrl=http://localhost:3000/microsoft-oauth-logged"
+        authorizeWindow(authURL, Provider.MICROSOFT)
+    }
+
     suspend fun sendEventSessionsToExternalCalendar(provider: Provider): Boolean {
         val currentSessions = agendaStore.store.state.selectedEventSessions
         val eventName = agendaStore.store.state.selectedEvent?.name!!
