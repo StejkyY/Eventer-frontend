@@ -19,7 +19,7 @@ repositories {
 // Versions
 val kotlinVersion: String by System.getProperties()
 val kvisionVersion: String by System.getProperties()
-
+val dotenvVersion: String by System.getProperties()
 
 kotlin {
     js(IR) {
@@ -32,14 +32,6 @@ kotlin {
                 devServer = KotlinWebpackConfig.DevServer(
                     open = false,
                     port = 3000,
-//                    proxy = mutableMapOf(
-//                        "/kv/*" to "http://localhost:8080",
-//                        "/kvsse/*" to "http://localhost:8080",
-//                        "/oauth/*" to "http://localhost:8080",
-//                        "/auth/*" to "http://localhost:8080",
-//                        "/logout" to "http://localhost:8080",
-//                        "/kvws/*" to mapOf("target" to "ws://localhost:8080", "ws" to true)
-//                    ),
                     static = mutableListOf("${layout.buildDirectory.asFile.get()}/processedResources/js/main")
                 )
             })
@@ -64,6 +56,7 @@ kotlin {
         implementation("io.kvision:kvision-redux-kotlin:$kvisionVersion")
         implementation("io.kvision:kvision-i18n:$kvisionVersion")
         api("io.kvision:kvision-server-ktor:$kvisionVersion")
+        implementation(npm("dotenv", dotenvVersion))
     }
     sourceSets["jsTest"].dependencies {
         implementation(kotlin("test-js"))
