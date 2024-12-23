@@ -61,13 +61,17 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
         padding = 20.px
         border = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
 
-        emailText = Text(label = tr("E-mail")) {
+        emailText = Text(label = tr("E-mail"), maxlength = 50) {
             disabled = true
         }
-        firstNameText = Text(label = tr("First name"))
-        lastNameText = Text(label = tr("Last name"))
-        currentPasswordText = Password(label = tr("Current password"))
-        newPasswordText = Password(label = tr("New password"))
+        firstNameText = Text(label = tr("First name"), maxlength = 50)
+        lastNameText = Text(label = tr("Last name"), maxlength = 50)
+        currentPasswordText = Password(label = tr("Current password")) {
+            maxlength = 64
+        }
+        newPasswordText = Password(label = tr("New password")) {
+            maxlength = 64
+        }
         changeEmailButton = Button(tr("Change email")){
             width = 180.px
             onClick {

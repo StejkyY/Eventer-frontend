@@ -126,7 +126,7 @@ class NewEventPanel(val state: AgendaAppState) : FormPanel<Event>() {
             }
 
             add(Event::name,
-                Text(label = tr("Event name")) {
+                Text(label = tr("Event name"), maxlength = 100) {
                     paddingTop = 15.px
                     autocomplete = Autocomplete.OFF
                 }, required = true)
@@ -143,7 +143,9 @@ class NewEventPanel(val state: AgendaAppState) : FormPanel<Event>() {
 
             vPanel {
                 alignItems = AlignItems.CENTER
-                add(Event::location, Text(label = tr("Event location")) {
+                add(
+                    Event::location,
+                    Text(label = tr("Event location"), maxlength = 100) {
                     autocomplete = Autocomplete.OFF
                 }, required = true)
                 add(

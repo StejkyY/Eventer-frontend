@@ -145,7 +145,7 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
             width = 100.perc
                 vPanel {
                     add(Event::name,
-                        Text(label = tr("Name")) {
+                        Text(label = tr("Name"), maxlength = 100) {
                             width = 250.px
                             marginTop = 10.px
                             onChange {
@@ -153,7 +153,7 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
                             }
                         })
                     add(Event::location,
-                        Text(label = tr("Location")) {
+                        Text(label = tr("Location"), maxlength = 100) {
                             width = 250.px
                             onChange {
                                 newStateOnChange()

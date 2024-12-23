@@ -54,20 +54,24 @@ class RegisterPanel: SimplePanel() {
             }
 
             vPanel (spacing = 10) {
-                add(User::firstName, Text(label = tr("First name")), required = true)
-                add(User::lastName, Text(label = tr("Last name")), required = true)
-                add(User::email, Text(label = tr("E-mail")), required = true,
+                add(User::firstName, Text(label = tr("First name"), maxlength = 50), required = true)
+                add(User::lastName, Text(label = tr("Last name"), maxlength = 50), required = true)
+                add(User::email, Text(label = tr("E-mail"), maxlength = 50), required = true,
                     validatorMessage = { gettext("E-mail address does not have correct syntax.") }) {
                     it.getValue()?.matches(Regex("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) ?: false
                 }
-                add(User::password, Password(label = tr("Password")), required = true,
+                add(User::password,
+                    Password(label = tr("Password")) { maxlength = 64 },
+                    required = true,
                     validatorMessage = { tr("Password does not meet criteria.") }) {
                     if(it.getValue() != null) {
                         it.getValue()!!.length >= 8 && it.getValue()?.any { it.isUpperCase() }!! && it.getValue()?.any { it.isDigit() }!!
                     }
                     true
                 }
-                add(User::password2, Password(label = tr("Password again")), required = true,
+                add(User::password2,
+                    Password(label = tr("Password again")) { maxlength = 64 },
+                    required = true,
                     validatorMessage = { gettext("Password does not meet criteria.") }) {
                     if (it.getValue() != null) {
                         it.getValue()!!.length >= 8 && it.getValue()?.any { it.isUpperCase() }!! && it.getValue()

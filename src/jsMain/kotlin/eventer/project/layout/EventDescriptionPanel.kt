@@ -18,7 +18,7 @@ class EventDescriptionPanel(val state: AgendaAppState) : EventChildPanel() {
     init {
         richText = RichText() {
             marginTop = 10.px
-            maxlength = 500
+            maxlength = 2000
             inputHeight = 490.px
         }
         descriptionFormPanel = formPanel {

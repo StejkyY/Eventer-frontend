@@ -101,7 +101,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
             options = list.map { it.id.toString() to it.name!! }
         }
 
-        newTypeInputText = Text(label = tr("New type")) {
+        newTypeInputText = Text(label = tr("New type"), maxlength = 50) {
             autocomplete = Autocomplete.OFF
         }
 
@@ -148,7 +148,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
             options = list.map { it.id.toString() to it.name!! }
         }
 
-        newLocationInputText = Text(label = tr("New location")) {
+        newLocationInputText = Text(label = tr("New location"), maxlength = 50) {
             autocomplete = Autocomplete.OFF
         }
 
@@ -181,7 +181,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
 
         sessionPanel = formPanel  {
             alignItems = AlignItems.CENTER
-            add(Session::name, Text(label = "${tr("Name")}:") {
+            add(Session::name, Text(label = "${tr("Name")}:", maxlength = 100) {
                 autocomplete = Autocomplete.OFF
             }, required = true)
             add(
@@ -210,6 +210,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
             }
             add(Session::description, TextArea(label = tr("Description"), rows = 3)  {
                 paddingTop = 5.px
+                maxlength = 500
             })
             flexPanel(
                 FlexDirection.ROW, FlexWrap.WRAP, JustifyContent.SPACEBETWEEN, AlignItems.CENTER,
