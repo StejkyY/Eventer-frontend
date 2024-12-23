@@ -23,6 +23,7 @@ import kotlin.js.json
 object ExternalCalendarSessionsManager {
 
     private var messageListener: ((dynamic) -> Unit)? = null
+    val FRONTEND_URL = Api.processEnv.FRONTEND_URL as String? ?: "http://localhost:3000"
 
     private fun authorizeWindow(authURL: String, provider: Provider) {
         val windowWidth = 600
@@ -53,13 +54,12 @@ object ExternalCalendarSessionsManager {
     }
 
     fun googleCalendarAuthorize() {
-
-        val authURL = "${Api.API_URL}/oauth/google/login?redirectUrl=http://localhost:3000/google-oauth-logged"
+        val authURL = "${Api.API_URL}/oauth/google/login?redirectUrl=${FRONTEND_URL}/google-oauth-logged"
         authorizeWindow(authURL, Provider.GOOGLE)
     }
 
     fun microsoftOutlookAuthorize() {
-        val authURL = "${Api.API_URL}/oauth/microsoft/login?redirectUrl=http://localhost:3000/microsoft-oauth-logged"
+        val authURL = "${Api.API_URL}/oauth/microsoft/login?redirectUrl=${FRONTEND_URL}/microsoft-oauth-logged"
         authorizeWindow(authURL, Provider.MICROSOFT)
     }
 
