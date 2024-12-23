@@ -1,6 +1,7 @@
 package eventer.project
 
 import eventer.project.models.UserCredentials
+import eventer.project.state.AgendaAppAction
 import eventer.project.web.ConduitManager
 import eventer.project.web.RoutingManager
 import eventer.project.web.View
@@ -35,9 +36,12 @@ object Security {
     suspend fun login() {
         var loggedIn = false
         RoutingManager.redirect(View.LOGIN)
-        while(!loggedIn) {
+        loginDeferred = CompletableDeferred()
+
+        while (!loggedIn) {
             try {
-                if(!ConduitManager.userLogin(loginDeferred.await())) {
+                val credentials = loginDeferred.await()
+                if (!ConduitManager.userLogin(credentials)) {
                     loginDeferred = CompletableDeferred()
                 } else {
                     loggedIn = true

@@ -104,7 +104,6 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
                 checkSessionsInDateRange()
             }
             marginTop = 10.px
-            gridColumnGap = 100
             add(hPanel (spacing = 10) {
                 add(buttonExport)
                 add(buttonAddToCalendar)

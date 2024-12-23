@@ -17,7 +17,9 @@ import io.kvision.i18n.I18n
 import io.kvision.i18n.tr
 import io.kvision.panel.SimplePanel
 import io.kvision.panel.vPanel
+import io.kvision.utils.ENTER_KEY
 import io.kvision.utils.auto
+import io.kvision.utils.perc
 import io.kvision.utils.px
 
 class LoginPanel: SimplePanel() {
@@ -25,15 +27,14 @@ class LoginPanel: SimplePanel() {
 //    private val facebookButton: Button
 //    private val registerButton: Button
 
-    private var credentials : UserCredentials? = null
     private val loginFormPanel: FormPanel<UserCredentials>
     private val passwordInput: Password
 
     init {
         passwordInput = Password(label = tr("Password"))
         loginFormPanel = this.formPanel {
+            marginTop = 5.perc
             width = 400.px
-            margin = 20.px
             marginLeft = auto
             marginRight = auto
             padding = 20.px
@@ -55,7 +56,7 @@ class LoginPanel: SimplePanel() {
                 add(Button(tr("Login")) {
                     marginTop = 20.px
                     onClick {
-                        this@LoginPanel.processCredentials()
+                        processCredentials()
                     }
                 })
 
@@ -81,6 +82,14 @@ class LoginPanel: SimplePanel() {
                             RoutingManager.redirect(View.REGISTER)
                         }
                     })
+                }
+
+                onEvent {
+                    keydown = {
+                        if (it.keyCode == ENTER_KEY) {
+                            processCredentials()
+                        }
+                    }
                 }
             }
     }

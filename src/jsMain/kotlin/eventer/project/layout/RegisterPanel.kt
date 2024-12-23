@@ -20,6 +20,7 @@ import io.kvision.modal.Alert
 import io.kvision.panel.*
 import io.kvision.rest.RemoteRequestException
 import io.kvision.utils.auto
+import io.kvision.utils.perc
 import io.kvision.utils.px
 import kotlinx.coroutines.await
 import kotlinx.coroutines.launch
@@ -38,7 +39,7 @@ class RegisterPanel: SimplePanel() {
 
         registerFormPanel = this.formPanel  {
             width = 400.px
-            margin = 20.px
+            marginTop = 5.perc
             marginLeft = auto
             marginRight = auto
             padding = 20.px
