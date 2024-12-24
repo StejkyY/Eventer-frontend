@@ -1,17 +1,15 @@
 package eventer.project.web
 
 import eventer.project.AppScope
-import eventer.project.components.addMinutesToJSDate
-import eventer.project.components.addTimeToJSDate
+import eventer.project.helpers.addMinutesToJSDate
+import eventer.project.helpers.addTimeToJSDate
 import eventer.project.models.Session
 import eventer.project.web.ConduitManager.GOOGLE_ACCESS_TOKEN
 import eventer.project.web.ConduitManager.MICROSOFT_ACCESS_TOKEN
 import eventer.project.web.ConduitManager.agendaStore
 import eventer.project.web.ConduitManager.getLocalStorageToken
-import io.kvision.i18n.I18n
 import io.kvision.i18n.tr
 import io.kvision.modal.Alert
-import io.kvision.rest.HTTP_UNAUTHORIZED
 import kotlinx.browser.window
 import kotlinx.coroutines.await
 import kotlinx.coroutines.launch
@@ -25,6 +23,12 @@ object ExternalCalendarSessionsManager {
     private var messageListener: ((dynamic) -> Unit)? = null
     val FRONTEND_URL = Api.processEnv.FRONTEND_URL as String? ?: "http://localhost:3000"
 
+    /**
+     * Opens an authorization window for the specified provider (Google or Microsoft).
+     * Adds a listener to the main application window, which waits for a received message
+     * with access token. Before adding new listener the current one is removed, otherwise
+     * last messages will still be used.
+     */
     private fun authorizeWindow(authURL: String, provider: Provider) {
         val windowWidth = 600
         val windowHeight = 700
@@ -53,21 +57,32 @@ object ExternalCalendarSessionsManager {
         window.addEventListener("message", messageListener)
     }
 
+    /**
+     * Initiates Google Calendar OAuth authorization.
+     */
     fun googleCalendarAuthorize() {
         val authURL = "${Api.API_URL}/oauth/google/login?redirectUrl=${FRONTEND_URL}/google-oauth-logged"
         authorizeWindow(authURL, Provider.GOOGLE)
     }
 
+    /**
+     * Initiates Microsoft Outlook OAuth authorization.
+     */
     fun microsoftOutlookAuthorize() {
         val authURL = "${Api.API_URL}/oauth/microsoft/login?redirectUrl=${FRONTEND_URL}/microsoft-oauth-logged"
         authorizeWindow(authURL, Provider.MICROSOFT)
     }
 
+    /**
+     * Sends event sessions to the specified external calendar provider.
+     */
     suspend fun sendEventSessionsToExternalCalendar(provider: Provider): Boolean {
         val currentSessions = agendaStore.store.state.selectedEventSessions
         val eventName = agendaStore.store.state.selectedEvent?.name!!
 
+        // Check if the access token is still valid
         if (!isAccessTokenValid(provider)) {
+            // receive renewed access token
             if(!ConduitManager.getRefreshedAccessToken(provider)) {
                 Alert.show(text = tr("Problem with access to the service occured," +
                         " please log in the service again.")
@@ -89,6 +104,9 @@ object ExternalCalendarSessionsManager {
         } else return false
     }
 
+    /**
+     * Sends a single session to the specified external calendar provider using access token.
+     */
     private suspend fun sendSessionToExternalCalendar(session: Session, eventName: String, provider: Provider) {
         val googleCalendarApiUrl = "https://www.googleapis.com/calendar/v3/calendars/primary/events"
         val microsoftOutlookApiUrl = "https://graph.microsoft.com/v1.0/me/events"
@@ -123,6 +141,9 @@ object ExternalCalendarSessionsManager {
         }
     }
 
+    /**
+     * Builds the event for Google Calendar in JSON format.
+     */
     private fun buildGoogleCalendarEventJson(session: Session, eventName: String): dynamic {
         val startDateTime = addTimeToJSDate(session.date!!, session.startTime!!)
         val endDateTime = addMinutesToJSDate(startDateTime, session.duration!!)
@@ -141,6 +162,9 @@ object ExternalCalendarSessionsManager {
         )
     }
 
+    /**
+     * Builds the event for Microsoft Outlook in JSON format.
+     */
     private fun buildMicrosoftEventJson(session: Session, eventName: String): dynamic {
         val startDateTime = addTimeToJSDate(session.date!!, session.startTime!!)
         val endDateTime = addMinutesToJSDate(startDateTime, session.duration!!)
@@ -164,6 +188,10 @@ object ExternalCalendarSessionsManager {
         )
     }
 
+    /**
+     * Checks if the access token is valid for the given provider.
+     * Sends a GET request to a test URL.
+     */
     private suspend fun isAccessTokenValid(provider: Provider): Boolean {
         val testUrl: String
         if (provider == Provider.GOOGLE){

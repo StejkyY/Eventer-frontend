@@ -1,25 +1,19 @@
 package eventer.project.layout
 
-import eventer.project.components.AgendaPrimaryButton
+import eventer.project.helpers.AgendaPrimaryButton
 import eventer.project.models.Event
 import eventer.project.state.AgendaAppState
-import eventer.project.web.ConduitManager
 import eventer.project.web.RoutingManager
-import eventer.project.web.Sort
 import eventer.project.web.View
 import io.kvision.core.*
-import io.kvision.dropdown.Direction
-import io.kvision.dropdown.dropDown
 import io.kvision.form.text.Text
 import io.kvision.form.text.TextInput
 import io.kvision.html.Autocomplete
 import io.kvision.html.Button
 import io.kvision.html.InputType
 import io.kvision.html.Label
-import io.kvision.i18n.I18n
 import io.kvision.i18n.tr
 import io.kvision.panel.*
-import io.kvision.state.ObservableList
 import io.kvision.state.bind
 import io.kvision.state.observableListOf
 import io.kvision.table.*
@@ -27,7 +21,6 @@ import io.kvision.utils.auto
 import io.kvision.utils.perc
 import io.kvision.utils.px
 import io.kvision.utils.syncWithList
-import web.html.HTML.body
 
 class EventsPanel(state: AgendaAppState) : SimplePanel() {
 

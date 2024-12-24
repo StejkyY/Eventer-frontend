@@ -1,14 +1,13 @@
 package eventer.project.layout.windows
 
-import eventer.project.components.AgendaPrimaryButton
+import eventer.project.helpers.AgendaPrimaryButton
 import eventer.project.AppScope
-import eventer.project.components.withProgress
+import eventer.project.helpers.withProgress
 import eventer.project.state.AgendaAppAction
 import eventer.project.web.ConduitManager
 import eventer.project.web.ExternalCalendarSessionsManager
 import eventer.project.web.Provider
 import io.kvision.core.AlignItems
-import io.kvision.core.BsColor
 import io.kvision.html.Button
 import io.kvision.html.ButtonStyle
 import io.kvision.html.Label
@@ -18,12 +17,7 @@ import io.kvision.panel.hPanel
 import io.kvision.panel.vPanel
 import io.kvision.state.bind
 import io.kvision.utils.px
-import kotlinx.browser.window
 import kotlinx.coroutines.launch
-import org.w3c.dom.MessageEvent
-import web.timers.Interval
-import web.timers.clearInterval
-import web.timers.setInterval
 
 class AddToCalendarWindow : Modal(caption = tr("Add sessions to calendar")) {
     private val buttonGoogleCalendarLogin: Button
@@ -131,11 +125,17 @@ class AddToCalendarWindow : Modal(caption = tr("Add sessions to calendar")) {
         }
     }
 
+    /**
+     * Opens the modal window.
+     */
     fun open() {
         checkAccountsSynced()
         show()
     }
 
+    /**
+     * Checks the synchronization status of linked accounts.
+     */
     fun checkAccountsSynced() {
         if(ConduitManager.getLocalStorageToken(ConduitManager.GOOGLE_ACCESS_TOKEN) != null &&
             !ConduitManager.agendaStore.getState().googleAccountSynced) {

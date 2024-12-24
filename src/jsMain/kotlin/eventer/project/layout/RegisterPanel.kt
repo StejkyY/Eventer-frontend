@@ -117,6 +117,9 @@ class RegisterPanel: SimplePanel() {
         }
     }
 
+    /**
+     * Sends the user info from the register form panel to the backend.
+     */
     private fun processRegister() {
         if(registerFormPanel.validate()) {
             val userData = registerFormPanel.getData()

@@ -200,6 +200,10 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
         }
     }
 
+
+    /**
+     * Check if the start date and time is set before the end date and time.
+     */
     fun checkEventBeginBeforeEnd(): Boolean {
         val startDateValue = startDate.getValue()?.getTime()!!
         val endDateValue = endDate.getValue()?.getTime()!!
@@ -214,10 +218,6 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
             }
             return timeResult
         }
-    }
-
-    fun getData(): Event {
-        return basicInfoFormPanel.getData()
     }
 
     override fun validate(): Boolean {
@@ -242,6 +242,10 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
         return ConduitManager.updateEvent(event)
     }
 
+
+    /**
+     * Checks the state of the edited event.
+     */
     private fun checkEventState(eventStartDate: Date, eventStartTime: LocalTime?): EventState {
         return if (eventStartDate.getDate() == LocalDate().getDate()) {
             if (eventStartTime == null || eventStartTime.getTime() >= LocalTime.now()) {
@@ -254,6 +258,10 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
         }
     }
 
+
+    /**
+     * Disables selected event type button.
+     */
     private fun disableTypeButton (typeButtonClicked: Button, typeButton2: Button, typeButton3: Button) {
         if(!typeButtonClicked.disabled) {
             newStateOnChange()
@@ -263,6 +271,10 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
         }
     }
 
+
+    /**
+     * Disables button with event type based on the initiation.
+     */
     private fun initDisableTypeButton () {
         if(state.selectedEvent != null) {
             when (state.selectedEvent.type) {
@@ -279,6 +291,10 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
         }
     }
 
+
+    /**
+     * Deletes event.
+     */
     private fun deleteEvent() {
         Confirm.show(tr("Are you sure?"), tr("Do you want to delete this event?")) {
             AppScope.launch {

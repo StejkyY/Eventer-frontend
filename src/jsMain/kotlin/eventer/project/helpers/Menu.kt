@@ -1,33 +1,24 @@
-package eventer.project.components
+package eventer.project.helpers
 
 import eventer.project.web.View
 import eventer.project.state.AgendaAppState
-import eventer.project.web.RoutingManager
 import io.kvision.core.*
 import io.kvision.dropdown.DD
 import io.kvision.dropdown.Direction
 import io.kvision.dropdown.dropDown
 import io.kvision.form.select.SelectInput
-import io.kvision.html.Button
-import io.kvision.html.ButtonStyle
 import io.kvision.i18n.I18n
 import io.kvision.i18n.tr
 import io.kvision.panel.flexPanel
 import io.kvision.utils.px
-import org.w3c.dom.HTMLElement
-import web.cssom.HtmlAttributes.Companion.border
 
 fun Container.menu(state: AgendaAppState) {
-    val languageButton = Button("ENG", style = ButtonStyle.LIGHT) {
-        border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-    }
 
     flexPanel(
         FlexDirection.ROW, FlexWrap.WRAP, JustifyContent.FLEXEND, AlignItems.CENTER,
         spacing = 10
     ) {
         marginTop = 10.px
-//                add(languageButton)
         add(SelectInput(
             listOf("en" to tr("ENG"), "cz" to tr("CZE")),
             I18n.language) {

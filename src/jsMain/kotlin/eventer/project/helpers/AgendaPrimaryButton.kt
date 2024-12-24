@@ -1,9 +1,8 @@
-package eventer.project.components
+package eventer.project.helpers
 
 import io.kvision.core.*
 import io.kvision.html.Button
 import io.kvision.html.ButtonStyle
-import io.kvision.i18n.I18n
 import io.kvision.modal.Confirm
 import io.kvision.utils.px
 

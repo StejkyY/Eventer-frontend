@@ -1,12 +1,11 @@
 package eventer.project.layout
 
 import eventer.project.*
-import eventer.project.components.AgendaIconButton
-import eventer.project.components.UnsavedChangesConfirm
+import eventer.project.helpers.AgendaIconButton
+import eventer.project.helpers.UnsavedChangesConfirm
 import eventer.project.models.User
 import eventer.project.state.AgendaAppState
 import eventer.project.web.ConduitManager
-import eventer.project.web.View
 import io.kvision.core.*
 import io.kvision.form.FormPanel
 import io.kvision.form.formPanel
@@ -14,7 +13,6 @@ import io.kvision.form.text.Password
 import io.kvision.form.text.Text
 import io.kvision.html.Button
 import io.kvision.html.Label
-import io.kvision.i18n.I18n
 import io.kvision.i18n.tr
 import io.kvision.modal.Confirm
 import io.kvision.panel.*
@@ -198,6 +196,9 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
         }
     }
 
+    /**
+     * Adjusts the panel layout based on whether the user is changing email or password.
+     */
     private fun change(changing: Changing) {
         deleteAccountButton.hide()
         firstNameText.hide()
@@ -215,6 +216,9 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
         }
     }
 
+    /**
+     * Changes back the panel layout to show the currently authenticated user info.
+     */
     private fun closeChanges() {
         deleteAccountButton.show()
         firstNameText.show()
@@ -227,6 +231,9 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
         changing = null
     }
 
+    /**
+     * Saves the changed data about the currently authenticated user profile.
+     */
     private fun save() {
         saveButton.disabled = true
         AppScope.launch {
@@ -251,6 +258,9 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
         }
     }
 
+    /**
+     * Deletes currently authenticated user's account.
+     */
     private fun deleteAccount() {
         Confirm.show(tr("Are you sure?"), tr("Do you want to delete your account?")) {
             AppScope.launch {

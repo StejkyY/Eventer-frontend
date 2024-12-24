@@ -8,6 +8,10 @@ import kotlinx.browser.window
 import kotlinx.coroutines.launch
 import kotlin.js.RegExp
 
+/**
+ * Enum representing various views in the application.
+ * Each view has an associated URL.
+ */
 enum class View (val url: String) {
     EVENTS("/events"),
     LOGIN("/auth/login"),
@@ -29,12 +33,18 @@ object RoutingManager {
         routing.resolve()
     }
 
+    /**
+     * Updates page links for the routing system.
+     */
     fun updatePageLinks() {
         if (::routing.isInitialized) {
             routing.updatePageLinks()
         }
     }
 
+    /**
+     * Defines all the application routes and their associated handlers.
+     */
     private fun Routing.routing() {
         routing.on("/", { _ ->
             ConduitManager.showEventsPage()
@@ -65,6 +75,10 @@ object RoutingManager {
         })
     }
 
+    /**
+     * Extracts the OAuth access token from the browser's URL hash in authentication window.
+     * Passes the extracted token to the main application window.
+     */
     fun extractAccessTokenFromWindowURL() {
         val hash = window.location.hash
         val accessToken = hash.substringAfter("access_token=").substringBefore("&")
@@ -75,10 +89,16 @@ object RoutingManager {
         }
     }
 
+    /**
+     * Redirects to a view.
+     */
     fun redirect(view: View) {
         routing.navigate(view.url)
     }
 
+    /**
+     * Redirects the user to a custom URL.
+     */
     fun redirect(url: String) {
         routing.navigate(url)
     }

@@ -2,13 +2,12 @@ package eventer.project.layout.windows
 
 import eventer.project.AppScope
 import eventer.project.layout.EventAgendaPanel
-import eventer.project.components.AgendaPrimaryButton
-import eventer.project.components.addMinutesToJSDate
-import eventer.project.components.lessThan
+import eventer.project.helpers.AgendaPrimaryButton
+import eventer.project.helpers.addMinutesToJSDate
+import eventer.project.helpers.lessThan
 import eventer.project.models.Location
 import eventer.project.models.Session
 import eventer.project.models.Type
-import eventer.project.state.AgendaAppAction
 import eventer.project.state.AgendaAppState
 import eventer.project.web.ConduitManager
 import io.kvision.core.*
@@ -21,8 +20,6 @@ import io.kvision.form.time.DateTime
 import io.kvision.html.Autocomplete
 import io.kvision.html.Button
 import io.kvision.html.ButtonStyle
-import io.kvision.i18n.I18n
-import io.kvision.i18n.gettext
 import io.kvision.i18n.tr
 import io.kvision.modal.Confirm
 import io.kvision.modal.Dialog
@@ -37,7 +34,6 @@ import io.kvision.utils.perc
 import io.kvision.utils.px
 import io.kvision.utils.syncWithList
 import kotlinx.coroutines.launch
-import web.assembly.validate
 import kotlin.js.Date
 
 class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgendaPanel) : Dialog<Session>(caption = "Session details", animation = false) {
@@ -246,18 +242,28 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
         }
     }
 
+    /**
+     * Checks if the edited/new session is overlapping with atleast one of the sessions
+     * during the selected time in the selected location.
+     */
     private fun checkLocationSessionsOverlap(location: Location, formSessionStartTime: LocalTime, formSessionDuration: Int) : Boolean {
         return sessionsMap?.get(sessionDate?.getTime())?.get(location)?.any{
             it != editingSession && checkFormSessionOverlap(it, formSessionStartTime, formSessionDuration)
         } ?: false
     }
 
+    /**
+     * Compares overlapping of a session and session in the form window.
+     */
     private fun checkFormSessionOverlap(session: Session, formSessionStartTime: Date, formSessionDuration: Int): Boolean {
         val editingSessionEndTime = addMinutesToJSDate(session.startTime!!, session.duration!!)
         val otherSessionEndTime = addMinutesToJSDate(formSessionStartTime, formSessionDuration)
         return session.startTime?.lessThan(otherSessionEndTime)!! && formSessionStartTime.lessThan(editingSessionEndTime)
     }
 
+    /**
+     * Updates options in duration selector according to the start time in the form.
+     */
     private fun updateDurationOptions(startTime: LocalTime) {
         val selectDurationOptionsList: MutableList<Pair<String, String>> = mutableListOf()
 
@@ -287,12 +293,17 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
         durationSelector.options = selectDurationOptionsList
     }
 
+    /**
+     * Saves the new/edited session opened in the form.
+     */
     private fun saveSession() {
         if(sessionPanel.validate()) {
             AppScope.launch {
                 val location: Location?
+
                 if(selectingLocationByList) location = locationsList[locationSelector.selectedIndex]
                 else {
+                    //if location was created, then it will be saved in database
                     location = ConduitManager.addLocation(Location(
                         name = newLocationInputText.value,
                         eventId = (state.selectedEvent?.id)))
@@ -308,6 +319,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
                 val type: Type?
                 if(selectingTypeByList) type = typesList[typeSelector.selectedIndex]
                 else {
+                    //if type was created, then it will be saved in database
                     type = ConduitManager.addType(Type(name = newTypeInputText.value))
                     if(type != null) {
                         typesList.syncWithList(listOf(type) + typesList)
@@ -339,6 +351,9 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
         }
     }
 
+    /**
+     * Closes the window.
+     */
     private fun close() {
         editingId = null
         sessionPanel.clearData()
@@ -347,6 +362,9 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
         this@EventSessionWindow.hide()
     }
 
+    /**
+     * Deletes opened edited session in the form.
+     */
     private fun deleteSession() {
         Confirm.show(tr("Are you sure?"), tr("Do you want to delete this session?")) {
             AppScope.launch {
@@ -356,6 +374,9 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
         }
     }
 
+    /**
+     * Shows session location list and hides creating of new location.
+     */
     private fun showLocationList() {
         locationSelector.show()
         newLocationInputText.hide()
@@ -365,6 +386,9 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
         buttonRemoveLocation.show()
     }
 
+    /**
+     * Shows new session location input and hides locations list.
+     */
     private fun showNewLocationInput() {
         locationSelector.hide()
         newLocationInputText.show()
@@ -374,6 +398,9 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
         selectingLocationByList = false
     }
 
+    /**
+     * Shows session type list and hides creating of new type.
+     */
     private fun showTypeList() {
         typeSelector.show()
         newTypeInputText.hide()
@@ -383,6 +410,9 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
         buttonNewType.show()
     }
 
+    /**
+     * Shows new session type input and hides types list.
+     */
     private fun showNewTypeInput() {
         typeSelector.hide()
         newTypeInputText.show()
@@ -392,6 +422,9 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
         selectingTypeByList = false
     }
 
+    /**
+     * Deletes selected created type from types list.
+     */
     private fun deleteSelectedType() {
         if(typeSelector.selectedIndex != -1 && typesList.size > 4) {
             AppScope.launch {
@@ -402,6 +435,9 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
         }
     }
 
+    /**
+     * Deletes selected created location from locations list.
+     */
     private fun deleteSelectedLocation() {
         if(locationSelector.selectedIndex != -1 && locationsList.size > 0) {
             AppScope.launch {
@@ -412,6 +448,9 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
         }
     }
 
+    /**
+     * Sets the form for editing a session from the event agenda.
+     */
     suspend fun editSession(sessions: Map<Double, Map<Location, List<Session>>>, session: Session): Session? {
         sessionPanel.setData(session)
         timeSelector.value = session.startTime
@@ -429,6 +468,9 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
         return getResult()
     }
 
+    /**
+     * Sets the form for creating a new session to the event agenda.
+     */
     suspend fun createSession(sessions: Map<Double, Map<Location, List<Session>>>, date: LocalDate): Session? {
         deleteButton.hide()
         sessionPanel.clearData()

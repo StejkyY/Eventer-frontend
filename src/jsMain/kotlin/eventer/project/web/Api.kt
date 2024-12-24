@@ -2,51 +2,32 @@ package eventer.project.web
 
 import eventer.project.web.ConduitManager.JWT_TOKEN
 import io.kvision.core.StringPair
-import eventer.project.AppScope
-import eventer.project.Security
-import eventer.project.components.addMinutesToJSDate
-import eventer.project.components.addTimeToJSDate
 import eventer.project.models.*
 import eventer.project.models.dto.*
-import io.kvision.types.LocalDate
-import io.kvision.types.LocalTime
-import kotlinx.serialization.UseContextualSerialization
 
 
-import eventer.project.state.AgendaAppAction
-import eventer.project.state.AgendaAppState
-import eventer.project.state.agendaAppReducer
-import eventer.project.web.ConduitManager.agendaStore
-import io.kvision.navigo.Navigo
-import io.kvision.redux.createTypedReduxStore
-import io.kvision.remote.SecurityException
 import io.kvision.rest.*
-import io.kvision.toast.ToastContainer
-import io.kvision.toast.ToastContainerPosition
-import kotlinx.browser.localStorage
-import kotlinx.browser.window
 import kotlinx.coroutines.await
-import kotlinx.coroutines.launch
-import kotlinx.serialization.Serializable
-import org.w3c.dom.get
-import org.w3c.dom.set
-import org.w3c.fetch.RequestInit
-import web.http.Headers
-import kotlin.js.Promise
-import kotlin.js.json
 
 object Api {
 
+    // Fetches environment variables and extracts backend API URL or defaults to localhost
     val processEnv = js("PROCESS_ENV")
     val API_URL = processEnv.API_URL as String? ?: "http://localhost:8080"
     private val restClient = RestClient()
 
+    /**
+     * Generates an authentication header for API requests using the JWT token stored in browser local storage.
+     */
     private fun authRequest(): List<StringPair> {
         return ConduitManager.getLocalStorageToken(JWT_TOKEN)?.let {
             listOf("Authorization" to "Bearer $it")
         } ?: emptyList()
     }
 
+    /**
+     * Retrieves event by its ID from the backend.
+     */
     suspend fun getEvent(eventId: Int): Event {
         return restClient.call<EventDTO>("$API_URL/events/$eventId") {
             method = HttpMethod.GET
@@ -54,13 +35,19 @@ object Api {
         }.await().event
     }
 
-    suspend fun getEventsList(): List<Event> {
+    /**
+     * Retrieves all events created by the user from the backend.
+     */
+    suspend fun getUserEventsList(): List<Event> {
         return restClient.call<EventsDTO>("$API_URL/events") {
             method = HttpMethod.GET
             headers = ::authRequest
         }.await().events
     }
 
+    /**
+     * Retrieves all event roles from the backend.
+     */
     suspend fun getEventRoles(): List<EventRole> {
         return restClient.call<EventRolesDTO>("$API_URL/events/roles") {
             method = HttpMethod.GET
@@ -68,6 +55,9 @@ object Api {
         }.await().eventRoles
     }
 
+    /**
+     * Retrieves all session for an event by its ID from the backend.
+     */
     suspend fun getEventSessions(eventId: Int): List<Session> {
         return restClient.call<SessionsDTO>("$API_URL/events/$eventId/sessions") {
             method = HttpMethod.GET
@@ -75,6 +65,9 @@ object Api {
         }.await().sessions
     }
 
+    /**
+     * Adds new event to the backend.
+     */
     suspend fun addEvent(event: Event): Event {
         return restClient.post<EventDTO, EventDTO>("$API_URL/events",
             EventDTO(event)) {
@@ -82,6 +75,9 @@ object Api {
         }.await().event
     }
 
+    /**
+     * Updates an event in the backend.
+     */
     suspend fun updateEvent(event: Event): Event {
         return restClient.call<EventDTO, EventDTO>("$API_URL/events/${event.id}",
             EventDTO(event)) {
@@ -90,6 +86,9 @@ object Api {
         }.await().event
     }
 
+    /**
+     * Deletes event by its ID in the backend.
+     */
     suspend fun deleteEvent(eventId: Int) {
         restClient.requestDynamic("$API_URL/events/$eventId") {
             method = HttpMethod.DELETE
@@ -97,6 +96,10 @@ object Api {
         }.await()
     }
 
+    /**
+     * Saves sessions from the event agenda by event ID.
+     * Sends added sessions, updated sessions and deleted sessions from the event agenda
+     */
     suspend fun saveEventAgendaSessions(eventId: Int,
                                           addedSessions: List<Session>,
                                           updatedSessions: List<Session>,
@@ -112,34 +115,18 @@ object Api {
         }.await()
     }
 
-    suspend fun addSession(session: Session) {
-        restClient.post<SessionDTO, SessionDTO>("$API_URL/sessions",
-            SessionDTO(session)){
-            headers = ::authRequest
-        }.await()
-    }
-
-    suspend fun updateSession(session: Session) {
-        restClient.call<SessionDTO, SessionDTO>("$API_URL/sessions/${session.id}",
-            SessionDTO(session)) {
-            method = HttpMethod.PUT
-            headers = ::authRequest
-        }.await()
-    }
-
-    suspend fun deleteSession(sessionId: Int) {
-        restClient.requestDynamic("$API_URL/sessions/$sessionId") {
-            method = HttpMethod.DELETE
-            headers = ::authRequest
-        }.await()
-    }
-
+    /**
+     * Adds new session type to the backend.
+     */
     suspend fun addType(type: Type): Type {
         return restClient.post<TypeDTO, TypeDTO>("$API_URL/types", TypeDTO(type)){
             headers = ::authRequest
         }.await().type
     }
 
+    /**
+     * Delete session type by its ID in the backend.
+     */
     suspend fun deleteType(typeId: Int) {
         restClient.requestDynamic("$API_URL/types/$typeId") {
             method = HttpMethod.DELETE
@@ -147,6 +134,9 @@ object Api {
         }.await()
     }
 
+    /**
+     * Retrieves all session types from the backend.
+     */
     suspend fun getSessionTypes(): List<Type> {
         return restClient.call<TypesDTO>("$API_URL/types") {
             method = HttpMethod.GET
@@ -154,12 +144,18 @@ object Api {
         }.await().types
     }
 
+    /**
+     * Add a new session location to the backend.
+     */
     suspend fun addLocation(location: Location): Location {
         return restClient.post<LocationDTO, LocationDTO>("$API_URL/locations", LocationDTO(location)){
             headers = ::authRequest
         }.await().location
     }
 
+    /**
+     * Delete session location in the backend.
+     */
     suspend fun deleteLocation(locationId: Int) {
         restClient.requestDynamic("$API_URL/locations/$locationId") {
             method = HttpMethod.DELETE
@@ -167,6 +163,9 @@ object Api {
         }.await()
     }
 
+    /**
+     * Adds new event to the backend.
+     */
     suspend fun getSessionLocations(eventId: Int): List<Location> {
         return restClient.call<LocationsDTO>("$API_URL/events/$eventId/locations") {
             method = HttpMethod.GET
@@ -174,6 +173,9 @@ object Api {
         }.await().locations
     }
 
+    /**
+     * Retreives a new access token for the specified provider from the backend.
+     */
     suspend fun getRefreshedAccessToken(provider: Provider): String? {
         val provider = provider.toString().lowercase()
        val response = restClient.requestDynamic("$API_URL/oauth/$provider/token-refresh") {
@@ -184,6 +186,9 @@ object Api {
         return responseJson["access_token"] as? String
     }
 
+    /**
+     * Sends user credentials for a user login to the backend.
+     */
     suspend fun login(userCredentials: UserCredentials): User {
         return restClient.post<UserDTO, UserDTO>(
             "$API_URL/auth/login",
@@ -198,6 +203,9 @@ object Api {
         }.await().user
     }
 
+    /**
+     * Sends a new user for a register to the backend.
+     */
     suspend fun registerUser(user: User) {
         restClient.post<UserDTO, UserDTO>("$API_URL/auth/register",
             UserDTO (
@@ -206,6 +214,9 @@ object Api {
         }.await()
     }
 
+    /**
+     * Retrieves currently authenticated user from the backend.
+     */
     suspend fun getCurrentProfile(): User {
         return restClient.call<UserDTO>("$API_URL/users/current") {
             method = HttpMethod.GET
@@ -213,7 +224,9 @@ object Api {
         }.await().user
     }
 
-
+    /**
+     * Sends user for updating to the backend.
+     */
     suspend fun updateProfile(profile: User): User {
         return restClient.call<UserDTO, UserDTO>("$API_URL/users/${profile.id}",
             UserDTO(profile)) {
@@ -222,14 +235,10 @@ object Api {
         }.await().user
     }
 
+    /**
+     * Sends new and current password for a password change to the backend.
+     */
     suspend fun updatePassword(currentPassword: String, newPassword: String)  {
-//        restClient.post<UserPasswordDTO, UserPasswordDTO>("$API_URL/users/current/change-password",
-//            UserPasswordDTO(
-//                UserPasswordChange(currentPassword, newPassword)
-//            )) {
-//            method = HttpMethod.POST
-//            headers = ::authRequest
-//        }.await()
         restClient.requestDynamic("$API_URL/users/current/change-password",
             UserPasswordDTO(
                 UserPasswordChange(currentPassword, newPassword)
@@ -239,6 +248,9 @@ object Api {
         }.await()
     }
 
+    /**
+     * Deletes currently authenticated user in the backend.
+     */
     suspend fun deleteProfile() {
         restClient.requestDynamic("$API_URL/users/current") {
             method = HttpMethod.DELETE

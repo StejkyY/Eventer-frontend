@@ -1,6 +1,6 @@
 package eventer.project
 
-import eventer.project.components.menu
+import eventer.project.helpers.menu
 import eventer.project.layout.EventAgendaPanel
 import eventer.project.layout.EventBasicInfoPanel
 import eventer.project.layout.EventDescriptionPanel
@@ -16,7 +16,6 @@ import io.kvision.pace.Pace
 import io.kvision.pace.PaceOptions
 import io.kvision.panel.root
 import io.kvision.panel.simplePanel
-import io.kvision.routing.Routing
 import io.kvision.state.bind
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

@@ -2,8 +2,6 @@ package eventer.project.web
 
 import eventer.project.AppScope
 import eventer.project.Security
-import eventer.project.components.addMinutesToJSDate
-import eventer.project.components.addTimeToJSDate
 import eventer.project.models.*
 
 
@@ -12,7 +10,6 @@ import eventer.project.state.AgendaAppState
 import eventer.project.state.agendaAppReducer
 import eventer.project.web.RoutingManager.redirect
 import io.kvision.core.BsColor
-import io.kvision.i18n.I18n
 import io.kvision.i18n.tr
 import io.kvision.redux.createTypedReduxStore
 import io.kvision.rest.*
@@ -25,9 +22,6 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import org.w3c.dom.get
 import org.w3c.dom.set
-import org.w3c.fetch.RequestInit
-import web.http.Headers
-import kotlin.js.json
 
 //data class EditingEventState(val event: Event, val sessions: List<Session>, val locations: List<Location>) {
 //
@@ -221,7 +215,7 @@ object ConduitManager {
     suspend fun getEventList() {
         try {
             Security.withAuth {
-                val newEvents = Api.getEventsList()
+                val newEvents = Api.getUserEventsList()
                 agendaStore.dispatch(AgendaAppAction.eventsLoaded(newEvents))
             }
         } catch (e: RemoteRequestException) {
@@ -240,31 +234,6 @@ object ConduitManager {
         Security.withAuth {
             val newSessions = Api.getEventSessions(eventId)
             agendaStore.dispatch(AgendaAppAction.eventSessionsLoaded(newSessions))
-        }
-    }
-
-//    suspend fun formatEventForEvent(eventId: Int) {
-//        val newSessions = sessionService.getEventSessionsFormatted(eventId)
-//        agendaStore.dispatch(AgendaAppAction.eventSessionsFormattedLoaded(newSessions))
-//    }
-
-    suspend fun deleteSession(sessionId: Int): Boolean {
-        Security.withAuth {
-            Api.deleteSession(sessionId)
-        }
-        return true
-    }
-
-    suspend fun addSession(session: Session) {
-        Security.withAuth {
-            Api.addSession(session)
-        }
-    }
-
-
-    suspend fun updateSession(session: Session) {
-        Security.withAuth {
-            Api.updateSession(session)
         }
     }
 

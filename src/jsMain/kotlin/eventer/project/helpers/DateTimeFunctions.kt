@@ -1,4 +1,4 @@
-package eventer.project.components
+package eventer.project.helpers
 
 import io.kvision.types.LocalDate
 

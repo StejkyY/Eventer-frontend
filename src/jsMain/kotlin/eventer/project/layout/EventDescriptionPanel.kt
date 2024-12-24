@@ -39,10 +39,6 @@ class EventDescriptionPanel(val state: AgendaAppState) : EventChildPanel() {
         }
     }
 
-    fun getData(): Event {
-        return descriptionFormPanel.getData()
-    }
-
     override fun validate(): Boolean {
         return descriptionFormPanel.validate()
     }

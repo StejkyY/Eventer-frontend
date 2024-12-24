@@ -94,6 +94,9 @@ class LoginPanel: SimplePanel() {
             }
     }
 
+    /**
+     * Sends credentials from the login form panel to the backend.
+     */
     private fun processCredentials() {
         if(loginFormPanel.validate()) {
             ConduitManager.login(loginFormPanel.getData())

@@ -5,6 +5,9 @@ import eventer.project.models.*
 import io.kvision.redux.RAction
 import web.html.Loading
 
+/**
+ * Represents the state of the agenda application.
+ */
 data class AgendaAppState(
     val appLoading: Boolean = true,
     val view: View = View.EVENTS,
@@ -21,6 +24,9 @@ data class AgendaAppState(
     val microsoftAccountSynced: Boolean = false,
 )
 
+/**
+ * Represents actions that can modify the application's state.
+ */
 sealed class AgendaAppAction: RAction {
     object appLoaded: AgendaAppAction()
     object loginPage: AgendaAppAction()
@@ -49,6 +55,9 @@ sealed class AgendaAppAction: RAction {
     object microsoftAccountLinked: AgendaAppAction()
 }
 
+/**
+ * A reducer function to update the state based on the given action.
+ */
 fun agendaAppReducer(state: AgendaAppState, action: AgendaAppAction): AgendaAppState = when (action) {
     is AgendaAppAction.appLoaded -> {
         state.copy(appLoading = false)

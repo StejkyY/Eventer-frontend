@@ -1,7 +1,7 @@
 package eventer.project.layout
 
 import eventer.project.AppScope
-import eventer.project.components.*
+import eventer.project.helpers.*
 import eventer.project.state.AgendaAppState
 import eventer.project.web.ConduitManager
 import eventer.project.web.RoutingManager
@@ -9,14 +9,12 @@ import eventer.project.web.View
 import io.kvision.core.*
 import io.kvision.html.Button
 import io.kvision.html.Label
-import io.kvision.i18n.I18n
 import io.kvision.i18n.tr
 import io.kvision.panel.*
 import io.kvision.utils.perc
 import io.kvision.utils.px
 import io.kvision.utils.vh
 import io.kvision.utils.vw
-import kotlinx.coroutines.launch
 
 class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : SimplePanel() {
     private val buttonBasicInfo: MenuTextButton
@@ -141,6 +139,9 @@ class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : S
         }
     }
 
+    /**
+     * Disables selected button from the menu for switching between child panels.
+     */
     private fun disableSelectedButton() {
         if(state.view == View.EVENT_BASIC_INFO) {
             buttonBasicInfo.disable()
@@ -157,18 +158,26 @@ class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : S
         }
     }
 
+    /**
+     * Redirects to the panel with basic info about the event.
+     */
     private fun goToBasicInfoPanel() {
         RoutingManager.redirect("/event/${ConduitManager.agendaStore.getState().selectedEvent?.id}${View.EVENT_BASIC_INFO.url}")
     }
 
+    /**
+     * Redirects to the panel with event's description.
+     */
     private fun goToDescriptionPanel() {
         RoutingManager.redirect("/event/${ConduitManager.agendaStore.getState().selectedEvent?.id}${View.EVENT_DESCRIPTION.url}")
     }
 
+    /**
+     * Redirects to the panel with event's agenda.
+     */
     private fun goToAgendaPanel() {
         RoutingManager.redirect("/event/${ConduitManager.agendaStore.getState().selectedEvent?.id}${View.EVENT_AGENDA.url}")
     }
-
 
     private fun save() {
         AppScope.withProgress {

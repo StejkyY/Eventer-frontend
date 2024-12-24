@@ -13,11 +13,17 @@ import kotlin.js.Date
 object LocalTimeSerializer : KSerializer<LocalTime> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("LocalTime", PrimitiveKind.STRING)
 
+    /**
+     * Serializes a `LocalTime` value into a string.
+     */
     override fun serialize(encoder: Encoder, value: LocalTime) {
         val timeString = value.toTimeString().take(8)
         encoder.encodeString(timeString)
     }
 
+    /**
+     * Deserializes a string into a `LocalTime` value.
+     */
     override fun deserialize(decoder: Decoder): LocalTime {
         val timeString = decoder.decodeString()
         if(timeString.length > 8){

@@ -1,7 +1,7 @@
 package eventer.project.layout
 
 import eventer.project.AppScope
-import eventer.project.components.*
+import eventer.project.helpers.*
 import eventer.project.models.Location
 import eventer.project.models.Session
 import eventer.project.state.AgendaAppAction
@@ -13,7 +13,6 @@ import eventer.project.layout.windows.EventSessionWindow
 import io.kvision.core.*
 import io.kvision.html.Button
 import io.kvision.html.Label
-import io.kvision.i18n.I18n
 import io.kvision.i18n.tr
 import io.kvision.panel.*
 import io.kvision.state.*
@@ -96,8 +95,6 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
             }
         }
 
-
-//          add(AgendaCalendar(state, CalendarMode.EDIT))
         gridPanel (templateColumns = "1fr 1fr 1fr", alignItems = AlignItems.CENTER, justifyItems = JustifyItems.CENTER)  {
             createDayButtons()
             if(mode == CalendarMode.EDIT) {
@@ -136,6 +133,11 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         }
     }
 
+    /**
+     * Creates panel with day selector.
+     * If there is more than 7 days, than there will be two side buttons
+     * for cycling through days.
+     */
     private fun dayButtonsPanel(): HPanel {
         return hPanel(spacing = 10).bind(dayButtonsFirstIndex) { firstButtonIndex ->
             if (daysCount > maxShownDays) {
@@ -164,6 +166,9 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         }
     }
 
+    /**
+     * Removes sessions outside the event date range from the session map.
+     */
     private fun checkSessionsInDateRange() {
         for ((date, group) in formattedEventSessionsMap.value) {
             if(date < state.selectedEvent?.startDate?.getTime()!! || date > state.selectedEvent.endDate?.getTime()!!) {
@@ -174,6 +179,9 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         }
     }
 
+    /**
+     * Sets up map with formatted sessions by locations and days
+     */
     private fun formatSessions() {
         if(state.formattedEventSessions == null) {
             formattedEventSessionsMap.value = mutableMapOf<Double, Map<Location, List<Session>>>()
@@ -182,6 +190,9 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         }
     }
 
+    /**
+     * Creates agenda day buttons.
+     */
     private fun createDayButtons() {
         dayTextButtonList.clear()
 
@@ -200,12 +211,18 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         }
     }
 
+    /**
+     * Changes current selected day to the new selected one.
+     */
     private fun changeDay(newSelectedDayIndex: Int) {
         selectedDayButtonIndex = newSelectedDayIndex
         val newSelectedDate = addDaysToJSDate(state.selectedEvent?.startDate!!, newSelectedDayIndex)
         selectedDate.value = newSelectedDate
     }
 
+    /**
+     * Creates a new session in the agenda through session window.
+     */
     private fun createSession() {
         AppScope.launch {
             val createdSession = sessionDialogWindow.createSession(formattedEventSessionsMap.value, selectedDate.value)
@@ -219,6 +236,9 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         }
     }
 
+    /**
+     * Edits a selected session in the agenda through session window.
+     */
     private fun editSession(session: Session) {
         AppScope.launch {
             val updatedSession = sessionDialogWindow.editSession(formattedEventSessionsMap.value, session)
@@ -236,6 +256,9 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         }
     }
 
+    /**
+     * Removes slected session from the agenda.
+     */
     fun removeSession(session: Session) {
         AppScope.launch {
             removeSessionFromMap(session)
@@ -243,17 +266,17 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         }
     }
 
+    /**
+     * Helper function for getting index of a given session in the map
+     * in the selected day and the location.
+     */
     private fun getSessionIndex(session: Session): Int {
         return formattedEventSessionsMap.value.get(selectedDate.value.getTime())?.get(session.location)?.indexOf(session) ?: 0
     }
 
-    private fun sessionsSame(otherSessions: List<Session>): Boolean {
-        val currentSessions = formattedEventSessionsMap.value.flatMap { (_, sessionsByLocation) ->
-            sessionsByLocation.flatMap { (_, sessions) -> sessions }
-        }
-        return otherSessions == currentSessions
-    }
-
+    /**
+     * Removes session from the agenda.
+     */
     private fun removeSessionFromMap(session: Session) {
         val daySessionsByLocation = formattedEventSessionsMap.value.get(
             selectedDate.value.getTime())?.toMutableMap() ?: return
@@ -270,20 +293,6 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
             }
             removed = true
         }
-//        for ((location, sessions) in daySessionsByLocation) {
-//            val sessionIndex = sessions.indexOfFirst { it.id == session.id }
-//            if (sessionIndex != -1) {
-//                val updatedSessions = sessions.toMutableList()
-//                updatedSessions.removeAt(sessionIndex)
-//                if (updatedSessions.isEmpty()) {
-//                    daySessionsByLocation.remove(location)
-//                } else {
-//                    daySessionsByLocation[location] = updatedSessions
-//                }
-//                removed = true
-//                break
-//            }
-//        }
 
         if (!removed) return
 
@@ -294,6 +303,9 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         formattedEventSessionsMap.value = adjustedMap
     }
 
+    /**
+     * Updates selected session in the agenda.
+     */
     private fun updateSessionInMap(session: Session, index: Int){
         val daySessionsByLocation = formattedEventSessionsMap.value.get(selectedDate.value.getTime())?.toMutableMap() ?: return
 
@@ -311,6 +323,9 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         }
     }
 
+    /**
+     * Adds session into the agenda.
+     */
     private fun addSessionToMap(session: Session) {
         val daySessionsByLocation = formattedEventSessionsMap.value.get(selectedDate.value.getTime())?.toMutableMap() ?: mutableMapOf()
 
@@ -324,7 +339,6 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
             locationOrder = daySessionsByLocation.keys.toList().indexOf(location) + 1
         }
 
-
         sessionsInLocation.add(session.copy(dayOrder = locationOrder))
         daySessionsByLocation[location!!] = sessionsInLocation
 
@@ -335,6 +349,9 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         formattedEventSessionsMap.value = adjustedMap
     }
 
+    /**
+     * Creates timeline in the agenda calendar component.
+     */
     private fun createTimeline(): VPanel {
         val timePanel = VPanel().bind(formattedEventSessionsMap) { sessionsMap ->
             val maxParallelSessionsCount = sessionsMap[selectedDate.value.getTime()]?.size ?: 0
@@ -374,6 +391,9 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         return timePanel
     }
 
+    /**
+     * Helper function for a text separator in the session block.
+     */
     private fun textSeparator(): VPanel {
         return vPanel {
             marginLeft = 5.px
@@ -382,7 +402,10 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         }
     }
 
-    private fun sessionBlockTexts(session: Session, endTime: LocalTime, maxHeight: CssSize): HPanel {
+    /**
+     * Creates formatted texts in the session block.
+     */
+    private fun sessionBlockTexts(session: Session, endTime: LocalTime): HPanel {
         val textsFormatted = hPanel {
             marginLeft = 5.px
             if(session.duration!! < 60) {
@@ -430,6 +453,9 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         return textsFormatted
     }
 
+    /**
+     * Creates a session block in the timeline of the calendar component.
+     */
     private fun createSessionBlock(session: Session): SimplePanel {
         val endTime = addMinutesToJSDate(session.startTime!!, session.duration!!)
         val sessionBlock = SimplePanel {
@@ -458,12 +484,14 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
                 )
             }
 
-            add(sessionBlockTexts(session, endTime, height!!))
-
+            add(sessionBlockTexts(session, endTime))
         }
         return sessionBlock
     }
 
+    /**
+     * Sets all the session in the created layout into the calendar component.
+     */
     private fun createSessionsPanel(): HPanel {
         val sessionPanel = HPanel().bind(formattedEventSessionsMap) { sessionsMap ->
             top = 0.px
@@ -503,6 +531,9 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         return true
     }
 
+    /**
+     * Saves the current state of the agenda.
+     */
     override suspend fun save(): Boolean {
         if(saveSessionsState()) {
             ConduitManager.getSessionsForEvent(state.selectedEvent?.id!!)
@@ -511,6 +542,9 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         } else return false
     }
 
+    /**
+     * Compares the current state of the session to the state of last save.
+     */
     private suspend fun saveSessionsState(): Boolean {
         val defaultSessions = state.selectedEventSessions
         val currentSessions = formattedEventSessionsMap.value.flatMap { (_, sessionsByLocation) ->
@@ -524,19 +558,16 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         if (defaultSessions != null) {
             for (session in defaultSessions) {
                 if (session.id != null && !currentSessions.any { it.id == session.id }) {
-//                    ConduitManager.deleteSession(session.id)
                     deletedSessions.add(session)
                 }
             }
         }
 
         for (session in currentSessions) {
-//            if (session.id == null) ConduitManager.addSession(session)
             if (session.id == null) addedSessions.add(session)
             else {
                 val correspondingSession = defaultSessions?.find { it.id == session.id }
                 if (correspondingSession != null && session != correspondingSession) {
-//                    ConduitManager.updateSession(session)
                     updatedSessions.add(session)
                 }
             }

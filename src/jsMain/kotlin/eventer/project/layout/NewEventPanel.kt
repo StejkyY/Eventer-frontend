@@ -1,7 +1,7 @@
 package eventer.project.layout
 
 import eventer.project.*
-import eventer.project.components.AgendaIconButton
+import eventer.project.helpers.AgendaIconButton
 import eventer.project.models.Event
 import eventer.project.models.EventPrivacy
 import eventer.project.models.EventState
@@ -19,8 +19,6 @@ import io.kvision.form.time.DateTime
 import io.kvision.html.Autocomplete
 import io.kvision.html.Button
 import io.kvision.html.Label
-import io.kvision.i18n.I18n
-import io.kvision.modal.Alert
 import io.kvision.panel.*
 import io.kvision.types.LocalDate
 import io.kvision.types.LocalTime
@@ -185,6 +183,9 @@ class NewEventPanel(val state: AgendaAppState) : FormPanel<Event>() {
         }
     }
 
+    /**
+     * Saves the created event.
+     */
     private fun saveEvent() {
         AppScope.launch {
             if(newEventFormPanel.validate()) {
@@ -209,6 +210,9 @@ class NewEventPanel(val state: AgendaAppState) : FormPanel<Event>() {
         }
     }
 
+    /**
+     * Creates the state of the new event.
+     */
     private fun checkEventState(eventStartDate: Date, eventStartTime: LocalTime?): EventState {
         return if (eventStartDate.getDate() == LocalDate().getDate()) {
             if (eventStartTime == null || eventStartTime.getTime() >= LocalTime.now()) {
@@ -221,6 +225,9 @@ class NewEventPanel(val state: AgendaAppState) : FormPanel<Event>() {
         }
     }
 
+    /**
+     * Disables selected event type button.
+     */
     private fun disableTypeButton (typeButtonClicked: Button, typeButton2: Button, typeButton3: Button) {
         if(!typeButtonClicked.disabled) {
             typeButtonClicked.disabled = true
