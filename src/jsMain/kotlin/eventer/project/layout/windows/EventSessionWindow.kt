@@ -22,6 +22,7 @@ import io.kvision.html.Autocomplete
 import io.kvision.html.Button
 import io.kvision.html.ButtonStyle
 import io.kvision.i18n.I18n
+import io.kvision.i18n.gettext
 import io.kvision.i18n.tr
 import io.kvision.modal.Confirm
 import io.kvision.modal.Dialog
@@ -36,6 +37,7 @@ import io.kvision.utils.perc
 import io.kvision.utils.px
 import io.kvision.utils.syncWithList
 import kotlinx.coroutines.launch
+import web.assembly.validate
 import kotlin.js.Date
 
 class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgendaPanel) : Dialog<Session>(caption = "Session details", animation = false) {
@@ -128,7 +130,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
             }
         }
 
-        typeSelector.onEvent {
+        typeSelector.onChange {
             if(typeSelector.getValue() != null &&
                     typesList[typeSelector.selectedIndex].name!! in
                         listOf("Break", "Workshop", "Session", "Lecture")) {
@@ -145,10 +147,12 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
         locationSelector = Select(
             label = tr("Location")
         ).bind(locationsList) { list ->
+            paddingTop = 15.px
             options = list.map { it.id.toString() to it.name!! }
         }
 
         newLocationInputText = Text(label = tr("New location"), maxlength = 50) {
+            paddingTop = 15.px
             autocomplete = Autocomplete.OFF
         }
 
@@ -193,7 +197,10 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
 
             add(newTypeInputText)
             add(backToTypeListButton)
-            addCustom(Session::type, typeSelector, required = true)
+            addCustom(
+                Session::type,
+                typeSelector,
+                required = true)
             hPanel (spacing = 10) {
                 width = 60.perc
                 add(buttonNewType, 1,1)
@@ -202,14 +209,19 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
 
             add(newLocationInputText)
             add(backToLocationListButton)
-            addCustom(Session::location, locationSelector, required = true)
+            addCustom(
+                Session::location,
+                locationSelector,
+                required = true,
+                validatorMessage = {"Missing value."},
+                validator = {it.selectedIndex != -1})
             hPanel (spacing = 10) {
                 width = 60.perc
                 add(buttonNewLocation, 1,1)
                 add(buttonRemoveLocation, 3, 1)
             }
             add(Session::description, TextArea(label = tr("Description"), rows = 3)  {
-                paddingTop = 5.px
+                paddingTop = 15.px
                 maxlength = 500
             })
             flexPanel(
@@ -221,7 +233,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
                 add(deleteButton)
             }
             validator = {
-                if(selectingLocationByList){
+                if(selectingLocationByList && locationSelector.selectedIndex != -1){
                     !checkLocationSessionsOverlap(
                         locationsList[locationSelector.selectedIndex],
                         get(Session::startTime)!!,
@@ -381,7 +393,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
     }
 
     private fun deleteSelectedType() {
-        if(typeSelector.getValue() != null && typesList.size > 4) {
+        if(typeSelector.selectedIndex != -1 && typesList.size > 4) {
             AppScope.launch {
                 ConduitManager.deleteType(typesList[typeSelector.selectedIndex].id!!)
                 typesList.removeAt(typeSelector.selectedIndex)
@@ -391,7 +403,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
     }
 
     private fun deleteSelectedLocation() {
-        if(locationSelector.getValue() != null && locationsList.size > 0) {
+        if(locationSelector.selectedIndex != -1 && locationsList.size > 0) {
             AppScope.launch {
                 ConduitManager.deleteLocation(locationsList[locationSelector.selectedIndex].id!!)
                 locationsList.removeAt(locationSelector.selectedIndex)
@@ -413,6 +425,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
         deleteButton.show()
         showLocationList()
         showTypeList()
+        sessionPanel.clearValidation()
         return getResult()
     }
 
@@ -430,6 +443,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
         editingSession = null
         showLocationList()
         showTypeList()
+        sessionPanel.clearValidation()
         return getResult()
     }
 }

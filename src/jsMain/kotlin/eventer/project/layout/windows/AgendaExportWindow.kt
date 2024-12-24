@@ -64,8 +64,8 @@ class AgendaExportWindow : Modal(caption = tr("Agenda sessions export")) {
         show()
     }
 
-    private fun downloadFile(data: String, fileName: String) {
-        val blob = Blob(arrayOf(data), BlobPropertyBag("text/csv"))
+    private fun downloadFile(data: String, fileName: String, mimeType: String) {
+        val blob = Blob(arrayOf(data), BlobPropertyBag("$mimeType;charset=utf-8"))
         val url = URL.createObjectURL(blob)
         val anchor = document.createElement("a") as web.html.HTMLAnchorElement
         anchor.href = url
@@ -101,7 +101,7 @@ class AgendaExportWindow : Modal(caption = tr("Agenda sessions export")) {
             }
 
             val csvData = csvHeader + csvContent
-            downloadFile(csvData, "agenda_sessions.csv")
+            downloadFile(csvData, "agenda_sessions.csv", "text/csv")
         }
     }
 
@@ -131,7 +131,7 @@ class AgendaExportWindow : Modal(caption = tr("Agenda sessions export")) {
 
             val jsonString = Json.encodeToString(JsonArray(jsonArray))
 
-            downloadFile(jsonString, "agenda_sessions.json")
+            downloadFile(jsonString, "agenda_sessions.json", "application/json")
         }
     }
 }

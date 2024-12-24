@@ -56,10 +56,12 @@ class RegisterPanel: SimplePanel() {
             vPanel (spacing = 10) {
                 add(User::firstName, Text(label = tr("First name"), maxlength = 50), required = true)
                 add(User::lastName, Text(label = tr("Last name"), maxlength = 50), required = true)
-                add(User::email, Text(label = tr("E-mail"), maxlength = 50), required = true,
-                    validatorMessage = { gettext("E-mail address does not have correct syntax.") }) {
-                    it.getValue()?.matches(Regex("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) ?: false
-                }
+                add(
+                    User::email,
+                    Text(label = tr("E-mail"), maxlength = 50),
+                    required = true,
+                    validatorMessage = { gettext("E-mail address does not have correct syntax.") },
+                    validator = { it.getValue()?.matches(Regex("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) ?: false })
                 add(User::password,
                     Password(label = tr("Password")) { maxlength = 64 },
                     required = true,
