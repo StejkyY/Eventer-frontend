@@ -255,23 +255,35 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
     }
 
     private fun removeSessionFromMap(session: Session) {
-        val daySessionsByLocation = formattedEventSessionsMap.value.get(selectedDate.value.getTime())?.toMutableMap() ?: return
+        val daySessionsByLocation = formattedEventSessionsMap.value.get(
+            selectedDate.value.getTime())?.toMutableMap() ?: return
+        val sessionsInLocation = daySessionsByLocation[session.location]?.toMutableList() ?: return
         var removed = false
+        val index = getSessionIndex(session)
 
-        for ((location, sessions) in daySessionsByLocation) {
-            val sessionIndex = sessions.indexOfFirst { it.id == session.id }
-            if (sessionIndex != -1) {
-                val updatedSessions = sessions.toMutableList()
-                updatedSessions.removeAt(sessionIndex)
-                if (updatedSessions.isEmpty()) {
-                    daySessionsByLocation.remove(location)
-                } else {
-                    daySessionsByLocation[location] = updatedSessions
-                }
-                removed = true
-                break
+        if (index in sessionsInLocation.indices) {
+            sessionsInLocation.removeAt(index)
+            if (sessionsInLocation.isEmpty()) {
+                daySessionsByLocation.remove(session.location)
+            } else {
+                daySessionsByLocation[session.location!!] = sessionsInLocation
             }
+            removed = true
         }
+//        for ((location, sessions) in daySessionsByLocation) {
+//            val sessionIndex = sessions.indexOfFirst { it.id == session.id }
+//            if (sessionIndex != -1) {
+//                val updatedSessions = sessions.toMutableList()
+//                updatedSessions.removeAt(sessionIndex)
+//                if (updatedSessions.isEmpty()) {
+//                    daySessionsByLocation.remove(location)
+//                } else {
+//                    daySessionsByLocation[location] = updatedSessions
+//                }
+//                removed = true
+//                break
+//            }
+//        }
 
         if (!removed) return
 

@@ -3,8 +3,10 @@ package eventer.project.state
 import eventer.project.web.View
 import eventer.project.models.*
 import io.kvision.redux.RAction
+import web.html.Loading
 
 data class AgendaAppState(
+    val appLoading: Boolean = true,
     val view: View = View.EVENTS,
     val previousView: View = View.EVENTS,
     val profile: User? = null,
@@ -14,13 +16,13 @@ data class AgendaAppState(
     val selectedEvent: Event? = null,
     val selectedEventSessions: List<Session>? = null,
     val selectedEventLocations: List<Location>? = null,
-//    val editingEventState: EventFormattedState? = null,
     val formattedEventSessions: Map<Double, Map<Location, List<Session>>>? = null,
     val googleAccountSynced: Boolean = false,
     val microsoftAccountSynced: Boolean = false,
 )
 
 sealed class AgendaAppAction: RAction {
+    object appLoaded: AgendaAppAction()
     object loginPage: AgendaAppAction()
     object registerPage: AgendaAppAction()
     object eventsPage: AgendaAppAction()
@@ -48,6 +50,9 @@ sealed class AgendaAppAction: RAction {
 }
 
 fun agendaAppReducer(state: AgendaAppState, action: AgendaAppAction): AgendaAppState = when (action) {
+    is AgendaAppAction.appLoaded -> {
+        state.copy(appLoading = false)
+    }
     is AgendaAppAction.loginPage -> {
         state.copy(view = View.LOGIN)
     }
@@ -55,25 +60,25 @@ fun agendaAppReducer(state: AgendaAppState, action: AgendaAppAction): AgendaAppS
         state.copy(view = View.REGISTER)
     }
     is AgendaAppAction.eventsPage -> {
-        state.copy(view = View.EVENTS, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
+        state.copy(appLoading = false, view = View.EVENTS, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
     }
     is AgendaAppAction.profilePage -> {
-        state.copy(view = View.PROFILE, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
+        state.copy(appLoading = false, view = View.PROFILE, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
     }
     is AgendaAppAction.newEventPage -> {
-        state.copy(view = View.NEW_EVENT, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
+        state.copy(appLoading = false, view = View.NEW_EVENT, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
     }
     is AgendaAppAction.eventPreviewPage -> {
-        state.copy(view = View.EVENT_PREVIEW, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
+        state.copy(appLoading = false, view = View.EVENT_PREVIEW, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
     }
     is AgendaAppAction.eventBasicInfoPage -> {
-        state.copy(view = View.EVENT_BASIC_INFO, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
+        state.copy(appLoading = false, view = View.EVENT_BASIC_INFO, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
     }
     is AgendaAppAction.eventDescriptionPage -> {
-        state.copy(view = View.EVENT_DESCRIPTION, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
+        state.copy(appLoading = false, view = View.EVENT_DESCRIPTION, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
     }
     is AgendaAppAction.eventAgendaPage -> {
-        state.copy(view = View.EVENT_AGENDA, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
+        state.copy(appLoading = false, view = View.EVENT_AGENDA, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
     }
     is AgendaAppAction.previousPage -> {
         state.copy(view = state.previousView, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
@@ -109,7 +114,7 @@ fun agendaAppReducer(state: AgendaAppState, action: AgendaAppAction): AgendaAppS
         state.copy(microsoftAccountSynced = true)
     }
     is AgendaAppAction.logout -> {
-        AgendaAppState()
+        AgendaAppState(appLoading = false)
     }
     is AgendaAppAction.formattedEventSessionsLoaded -> {
         state.copy(formattedEventSessions = action.formattedEventSessions)

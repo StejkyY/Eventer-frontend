@@ -98,8 +98,7 @@ object ConduitManager {
         agendaStore.dispatch(AgendaAppAction.newEventPage)
     }
 
-    fun loadEvent(eventId: Int, agendaLoad: Boolean = false) {
-        AppScope.launch {
+    suspend fun loadEvent(eventId: Int, agendaLoad: Boolean = false) {
             val event = Api.getEvent(eventId)
             if (agendaLoad || agendaStore.getState().selectedEvent?.id != eventId) {
                 getSessionsForEvent(eventId)
@@ -108,22 +107,27 @@ object ConduitManager {
             }
             agendaStore.dispatch(AgendaAppAction.eventLoaded(event))
             formatSessions()
-        }
     }
 
     fun showEventBasicInfoPage(eventId: Int) {
-        loadEvent(eventId)
-        agendaStore.dispatch(AgendaAppAction.eventBasicInfoPage)
+        AppScope.launch {
+            loadEvent(eventId)
+            agendaStore.dispatch(AgendaAppAction.eventBasicInfoPage)
+        }
     }
 
     fun showEventDescriptionPage(eventId: Int) {
-        loadEvent(eventId)
-        agendaStore.dispatch(AgendaAppAction.eventDescriptionPage)
+        AppScope.launch {
+            loadEvent(eventId)
+            agendaStore.dispatch(AgendaAppAction.eventDescriptionPage)
+        }
     }
 
     fun showEventAgendaPage(eventId: Int) {
-        loadEvent(eventId, true)
-        agendaStore.dispatch(AgendaAppAction.eventAgendaPage)
+        AppScope.launch {
+            loadEvent(eventId, true)
+            agendaStore.dispatch(AgendaAppAction.eventAgendaPage)
+        }
     }
 
     fun showEventPreviewPage(eventId: Int) {

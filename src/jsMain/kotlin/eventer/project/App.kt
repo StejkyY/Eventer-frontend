@@ -41,40 +41,42 @@ class App : Application() {
 
         root("eventer" ) {
             simplePanel().bind(ConduitManager.agendaStore) { state ->
-                when(state.view) {
-                    View.EVENTS -> {
-                        menu(state)
-                        add(EventsPanel(state))
-                    }
-                    View.LOGIN -> {
-                        add(LoginPanel())
-                    }
-                    View.REGISTER -> {
-                        add(RegisterPanel())
-                    }
-                    View.PROFILE -> {
-                        add(MyProfilePanel(state))
-                    }
-                    View.NEW_EVENT -> {
-                        add(NewEventPanel(state))
-                    }
-                    View.EVENT_PREVIEW -> {
-                        add(EventPreviewPanel(state))
-                    }
-                    View.EVENT_BASIC_INFO -> {
-                        menu(state)
-                        val childPanel = EventBasicInfoPanel(state)
-                        add(EventPanel(state, childPanel))
-                    }
-                    View.EVENT_DESCRIPTION -> {
-                        menu(state)
-                        val childPanel = EventDescriptionPanel(state)
-                        add(EventPanel(state, childPanel))
-                    }
-                    View.EVENT_AGENDA -> {
-                        menu(state)
-                        val childPanel = EventAgendaPanel(state, CalendarMode.EDIT)
-                        add(EventPanel(state, childPanel))
+                if(!state.appLoading) {
+                    when(state.view) {
+                        View.EVENTS -> {
+                            menu(state)
+                            add(EventsPanel(state))
+                        }
+                        View.LOGIN -> {
+                            add(LoginPanel())
+                        }
+                        View.REGISTER -> {
+                            add(RegisterPanel())
+                        }
+                        View.PROFILE -> {
+                            add(MyProfilePanel(state))
+                        }
+                        View.NEW_EVENT -> {
+                            add(NewEventPanel(state))
+                        }
+                        View.EVENT_PREVIEW -> {
+                            add(EventPreviewPanel(state))
+                        }
+                        View.EVENT_BASIC_INFO -> {
+                            menu(state)
+                            val childPanel = EventBasicInfoPanel(state)
+                            add(EventPanel(state, childPanel))
+                        }
+                        View.EVENT_DESCRIPTION -> {
+                            menu(state)
+                            val childPanel = EventDescriptionPanel(state)
+                            add(EventPanel(state, childPanel))
+                        }
+                        View.EVENT_AGENDA -> {
+                            menu(state)
+                            val childPanel = EventAgendaPanel(state, CalendarMode.EDIT)
+                            add(EventPanel(state, childPanel))
+                        }
                     }
                 }
                 RoutingManager.updatePageLinks()

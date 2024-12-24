@@ -37,11 +37,9 @@ object RoutingManager {
 
     private fun Routing.routing() {
         routing.on("/", { _ ->
-            redirect(View.EVENTS)
+            ConduitManager.showEventsPage()
         }).on(View.EVENTS.url, { _ ->
-            AppScope.launch {
-                ConduitManager.showEventsPage()
-            }
+            ConduitManager.showEventsPage()
         }).on(View.NEW_EVENT.url, { _ ->
             ConduitManager.showNewEventPage()
         }).on(View.LOGIN.url, { _ ->
@@ -63,9 +61,7 @@ object RoutingManager {
         }).on("/microsoft-oauth-logged", { _ ->
             extractAccessTokenFromWindowURL()
         }).on("/logout", { _ ->
-            AppScope.launch {
-                ConduitManager.logout()
-            }
+            ConduitManager.logout()
         })
     }
 
