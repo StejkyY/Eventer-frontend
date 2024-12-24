@@ -2,6 +2,7 @@ package eventer.project.layout.windows
 
 import eventer.project.components.AgendaPrimaryButton
 import eventer.project.AppScope
+import eventer.project.components.withProgress
 import eventer.project.state.AgendaAppAction
 import eventer.project.web.ConduitManager
 import eventer.project.web.ExternalCalendarSessionsManager
@@ -45,7 +46,7 @@ class AddToCalendarWindow : Modal(caption = tr("Add sessions to calendar")) {
             marginLeft = 5.px
             onClick {
                 try {
-                    AppScope.launch {
+                    AppScope.withProgress {
                         if(ExternalCalendarSessionsManager.sendEventSessionsToExternalCalendar(Provider.GOOGLE)) {
                             ConduitManager.showSuccessToast(tr("Sessions were added succesfully to your calendar."))
                         }
@@ -59,7 +60,7 @@ class AddToCalendarWindow : Modal(caption = tr("Add sessions to calendar")) {
             marginLeft = 5.px
             onClick {
                 try {
-                    AppScope.launch {
+                    AppScope.withProgress {
                         if(ExternalCalendarSessionsManager.sendEventSessionsToExternalCalendar(Provider.MICROSOFT)) {
                             ConduitManager.showSuccessToast(tr("Sessions were added succesfully to your calendar."))
                         }
@@ -142,7 +143,7 @@ class AddToCalendarWindow : Modal(caption = tr("Add sessions to calendar")) {
         }
         if(ConduitManager.getLocalStorageToken(ConduitManager.MICROSOFT_ACCESS_TOKEN) != null &&
             !ConduitManager.agendaStore.getState().microsoftAccountSynced) {
-            ConduitManager.agendaStore.dispatch(AgendaAppAction.googleAccountLinked)
+            ConduitManager.agendaStore.dispatch(AgendaAppAction.microsoftAccountLinked)
         }
     }
 

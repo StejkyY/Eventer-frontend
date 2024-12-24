@@ -1,10 +1,7 @@
 package eventer.project.layout
 
 import eventer.project.AppScope
-import eventer.project.components.AgendaIconButton
-import eventer.project.components.AgendaPrimaryButton
-import eventer.project.components.MenuTextButton
-import eventer.project.components.UnsavedChangesConfirm
+import eventer.project.components.*
 import eventer.project.state.AgendaAppState
 import eventer.project.web.ConduitManager
 import eventer.project.web.RoutingManager
@@ -174,7 +171,7 @@ class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : S
 
 
     private fun save() {
-        AppScope.launch {
+        AppScope.withProgress {
             if(childPanel.validate() && childPanel.save()) {
                 saveButton.disabled = true
                 ConduitManager.showSuccessToast(tr("Event changes were saved succesfully."))

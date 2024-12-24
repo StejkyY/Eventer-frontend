@@ -12,6 +12,8 @@ import eventer.project.web.View
 import io.kvision.*
 import io.kvision.i18n.DefaultI18nManager
 import io.kvision.i18n.I18n
+import io.kvision.pace.Pace
+import io.kvision.pace.PaceOptions
 import io.kvision.panel.root
 import io.kvision.panel.simplePanel
 import io.kvision.routing.Routing
@@ -24,6 +26,8 @@ val AppScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
 class App : Application() {
     init {
+        Pace.init(require("pace-progressbar/themes/blue/pace-theme-minimal.css"))
+        Pace.setOptions(PaceOptions(manual = true))
         ConduitManager.initialize()
         if (I18n.language !in listOf("en", "cz")) {
             I18n.language = "en"
