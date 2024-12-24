@@ -36,7 +36,7 @@ import io.kvision.utils.syncWithList
 import kotlinx.coroutines.launch
 import kotlin.js.Date
 
-class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgendaPanel) : Dialog<Session>(caption = "Session details", animation = false) {
+class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgendaPanel) : Dialog<Session>(caption = tr("Session details"), animation = false) {
     private val sessionPanel: FormPanel<Session>
     private val saveButton: Button
     private val deleteButton: Button
@@ -181,7 +181,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
 
         sessionPanel = formPanel  {
             alignItems = AlignItems.CENTER
-            add(Session::name, Text(label = "${tr("Name")}:", maxlength = 100) {
+            add(Session::name, Text(label = tr("Name"), maxlength = 100) {
                 autocomplete = Autocomplete.OFF
             }, required = true)
             add(

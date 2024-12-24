@@ -13,6 +13,7 @@ import io.kvision.core.BsColor
 import io.kvision.i18n.tr
 import io.kvision.redux.createTypedReduxStore
 import io.kvision.rest.*
+import io.kvision.routing.Routing
 import io.kvision.toast.ToastContainer
 import io.kvision.toast.ToastContainerPosition
 import kotlinx.browser.localStorage

@@ -32,11 +32,10 @@ fun Container.menu(state: AgendaAppState) {
         dropDown("", elements = listOf(
             (state.profile?.firstName + " " + state.profile?.lastName) to DD.HEADER.option,
             tr("My profile") to View.PROFILE.url,
-            tr("Separator") to DD.SEPARATOR.option,
+            "Separator" to DD.SEPARATOR.option,
             tr("Events") to View.EVENTS.url,
-            tr("Groups") to "/groups",
-            tr("Separator") to DD.SEPARATOR.option,
-            tr("Log out") to "/logout",
+            "Separator" to DD.SEPARATOR.option,
+            tr("Logout") to "/logout",
         ), arrowVisible = false, icon = "fas fa-bars") {
             paddingRight = 30.px
             direction = Direction.DROPUP
