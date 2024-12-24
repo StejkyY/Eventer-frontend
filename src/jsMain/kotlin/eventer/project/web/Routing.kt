@@ -28,7 +28,7 @@ object RoutingManager {
     lateinit var routing: Routing
 
     fun init() {
-        routing = Routing("/", useHash = false, strategy = Strategy.ALL)
+        routing = Routing("/", useHash = true, strategy = Strategy.ALL)
         routing.routing()
         routing.resolve()
     }
@@ -80,8 +80,8 @@ object RoutingManager {
      * Passes the extracted token to the main application window.
      */
     fun extractAccessTokenFromWindowURL() {
-        val hash = window.location.hash
-        val accessToken = hash.substringAfter("access_token=").substringBefore("&")
+        val search = window.location.search
+        val accessToken = search.substringAfter("access_token=").substringBefore("&")
         if (accessToken.isNotEmpty()) {
             AppScope.launch {
                 ConduitManager.passAccessTokenToMainWindow(accessToken)

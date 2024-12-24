@@ -57,9 +57,11 @@ class App : Application() {
                             add(RegisterPanel())
                         }
                         View.PROFILE -> {
+                            menu(state)
                             add(MyProfilePanel(state))
                         }
                         View.NEW_EVENT -> {
+                            menu(state)
                             add(NewEventPanel(state))
                         }
                         View.EVENT_PREVIEW -> {
