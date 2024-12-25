@@ -96,7 +96,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
         typeSelector = Select(
             label = tr("Type")
         ).bind(typesList) { list ->
-            options = list.map { it.id.toString() to it.name!! }
+            options = list.map { it.id.toString() to tr(it.name!!) }
         }
 
         newTypeInputText = Text(label = tr("New type"), maxlength = 50) {

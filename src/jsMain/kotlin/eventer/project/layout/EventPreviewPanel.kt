@@ -4,7 +4,9 @@ import eventer.project.state.AgendaAppState
 import io.kvision.core.*
 import io.kvision.html.Icon
 import io.kvision.html.Label
+import io.kvision.html.span
 import io.kvision.i18n.I18n
+import io.kvision.i18n.gettext
 import io.kvision.i18n.tr
 import io.kvision.panel.SimplePanel
 import io.kvision.panel.hPanel
@@ -37,8 +39,8 @@ class EventPreviewPanel(state: AgendaAppState) : SimplePanel() {
                     fontSize = 20.px
                 })
             }
-            add(Label(
-                tr("${state.selectedEvent?.type.toString()} event")) {
+            val typeString = gettext(state.selectedEvent?.type.toString())
+            add(Label(typeString) {
                 fontSize = 18.px
             })
             hPanel(spacing = 20) {

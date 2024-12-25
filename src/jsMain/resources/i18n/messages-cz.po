@@ -8,456 +8,491 @@ msgstr ""
 "Language: cz\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:44
-#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:58
+#: src/jsMain/kotlin/eventer/project/layout/EventPreviewPanel.kt:42
+msgid "In-Person"
+msgstr "Prezenční"
+
+#: src/jsMain/kotlin/eventer/project/layout/EventPreviewPanel.kt:42
+msgid "Hybrid"
+msgstr "Hybridní"
+
+#: src/jsMain/kotlin/eventer/project/layout/EventPreviewPanel.kt:42
+msgid "Virtual"
+msgstr "Virtuální"
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:39
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:53
 msgid "Add sessions"
-msgstr "Přidání relací"
+msgstr "Přidat sessions"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:27
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:22
 msgid "Add sessions to calendar"
-msgstr "Přidání relací do kalendáře"
+msgstr "Přidejte sessions do kalendáře"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:77
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:76
 msgid "Add to calendar"
 msgstr "Přidat do kalendáře"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:66
-#: src/jsMain/kotlin/eventer/project/layout/EventPreviewPanel.kt:72
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:61
+#: src/jsMain/kotlin/eventer/project/layout/EventPreviewPanel.kt:73
 msgid "Agenda"
-msgstr "Agenda"
+msgstr "Program"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/AgendaExportWindow.kt:24
+#: src/jsMain/kotlin/eventer/project/layout/windows/AgendaExportWindow.kt:26
 msgid "Agenda sessions export"
-msgstr "Export relací agendy"
+msgstr "Export sessions programu"
 
-#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:98
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:105
 msgid "Already have an account?"
 msgstr "Již máte účet?"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:283
-#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:251
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:338
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:299
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:265
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:369
 msgid "Are you sure?"
-msgstr "Jste si jistý?"
+msgstr "Jsi si jistá?"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:108
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:106
 #: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:162
 msgid "Back"
-msgstr "Zpět"
+msgstr "Zpátky"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:64
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:59
 msgid "Basic info"
-msgstr "Základní informace"
+msgstr "Základní info"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/AgendaExportWindow.kt:54
+#: src/jsMain/kotlin/eventer/project/layout/EventSessionWindow.kt:99
+msgid "Break"
+msgstr "Přestávka"
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/AgendaExportWindow.kt:56
 msgid "CSV format"
-msgstr "Formát CSV"
+msgstr "CSV formát"
 
-#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:71
+#: src/jsMain/kotlin/eventer/project/helpers/Menu.kt:23
+msgid "CZE"
+msgstr "ČERVEN"
+
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:73
 msgid "Change email"
 msgstr "Změnit e-mail"
 
-#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:77
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:79
 msgid "Change password"
 msgstr "Změnit heslo"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:73
-#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:82
-#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:57
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:72
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:81
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:52
 msgid "Changes need to be saved first."
-msgstr "Změny je třeba nejprve uložit."
+msgstr "Změny je potřeba nejprve uložit."
 
-#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:110
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:112
 msgid "Close"
-msgstr "Zavřít"
+msgstr "ZAVŘIT"
 
 #: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:100
 #: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:117
 msgid "Confirm changes"
-msgstr "Potvrdit změny"
+msgstr "Potvrďte změny"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventPreviewWindow.kt:21
-msgid "Copy this link for event preview."
-msgstr "Zkopírujte tento odkaz pro náhled události."
-
-#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:49
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:47
 msgid "Create"
 msgstr "Vytvořit"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:48
-#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:114
+#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:42
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:112
 msgid "Create new event"
 msgstr "Vytvořit novou událost"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:60
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:59
 msgid "Create new session"
-msgstr "Vytvořit novou relaci"
+msgstr "Vytvořit novou session"
 
-#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:69
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:67
 msgid "Current password"
-msgstr "Současné heslo"
+msgstr "Aktuální heslo"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:190
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:198
 msgid "Day"
 msgstr "Den"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:76
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:74
 msgid "Delete"
-msgstr "Delete"
+msgstr "Vymazat"
 
-#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:83
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:85
 msgid "Delete account"
-msgstr "Smazat účet"
+msgstr "Odstranit účet"
 
 #: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:84
 msgid "Delete event"
-msgstr "Odstranit událost"
+msgstr "Smazat událost"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:124
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:122
 #: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:155
 msgid "Delete selected"
 msgstr "Smazat vybrané"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:65
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:211
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:60
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:219
 msgid "Description"
 msgstr "Popis"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:283
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:299
 msgid "Do you want to delete this event?"
 msgstr "Chcete tuto událost smazat?"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:338
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:369
 msgid "Do you want to delete this session?"
-msgstr "Chcete tuto relaci smazat?"
+msgstr "Chcete tuto session smazat?"
 
-#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:251
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:265
 msgid "Do you want to delete your account?"
-msgstr "Chcete svůj účet smazat?"
+msgstr "Chcete smazat svůj účet?"
 
-#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:73
+#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:74
 msgid "Don't have an account yet?"
 msgstr "Ještě nemáte účet?"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/AgendaExportWindow.kt:30
-#: src/jsMain/kotlin/eventer/project/layout/windows/AgendaExportWindow.kt:36
+#: src/jsMain/kotlin/eventer/project/layout/windows/AgendaExportWindow.kt:32
+#: src/jsMain/kotlin/eventer/project/layout/windows/AgendaExportWindow.kt:38
 msgid "Download"
-msgstr "Stáhnout"
+msgstr "Ke stažení"
 
 #: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:79
 msgid "Duplicate event"
 msgstr "Duplicitní událost"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:95
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:93
 msgid "Duration"
-msgstr "Doba trvání"
+msgstr "Trvání"
 
-#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:51
-#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:64
-#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:58
+#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:52
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:62
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:61
 msgid "E-mail"
 msgstr "E-mail"
 
+#: src/jsMain/kotlin/eventer/project/helpers/Menu.kt:23
+msgid "ENG"
+msgstr "EN"
+
 #: src/jsMain/kotlin/eventer/project/models/EventState.kt:9
 msgid "Elapsed"
-msgstr "Uplynulý"
+msgstr "Uplynulo"
 
 #: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:109
-#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:113
-#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:89
+#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:107
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:87
 msgid "End date"
-msgstr "Datum ukončení"
+msgstr "Datum konce"
 
 #: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:134
-#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:98
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:96
 msgid "End time"
-msgstr "Konec úvazku"
+msgstr "Čas konce"
 
-#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:86
-#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:91
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:84
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:89
 msgid "Enter date"
 msgstr "Zadejte datum"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:290
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:303
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:314
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:328
 msgid "Error when saving session."
-msgstr "Chyba při ukládání relace."
+msgstr "Chyba při ukládání session."
 
-#: src/jsMain/kotlin/eventer/project/web/ConduitManager.kt:61
+#: src/jsMain/kotlin/eventer/project/web/ConduitManager.kt:56
 msgid "Error with connection to the server. Please try again later."
-msgstr "Chyba při připojení k serveru. Zkuste to prosím znovu později."
+msgstr "Chyba připojení k serveru. Zkuste to znovu později."
 
-#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:180
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:186
 msgid "Event changes were saved succesfully."
 msgstr "Změny událostí byly úspěšně uloženy."
 
 #: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:146
 msgid "Event location"
-msgstr "Místo konání události"
+msgstr "Místo události"
 
-#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:129
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:127
 msgid "Event name"
 msgstr "Název události"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventPreviewWindow.kt:11
-msgid "Event preview"
-msgstr "Náhled události"
-
 #: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:225
 msgid "Event start time and date has to be set before end."
-msgstr "Čas a datum zahájení události musí být nastaveny před koncem."
+msgstr "Čas a datum začátku události musí být nastaveny před koncem."
 
-#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:286
+#: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:302
 msgid "Event successfully deleted"
 msgstr "Událost byla úspěšně smazána"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:55
+#: src/jsMain/kotlin/eventer/project/helpers/Menu.kt:36
+#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:49
 msgid "Events"
 msgstr "Události"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:68
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:67
 msgid "Export"
 msgstr "Export"
 
-#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:70
+#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:71
 msgid "Facebook"
 msgstr "Facebook"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:54
-#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:68
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:49
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:63
 msgid "Failed adding sessions to calendar."
-msgstr "Přidání relací do kalendáře se nezdařilo."
+msgstr "Přidání sessions do kalendáře se nezdařilo."
 
-#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:67
-#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:56
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:65
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:57
 msgid "First name"
 msgstr "Křestní jméno"
 
-#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:69
+#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:70
 msgid "Google"
 msgstr "Google"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:105
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:100
 msgid "Google Calendar:"
 msgstr "Kalendář Google:"
 
 #: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:53
-#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:58
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:56
 #: src/jsMain/kotlin/eventer/project/models/EventType.kt:9
 msgid "Hybrid"
 msgstr "Hybridní"
 
 #: src/jsMain/kotlin/eventer/project/models/EventType.kt:9
 msgid "In-person"
-msgstr "Osobně"
+msgstr "Prezenční"
 
 #: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:46
-#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:55
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:53
 msgid "In Person"
-msgstr "Osobně"
+msgstr "Prezenční"
 
 #: src/jsMain/kotlin/eventer/project/models/EventState.kt:9
 msgid "In progress"
-msgstr "Probíhá"
+msgstr "Probíhající"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/AgendaExportWindow.kt:46
+#: src/jsMain/kotlin/eventer/project/layout/windows/AgendaExportWindow.kt:48
 msgid "JSON format"
-msgstr "Formát JSON"
+msgstr "formát JSON"
 
-#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:68
-#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:57
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:66
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:58
 msgid "Last name"
 msgstr "Příjmení"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventPreviewWindow.kt:15
-msgid "Link"
-msgstr "Odkaz"
+#: src/jsMain/kotlin/eventer/project/layout/EventSessionWindow.kt:99
+msgid "Lecture"
+msgstr "Přednáška"
 
 #: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:156
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:146
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:144
 msgid "Location"
-msgstr "Lokace"
+msgstr "Lokalita"
 
-#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:44
-#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:55
-#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:103
-#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:72
-#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:78
+#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:45
+#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:56
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:110
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:67
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:73
 msgid "Login"
-msgstr "Login"
+msgstr "Přihlásit se"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:119
+#: src/jsMain/kotlin/eventer/project/helpers/Menu.kt:38
+msgid "Logout"
+msgstr "Odhlásit se"
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:114
 msgid "Microsoft Outlook:"
-msgstr "Aplikace Microsoft Outlook:"
+msgstr "Microsoft Outlook:"
 
-#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:144
+#: src/jsMain/kotlin/eventer/project/helpers/Menu.kt:34
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:146
 msgid "My profile"
 msgstr "Můj profil"
 
 #: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:148
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:184
 msgid "Name"
-msgstr "Jméno"
+msgstr "Název"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:151
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:150
 #: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:169
 msgid "New location"
-msgstr "Nová lokalita"
+msgstr "Nové umístění"
 
 #: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:70
 msgid "New password"
 msgstr "Nové heslo"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:288
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:312
 msgid "New session location added."
-msgstr "Přidáno nové umístění relace."
+msgstr "Bylo přidáno nové umístění session."
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:301
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:326
 msgid "New session type added."
-msgstr "Přidán nový typ relace."
+msgstr "Přidán nový typ session."
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:104
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:115
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:102
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:113
 msgid "New type"
 msgstr "Nový typ"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:443
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:480
 msgid "No description available"
-msgstr "Žádný popis není k dispozici"
+msgstr "Popis není k dispozici"
 
-#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:64
+#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:65
 msgid "Or you can use"
 msgstr "Nebo můžete použít"
 
-#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:33
-#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:62
-msgid "Password"
-msgstr "Password"
+#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:119
+msgid "Owner"
+msgstr "Vlastník"
 
-#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:69
+#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:34
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:66
+msgid "Password"
+msgstr "Přístupové heslo"
+
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:75
 msgid "Password again"
 msgstr "Heslo znovu"
 
-#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:235
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:246
 msgid "Password is not correct."
 msgstr "Heslo není správné."
 
-#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:78
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:85
 msgid "Password needs to be atleast 8 characters long, contain atleast one upper case and one number"
-msgstr "Heslo musí obsahovat alespoň 8 znaků, obsahovat alespoň jedno velké písmeno a jedno číslo"
+msgstr "Heslo musí mít alespoň 8 znaků, obsahovat alespoň jedno velké písmeno a jedno číslo"
 
-#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:90
-#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:91
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:97
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:98
 msgid "Passwords are not the same"
 msgstr "Hesla nejsou stejná"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:52
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:47
 msgid "Preview"
 msgstr "Náhled"
 
-#: src/jsMain/kotlin/eventer/project/web/ExternalCalendarSessionsManager.kt:29
+#: src/jsMain/kotlin/eventer/project/web/ExternalCalendarSessionsManager.kt:87
 msgid "Problem with access to the service occured, please log in the service again."
-msgstr "Došlo k problému s přístupem ke službě, přihlaste se prosím znovu do služby."
+msgstr "Vyskytl se problém s přístupem ke službě, přihlaste se prosím znovu ke službě."
 
-#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:241
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:252
 msgid "Profile updated succesfully."
 msgstr "Profil byl úspěšně aktualizován."
 
-#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:78
-#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:32
-#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:49
+#: src/jsMain/kotlin/eventer/project/layout/LoginPanel.kt:79
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:33
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:50
 msgid "Register"
-msgstr "Registrovat se"
+msgstr "Zaregistrujte se"
 
-#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:89
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:70
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:91
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:68
 msgid "Save"
 msgstr "Uložit"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:34
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:29
 msgid "Save changes"
 msgstr "Uložit změny"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:81
+#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:75
 msgid "Search:"
 msgstr "Vyhledávání:"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:323
+#: src/jsMain/kotlin/eventer/project/layout/EventSessionWindow.kt:99
+msgid "Session"
+msgstr "Session"
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:39
+msgid "Session details"
+msgstr "Podrobnosti session"
+
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:348
 msgid "Session saved succesfully."
-msgstr "Relace byla úspěšně uložena."
+msgstr "Session byla úspěšně uložena."
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:50
-#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:64
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:45
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:59
 msgid "Sessions were added succesfully to your calendar."
-msgstr "Relace byly úspěšně přidány do vašeho kalendáře."
+msgstr "Sessions byly úspěšně přidány do vašeho kalendáře."
 
-#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:245
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:256
 msgid "Something went wrong."
 msgstr "Něco se pokazilo."
 
 #: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:92
-#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:112
-#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:84
+#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:106
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:82
 msgid "Start date"
 msgstr "Datum zahájení"
 
 #: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:126
-#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:94
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:82
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:92
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:80
 msgid "Start time"
-msgstr "Čas zahájení"
+msgstr "Čas začátku"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:111
+#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:105
 msgid "Status"
-msgstr "Stav"
+msgstr "Status"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:38
-#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:41
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:33
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:36
 msgid "Synced"
-msgstr "Synchronizované"
+msgstr "Synchronizováno"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:110
+#: src/jsMain/kotlin/eventer/project/layout/EventsPanel.kt:104
 msgid "Title"
-msgstr "Title"
+msgstr "Název"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:99
+#: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:97
 msgid "Type"
 msgstr "Typ"
 
-#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:85
-#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:93
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:80
+#: src/jsMain/kotlin/eventer/project/layout/windows/AddToCalendarWindow.kt:88
 msgid "Unlink"
 msgstr "Odpojit"
 
 #: src/jsMain/kotlin/eventer/project/models/EventState.kt:9
 msgid "Upcoming"
-msgstr "Připravované"
+msgstr "Nadcházející"
 
-#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:118
+#: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:128
 msgid "User registered. You can now log in."
 msgstr "Uživatel registrován. Nyní se můžete přihlásit."
 
 #: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:60
-#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:61
+#: src/jsMain/kotlin/eventer/project/layout/NewEventPanel.kt:59
 #: src/jsMain/kotlin/eventer/project/models/EventType.kt:9
 msgid "Virtual"
 msgstr "Virtuální"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:46
-#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:103
-msgid "You have unsaved changes, are you sure you want to leave?"
-msgstr "Máte neuložené změny, jste si jisti, že chcete odejít?"
+#: src/jsMain/kotlin/eventer/project/layout/EventSessionWindow.kt:99
+msgid "Workshop"
+msgstr "Workshop"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:74
-#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:83
-#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:92
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:41
+#: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:105
+msgid "You have unsaved changes, are you sure you want to leave?"
+msgstr "Máte neuložené změny, opravdu chcete odejít?"
+
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:69
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:78
+#: src/jsMain/kotlin/eventer/project/layout/EventPanel.kt:87
 msgid "You have unsaved changes, do you want to leave the page?"
 msgstr "Máte neuložené změny, chcete stránku opustit?"
 
 #: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:101
 #: src/jsMain/kotlin/eventer/project/layout/EventBasicInfoPanel.kt:118
 msgid "You will lose all sessions on days you removed. Do you want to continue?"
-msgstr "Ve dnech, kdy jste odebrali, ztratíte všechny relace. Chcete pokračovat?"
-
-#: src/jsMain/kotlin/eventer/project/layout/EventPreviewPanel.kt:40
-msgid "event"
-msgstr "Událost"
+msgstr "Ve dnech, které jste odebrali, přijdete o všechny sessions. Chcete pokračovat?"

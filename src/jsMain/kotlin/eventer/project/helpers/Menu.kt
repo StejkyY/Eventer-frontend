@@ -20,7 +20,7 @@ fun Container.menu(state: AgendaAppState) {
     ) {
         marginTop = 10.px
         add(SelectInput(
-            listOf("en" to tr("ENG"), "cz" to tr("CZE")),
+            listOf("en" to "ENG", "cz" to "CZE"),
             I18n.language) {
             width = 80.px
             onEvent {

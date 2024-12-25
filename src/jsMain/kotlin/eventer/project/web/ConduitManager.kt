@@ -127,9 +127,7 @@ object ConduitManager {
 
     fun showEventPreviewPage(eventId: Int) {
         AppScope.launch {
-            val event = Api.getEvent(eventId)
-            agendaStore.dispatch(AgendaAppAction.eventLoaded(event))
-            formatSessions()
+            loadEvent(eventId, false)
             agendaStore.dispatch(AgendaAppAction.eventPreviewPage)
         }
     }

@@ -13,6 +13,7 @@ import eventer.project.layout.windows.EventSessionWindow
 import io.kvision.core.*
 import io.kvision.html.Button
 import io.kvision.html.Label
+import io.kvision.i18n.gettext
 import io.kvision.i18n.tr
 import io.kvision.panel.*
 import io.kvision.state.*
@@ -195,9 +196,10 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
      */
     private fun createDayButtons() {
         dayTextButtonList.clear()
+        val dayText = tr("Day")
 
         for(i: Int in 0 until daysCount) {
-            val dayButton = AgendaTextButton(tr("Day") + " " + (i + 1)) {
+            val dayButton = AgendaTextButton("$dayText ${i + 1}") {
                 onClick {
                     dayTextButtonList[selectedDayButtonIndex].enable()
                     disable()

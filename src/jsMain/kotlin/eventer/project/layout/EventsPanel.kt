@@ -12,6 +12,7 @@ import io.kvision.html.Autocomplete
 import io.kvision.html.Button
 import io.kvision.html.InputType
 import io.kvision.html.Label
+import io.kvision.i18n.gettext
 import io.kvision.i18n.tr
 import io.kvision.panel.*
 import io.kvision.state.bind
@@ -115,7 +116,7 @@ class EventsPanel(state: AgendaAppState) : SimplePanel() {
                             cell(event.startDate?.toLocaleDateString()!!)
                             cell(event.endDate?.toLocaleDateString()!!)
                             if(event.userEventRole == null) cell("")
-                            else cell(event.userEventRole?.name.toString()) {
+                            else cell(tr(event.userEventRole?.name.toString())) {
                                 if(event.userEventRole?.name == "Owner") {
                                     this.fontWeight = FontWeight.BOLD
                                 }
