@@ -46,6 +46,7 @@ object Security {
      */
     suspend fun login() {
         var loggedIn = false
+        ConduitManager.agendaStore.dispatch(AgendaAppAction.appLoaded)
         RoutingManager.redirect(View.LOGIN)
         loginDeferred = CompletableDeferred()
 

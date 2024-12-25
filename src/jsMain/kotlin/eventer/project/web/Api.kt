@@ -135,7 +135,7 @@ object Api {
     }
 
     /**
-     * Retrieves all session types from the backend.
+     * Retrieves all session types from the backend (custom + default).
      */
     suspend fun getSessionTypes(): List<Type> {
         return restClient.call<TypesDTO>("$API_URL/types") {
