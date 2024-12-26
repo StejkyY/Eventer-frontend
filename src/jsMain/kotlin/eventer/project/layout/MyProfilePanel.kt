@@ -238,16 +238,16 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
         saveButton.disabled = true
         AppScope.launch {
             try {
-                if(passwordFormPanel[PasswordState::currentPassword] != null &&
-                    passwordFormPanel[PasswordState::newPassword] != null) {
-                    if(!ConduitManager.updatePassword(passwordFormPanel[PasswordState::currentPassword]!!,
-                            passwordFormPanel[PasswordState::newPassword]!!)
-                    ) {
-                        currentPasswordText.validatorError = tr("Password is not correct.")
-                        return@launch
+                if (profileFormPanel.validate() && passwordFormPanel.validate()) {
+                    if(passwordFormPanel[PasswordState::currentPassword] != null &&
+                        passwordFormPanel[PasswordState::newPassword] != null) {
+                        if(!ConduitManager.updatePassword(passwordFormPanel[PasswordState::currentPassword]!!,
+                                passwordFormPanel[PasswordState::newPassword]!!)
+                        ) {
+                            currentPasswordText.validatorError = tr("Password is not correct.")
+                            return@launch
+                        }
                     }
-                }
-                if(profileFormPanel.validate() && passwordFormPanel.validate()) {
                     ConduitManager.updateProfile(profileFormPanel.getData())
                     toastContainer.showToast(tr("Profile updated succesfully."), color = BsColor.SUCCESSBG)
                 }
