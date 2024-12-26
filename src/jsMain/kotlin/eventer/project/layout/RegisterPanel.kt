@@ -65,22 +65,23 @@ class RegisterPanel: SimplePanel() {
                 add(User::password,
                     Password(label = tr("Password")) { maxlength = 64 },
                     required = true,
-                    validatorMessage = { tr("Password does not meet criteria.") }) {
-                    if(it.getValue() != null) {
-                        it.getValue()!!.length >= 8 && it.getValue()?.any { it.isUpperCase() }!! && it.getValue()?.any { it.isDigit() }!!
-                    }
-                    true
-                }
+                    validatorMessage = { tr("Password does not meet criteria.") },
+                    validator = { password ->
+                        password.getValue() != null &&
+                                password.getValue()!!.length >= 8 &&
+                                password.getValue()?.any { it.isUpperCase() }!! &&
+                                password.getValue()?.any { it.isDigit() }!!
+                    })
                 add(User::password2,
                     Password(label = tr("Password again")) { maxlength = 64 },
                     required = true,
-                    validatorMessage = { gettext("Password does not meet criteria.") }) {
-                    if (it.getValue() != null) {
-                        it.getValue()!!.length >= 8 && it.getValue()?.any { it.isUpperCase() }!! && it.getValue()
-                            ?.any { it.isDigit() }!!
-                    }
-                    true
-                }
+                    validatorMessage = { gettext("Password does not meet criteria.") },
+                    validator = { password ->
+                        password.getValue() != null &&
+                                password.getValue()!!.length >= 8 &&
+                                password.getValue()?.any { it.isUpperCase() }!! &&
+                                password.getValue()?.any { it.isDigit() }!!
+                    })
                 span {
                     +tr("Password needs to be atleast 8 characters long," +
                             " contain atleast one upper case and one number")

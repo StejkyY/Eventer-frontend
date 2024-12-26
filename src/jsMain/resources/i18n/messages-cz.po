@@ -283,7 +283,7 @@ msgstr "Probíhající"
 
 #: src/jsMain/kotlin/eventer/project/layout/windows/AgendaExportWindow.kt:48
 msgid "JSON format"
-msgstr "formát JSON"
+msgstr "JSON formát"
 
 #: src/jsMain/kotlin/eventer/project/layout/MyProfilePanel.kt:66
 #: src/jsMain/kotlin/eventer/project/layout/RegisterPanel.kt:58
