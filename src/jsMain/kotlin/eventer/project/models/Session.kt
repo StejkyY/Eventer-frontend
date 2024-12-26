@@ -3,12 +3,11 @@
 
 package eventer.project.models
 
-import eventer.project.web.LocalDateSerializer
-import eventer.project.web.LocalTimeSerializer
+import eventer.project.helpers.LocalDateSerializer
+import eventer.project.helpers.LocalTimeSerializer
 import io.kvision.types.LocalDate
 import io.kvision.types.LocalTime
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.UseContextualSerialization
 
 
 @Serializable

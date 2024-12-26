@@ -333,7 +333,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
                 val durationInMinutes = durationSelector.getValue()?.toIntOrNull() ?: 0
                 if (state.selectedEvent != null) {
                     val session = Session (
-                        id = sessionPanel[Session::id],
+                        id = editingId,
                         name = sessionPanel[Session::name],
                         date = sessionDate,
                         startTime = sessionPanel[Session::startTime],

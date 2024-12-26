@@ -5,7 +5,7 @@ import eventer.project.AppScope
 import eventer.project.helpers.withProgress
 import eventer.project.state.AgendaAppAction
 import eventer.project.web.ConduitManager
-import eventer.project.web.ExternalCalendarSessionsManager
+import eventer.project.helpers.ExternalCalendarSessionsManager
 import eventer.project.web.Provider
 import io.kvision.core.AlignItems
 import io.kvision.html.Button

@@ -1,4 +1,4 @@
-package eventer.project.web
+package eventer.project.helpers
 
 import io.kvision.types.LocalDate
 import kotlinx.serialization.KSerializer

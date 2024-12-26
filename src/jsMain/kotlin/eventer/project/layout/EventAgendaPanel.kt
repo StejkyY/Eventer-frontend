@@ -13,6 +13,7 @@ import eventer.project.layout.windows.EventSessionWindow
 import io.kvision.core.*
 import io.kvision.html.Button
 import io.kvision.html.Label
+import io.kvision.i18n.I18n
 import io.kvision.i18n.gettext
 import io.kvision.i18n.tr
 import io.kvision.panel.*
@@ -196,10 +197,9 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
      */
     private fun createDayButtons() {
         dayTextButtonList.clear()
-        val dayText = tr("Day")
 
         for(i: Int in 0 until daysCount) {
-            val dayButton = AgendaTextButton("$dayText ${i + 1}") {
+            val dayButton = AgendaTextButton(tr("Day ${i + 1}")) {
                 onClick {
                     dayTextButtonList[selectedDayButtonIndex].enable()
                     disable()
@@ -243,7 +243,10 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
      */
     private fun editSession(session: Session) {
         AppScope.launch {
-            val updatedSession = sessionDialogWindow.editSession(formattedEventSessionsMap.value, session)
+            val updatedSession = sessionDialogWindow.editSession(
+                formattedEventSessionsMap.value,
+                session)
+
             if(updatedSession == null) {
                 return@launch
             }
@@ -252,7 +255,7 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
                     removeSessionFromMap(session)
                     addSessionToMap(updatedSession)
                 }
-                updateSessionInMap(updatedSession, getSessionIndex(session))
+                updateSessionInMap(updatedSession.copy(dayOrder = session.dayOrder), getSessionIndex(session))
                 newStateOnChange()
             }
         }
@@ -461,7 +464,7 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
     private fun createSessionBlock(session: Session): SimplePanel {
         val endTime = addMinutesToJSDate(session.startTime!!, session.duration!!)
         val sessionBlock = SimplePanel {
-            top = (((session.startTime!!.getHours() * 60 + session.startTime!!.getMinutes()) * 5/6) - 1).px
+            top = ((session.startTime!!.getHours() * 60 + session.startTime!!.getMinutes()) * 5/6).px
             height = ((endTime.getHours() * 60 + endTime.getMinutes() - (session.startTime!!.getHours() * 60 + session.startTime!!.getMinutes())) * 5/6).px
             background = if(session.type!!.name == "Break" ) Background(Color.name(Col.LIGHTGREEN))
             else Background(Color.name(Col.SKYBLUE))
@@ -499,8 +502,9 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
             top = 0.px
             left = 0.px
             width = 92.perc
-            marginLeft = 6.perc
-            marginTop = 1.perc
+            marginLeft = 55.px
+            paddingLeft = 2.perc
+            marginTop = 11.px
             position = Position.ABSOLUTE
             bind(selectedDate) { date ->
                 if(sessionsMap[date.getTime()] != null) {
@@ -509,7 +513,7 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
                         val blockMinWidth = when {
                             count <= 1 -> 100.perc
                             count == 2 -> 50.perc
-                            else -> 33.33.perc
+                            else -> 33.perc
                         }
                         val parallelVPanel: VPanel = vPanel {
                             position = Position.RELATIVE

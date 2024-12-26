@@ -1,4 +1,4 @@
-package eventer.project.helpers
+package eventer.project.layout
 
 import eventer.project.web.View
 import eventer.project.state.AgendaAppState

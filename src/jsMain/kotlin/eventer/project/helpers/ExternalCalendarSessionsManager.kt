@@ -1,13 +1,14 @@
-package eventer.project.web
+package eventer.project.helpers
 
 import eventer.project.AppScope
-import eventer.project.helpers.addMinutesToJSDate
-import eventer.project.helpers.addTimeToJSDate
 import eventer.project.models.Session
+import eventer.project.web.Api
+import eventer.project.web.ConduitManager
 import eventer.project.web.ConduitManager.GOOGLE_ACCESS_TOKEN
 import eventer.project.web.ConduitManager.MICROSOFT_ACCESS_TOKEN
 import eventer.project.web.ConduitManager.agendaStore
 import eventer.project.web.ConduitManager.getLocalStorageToken
+import eventer.project.web.Provider
 import io.kvision.i18n.tr
 import io.kvision.modal.Alert
 import kotlinx.browser.window
@@ -61,7 +62,7 @@ object ExternalCalendarSessionsManager {
      * Initiates Google Calendar OAuth authorization.
      */
     fun googleCalendarAuthorize() {
-        val authURL = "${Api.API_URL}/oauth/google/login?redirectUrl=${FRONTEND_URL}/google-oauth-logged"
+        val authURL = "${Api.API_URL}/oauth/google/login?redirectUrl=$FRONTEND_URL/google-oauth-logged"
         authorizeWindow(authURL, Provider.GOOGLE)
     }
 
@@ -69,7 +70,7 @@ object ExternalCalendarSessionsManager {
      * Initiates Microsoft Outlook OAuth authorization.
      */
     fun microsoftOutlookAuthorize() {
-        val authURL = "${Api.API_URL}/oauth/microsoft/login?redirectUrl=${FRONTEND_URL}/microsoft-oauth-logged"
+        val authURL = "${Api.API_URL}/oauth/microsoft/login?redirectUrl=$FRONTEND_URL/microsoft-oauth-logged"
         authorizeWindow(authURL, Provider.MICROSOFT)
     }
 

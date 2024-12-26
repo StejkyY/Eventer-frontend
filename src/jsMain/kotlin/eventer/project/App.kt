@@ -1,6 +1,6 @@
 package eventer.project
 
-import eventer.project.helpers.menu
+import eventer.project.layout.menu
 import eventer.project.layout.EventAgendaPanel
 import eventer.project.layout.EventBasicInfoPanel
 import eventer.project.layout.EventDescriptionPanel
