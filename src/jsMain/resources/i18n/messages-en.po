@@ -95,8 +95,8 @@ msgstr ""
 msgid "CZE"
 msgstr ""
 
-#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:198
-msgid "Day"
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:202
+msgid "Day 1"
 msgstr ""
 
 #: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:74
@@ -481,18 +481,34 @@ msgstr ""
 msgid "Owner"
 msgstr ""
 
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:449
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:427
+#: src/jsMain/kotlin/eventer/project/layout/SessionsExportManager.kt:54
+#: src/jsMain/kotlin/eventer/project/layout/windows/SessionsExportManager.kt:79
 #: src/jsMain/kotlin/eventer/project/layout/EventSessionWindow.kt:99
 msgid "Break"
 msgstr ""
 
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:449
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:427
+#: src/jsMain/kotlin/eventer/project/layout/SessionsExportManager.kt:54
+#: src/jsMain/kotlin/eventer/project/layout/windows/SessionsExportManager.kt:79
 #: src/jsMain/kotlin/eventer/project/layout/EventSessionWindow.kt:99
 msgid "Lecture"
 msgstr ""
 
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:449
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:427
+#: src/jsMain/kotlin/eventer/project/layout/SessionsExportManager.kt:54
+#: src/jsMain/kotlin/eventer/project/layout/windows/SessionsExportManager.kt:79
 #: src/jsMain/kotlin/eventer/project/layout/EventSessionWindow.kt:99
 msgid "Session"
 msgstr ""
 
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:449
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:427
+#: src/jsMain/kotlin/eventer/project/layout/SessionsExportManager.kt:54
+#: src/jsMain/kotlin/eventer/project/layout/windows/SessionsExportManager.kt:79
 #: src/jsMain/kotlin/eventer/project/layout/EventSessionWindow.kt:99
 msgid "Workshop"
 msgstr ""

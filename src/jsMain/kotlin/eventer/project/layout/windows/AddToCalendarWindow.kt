@@ -41,12 +41,15 @@ class AddToCalendarWindow : Modal(caption = tr("Add sessions to calendar")) {
             onClick {
                 try {
                     AppScope.withProgress {
+                        disabled = true
                         if(ExternalCalendarSessionsManager.sendEventSessionsToExternalCalendar(Provider.GOOGLE)) {
                             ConduitManager.showSuccessToast(tr("Sessions were added succesfully to your calendar."))
                         }
+                        disabled = false
                     }
                 } catch (e: Exception) {
                     ConduitManager.showErrorToast(tr("Failed adding sessions to calendar."))
+                    disabled = false
                 }
             }
         }
@@ -55,11 +58,14 @@ class AddToCalendarWindow : Modal(caption = tr("Add sessions to calendar")) {
             onClick {
                 try {
                     AppScope.withProgress {
+                        disabled = true
                         if(ExternalCalendarSessionsManager.sendEventSessionsToExternalCalendar(Provider.MICROSOFT)) {
                             ConduitManager.showSuccessToast(tr("Sessions were added succesfully to your calendar."))
                         }
+                        disabled = false
                     }
                 } catch (e: Exception) {
+                    disabled = false
                     ConduitManager.showErrorToast(tr("Failed adding sessions to calendar."))
                 }
             }

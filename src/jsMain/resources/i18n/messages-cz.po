@@ -61,6 +61,10 @@ msgstr "Zpátky"
 msgid "Basic info"
 msgstr "Základní info"
 
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:449
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:427
+#: src/jsMain/kotlin/eventer/project/layout/SessionsExportManager.kt:54
+#: src/jsMain/kotlin/eventer/project/layout/windows/SessionsExportManager.kt:79
 #: src/jsMain/kotlin/eventer/project/layout/EventSessionWindow.kt:99
 msgid "Break"
 msgstr "Přestávka"
@@ -113,9 +117,9 @@ msgstr "Vytvořit novou session"
 msgid "Current password"
 msgstr "Aktuální heslo"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:198
-msgid "Day"
-msgstr "Den"
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:202
+msgid "Day 1"
+msgstr "Den 1"
 
 #: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:74
 msgid "Delete"
@@ -286,6 +290,10 @@ msgstr "formát JSON"
 msgid "Last name"
 msgstr "Příjmení"
 
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:449
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:427
+#: src/jsMain/kotlin/eventer/project/layout/SessionsExportManager.kt:54
+#: src/jsMain/kotlin/eventer/project/layout/windows/SessionsExportManager.kt:79
 #: src/jsMain/kotlin/eventer/project/layout/EventSessionWindow.kt:99
 msgid "Lecture"
 msgstr "Přednáška"
@@ -408,6 +416,10 @@ msgstr "Uložit změny"
 msgid "Search:"
 msgstr "Vyhledávání:"
 
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:449
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:427
+#: src/jsMain/kotlin/eventer/project/layout/SessionsExportManager.kt:54
+#: src/jsMain/kotlin/eventer/project/layout/windows/SessionsExportManager.kt:79
 #: src/jsMain/kotlin/eventer/project/layout/EventSessionWindow.kt:99
 msgid "Session"
 msgstr "Session"
@@ -477,6 +489,10 @@ msgstr "Uživatel registrován. Nyní se můžete přihlásit."
 msgid "Virtual"
 msgstr "Virtuální"
 
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:449
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:427
+#: src/jsMain/kotlin/eventer/project/layout/SessionsExportManager.kt:54
+#: src/jsMain/kotlin/eventer/project/layout/windows/SessionsExportManager.kt:79
 #: src/jsMain/kotlin/eventer/project/layout/EventSessionWindow.kt:99
 msgid "Workshop"
 msgstr "Workshop"

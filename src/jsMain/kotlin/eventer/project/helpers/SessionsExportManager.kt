@@ -2,6 +2,8 @@ package eventer.project.helpers
 
 import eventer.project.models.Location
 import eventer.project.models.Session
+import io.kvision.i18n.gettext
+import io.kvision.i18n.tr
 import io.kvision.types.LocalDate
 import io.kvision.types.LocalTime
 import kotlinx.serialization.encodeToString
@@ -38,27 +40,25 @@ object SessionsExportManager {
             sessionsByLocation.flatMap { (_, sessions) -> sessions }.sortedBy { it.startTime?.getTime() }
         }.sortedBy { it.date?.getTime() }
 
-        if (sessions != null) {
-            val csvHeader = "Name,Date,Start Time,Duration,Description,Type,Location\n"
-            val csvContent = sessions.joinToString("\n") { session ->
+        val csvHeader = "Name,Date,Start Time,Duration,Description,Type,Location\n"
+        val csvContent = sessions.joinToString("\n") { session ->
 
-                val sessionStartDateFormatted = formatDate(session.date!!)
-                val sessionStartTimeFormatted = formatTime(session.startTime!!)
+            val sessionStartDateFormatted = formatDate(session.date!!)
+            val sessionStartTimeFormatted = formatTime(session.startTime!!)
 
-                listOf(
-                    "\"${session.name ?: ""}\"",
-                    "\"$sessionStartDateFormatted\"",
-                    "\"$sessionStartTimeFormatted\"",
-                    "\"${session.duration ?: ""}\"",
-                    "\"${session.description ?: ""}\"",
-                    "\"${session.type?.name ?: ""}\"",
-                    "\"${session.location?.name ?: ""}\""
-                ).joinToString(",")
-            }
-
-            val csvData = "\uFEFF" + csvHeader + csvContent
-            downloadFile(csvData, "agenda_sessions.csv", "text/csv")
+            listOf(
+                "\"${session.name ?: ""}\"",
+                "\"$sessionStartDateFormatted\"",
+                "\"$sessionStartTimeFormatted\"",
+                "\"${session.duration ?: ""}\"",
+                "\"${session.description ?: ""}\"",
+                "\"${gettext(session.type?.name.toString())}\"",
+                "\"${session.location?.name ?: ""}\""
+            ).joinToString(",")
         }
+
+        val csvData = "\uFEFF" + csvHeader + csvContent
+        downloadFile(csvData, "agenda_sessions.csv", "text/csv")
     }
 
     fun JSONexport(sessionsMap: Map<Double, Map<Location, List<Session>>>) {
@@ -66,27 +66,25 @@ object SessionsExportManager {
             sessionsByLocation.flatMap { (_, sessions) -> sessions }.sortedBy { it.startTime?.getTime() }
         }.sortedBy { it.date?.getTime() }
 
-        if (sessions != null) {
-            val jsonArray = sessions.map { session ->
+        val jsonArray = sessions.map { session ->
 
-                val sessionStartDateFormatted = formatDate(session.date!!)
-                val sessionStartTimeFormatted = formatTime(session.startTime!!)
+            val sessionStartDateFormatted = formatDate(session.date!!)
+            val sessionStartTimeFormatted = formatTime(session.startTime!!)
 
-                buildJsonObject {
-                    put("name", session.name ?: "")
-                    put("date", sessionStartDateFormatted)
-                    put("startTime", sessionStartTimeFormatted)
-                    put("duration", session.duration.toString())
-                    put("description", session.description ?: "")
-                    put("type", session.type?.name ?: "")
-                    put("location", session.location?.name ?: "")
-                }
+            buildJsonObject {
+                put("name", session.name ?: "")
+                put("date", sessionStartDateFormatted)
+                put("startTime", sessionStartTimeFormatted)
+                put("duration", session.duration.toString())
+                put("description", session.description ?: "")
+                put("type", gettext(session.type?.name.toString()))
+                put("location", session.location?.name ?: "")
             }
-
-            val jsonString = Json.encodeToString(JsonArray(jsonArray))
-
-            downloadFile(jsonString, "agenda_sessions.json", "application/json")
         }
+
+        val jsonString = Json.encodeToString(JsonArray(jsonArray))
+
+        downloadFile(jsonString, "agenda_sessions.json", "application/json")
     }
 
     /**

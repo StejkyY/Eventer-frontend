@@ -424,7 +424,7 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
                     fontSize = 0.75.rem
                 })
                 add(textSeparator())
-                add(Label(session.type!!.name) {
+                add(Label(tr(session.type!!.name.toString())) {
                     fontSize = 0.75.rem
                 })
                 add(textSeparator())
@@ -446,7 +446,7 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
                 vPanel {
                     marginLeft = 3.px
                     height = 95.perc
-                    add(Label(session.type!!.name) {
+                    add(Label(tr(session.type!!.name.toString())) {
                         fontSize = 0.75.rem
                     })
                     add(Label(session.location!!.name) {
@@ -501,7 +501,7 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         val sessionPanel = HPanel().bind(formattedEventSessionsMap) { sessionsMap ->
             top = 0.px
             left = 0.px
-            width = 92.perc
+            width = 93.perc
             marginLeft = 55.px
             paddingLeft = 2.perc
             marginTop = 11.px
