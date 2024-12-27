@@ -26,16 +26,19 @@ import kotlinx.coroutines.await
 import kotlinx.coroutines.launch
 
 class RegisterPanel: SimplePanel() {
-    private val registerButton: Button
+    private lateinit var registerButton: Button
+    private lateinit var loginRedirectButton: Button
+    private lateinit var firstNameText: Text
+    private lateinit var lastNameText: Text
+    private lateinit var emailText: Text
+    private lateinit var passwordText: Text
+    private lateinit var passwordText2: Text
+
     private val registerFormPanel: FormPanel<User>
 
     init {
-        registerButton =  Button(tr("Register")){
-            onClick {
-                this@RegisterPanel.processRegister()
-            }
-            marginTop = 20.px
-        }
+        buttonsInitialization()
+        textFieldsInitialization()
 
         registerFormPanel = this.formPanel  {
             width = 400.px
@@ -54,45 +57,35 @@ class RegisterPanel: SimplePanel() {
             }
 
             vPanel (spacing = 10) {
-                add(User::firstName, Text(label = tr("First name"), maxlength = 50), required = true)
-                add(User::lastName, Text(label = tr("Last name"), maxlength = 50), required = true)
+                add(User::firstName, firstNameText, required = true)
+                add(User::lastName, lastNameText, required = true)
                 add(
                     User::email,
-                    Text(label = tr("E-mail"), maxlength = 50),
+                    emailText,
                     required = true,
                     validatorMessage = { gettext("E-mail address does not have correct syntax.") },
                     validator = {checkEmailSyntaxValid(it.getValue()!!)})
                 add(User::password,
-                    Password(label = tr("Password"))
-                    {
-                        maxlength = 64
-                        onInput {
-                            clearValidation()
-                        }
-                    },
+                    passwordText,
                     required = true,
                     validatorMessage = { tr("Password does not meet criteria.") },
                     validator = { password ->
-                        password.getValue() != null &&
-                                password.getValue()!!.length >= 8 &&
-                                password.getValue()?.any { it.isUpperCase() }!! &&
-                                password.getValue()?.any { it.isDigit() }!!
+                        if (password.getValue() == null) {
+                            false
+                        } else {
+                            clearRegisterFormPanelValidation(password.getValue()!!)
+                        }
                     })
                 add(User::password2,
-                    Password(label = tr("Password again"))
-                    {
-                        maxlength = 64
-                        onInput {
-                            clearValidation()
-                        }
-                    },
+                    passwordText2,
                     required = true,
                     validatorMessage = { gettext("Password does not meet criteria.") },
                     validator = { password ->
-                        password.getValue() != null &&
-                                password.getValue()!!.length >= 8 &&
-                                password.getValue()?.any { it.isUpperCase() }!! &&
-                                password.getValue()?.any { it.isDigit() }!!
+                        if (password.getValue() == null) {
+                            false
+                        } else {
+                            clearRegisterFormPanelValidation(password.getValue()!!)
+                        }
                     })
                 span {
                     +tr("Password needs to be atleast 8 characters long," +
@@ -101,10 +94,7 @@ class RegisterPanel: SimplePanel() {
                 }
 
                 validator = {form ->
-                    val password = form[User::password].toString()
-                    val password2 = form[User::password2].toString()
-
-                    val passwordsMatch = password == password2
+                    val passwordsMatch = form[User::password].toString() == form[User::password2].toString()
 
                     if (!passwordsMatch) {
                         form.getControl(User::password)?.validatorError = gettext("Passwords are not the same")
@@ -120,14 +110,64 @@ class RegisterPanel: SimplePanel() {
                     paddingTop = 30.px
                 }
 
-                add(Button(tr("Login")) {
-                    onClick {
-                        this@RegisterPanel.hide()
-                        RoutingManager.redirect(View.LOGIN)
-                    }
-                })
+                add(loginRedirectButton)
             }
         }
+    }
+
+    /**
+     * Initializes used buttons.
+     */
+    private fun buttonsInitialization() {
+        registerButton = Button(tr("Register")){
+            onClick {
+                this@RegisterPanel.processRegister()
+            }
+            marginTop = 20.px
+        }
+        loginRedirectButton = Button(tr("Login")) {
+            onClick {
+                this@RegisterPanel.hide()
+                RoutingManager.redirect(View.LOGIN)
+            }
+        }
+    }
+
+    /**
+     * Initializes used text fields.
+     */
+    private fun textFieldsInitialization() {
+        firstNameText = Text(label = tr("First name"), maxlength = 50)
+        lastNameText = Text(label = tr("Last name"), maxlength = 50)
+        emailText = Text(label = tr("E-mail"), maxlength = 50)
+        passwordText = Password(label = tr("Password")) {
+            maxlength = 64
+            onInput {
+                clearRegisterFormPanelValidation(registerFormPanel)
+            }
+        }
+        passwordText2 = Password(label = tr("Password again")) {
+            maxlength = 64
+            onInput {
+                clearRegisterFormPanelValidation(registerFormPanel)
+            }
+        }
+    }
+
+    /**
+     * Helper function for clearing validator of the form panel for registration.
+     */
+    private fun clearRegisterFormPanelValidation(formPanel: FormPanel<User>) {
+        formPanel.clearValidation()
+    }
+
+    /**
+     * Checks validation criteria of the given password.
+     */
+    private fun clearRegisterFormPanelValidation(password: String): Boolean {
+        return password.length >= 8 &&
+                password.any { it.isUpperCase() } &&
+                    password.any { it.isDigit() }
     }
 
     /**

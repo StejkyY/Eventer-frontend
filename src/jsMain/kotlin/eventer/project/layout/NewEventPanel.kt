@@ -29,75 +29,25 @@ import kotlinx.coroutines.launch
 import kotlin.js.Date
 
 class NewEventPanel(val state: AgendaAppState) : FormPanel<Event>() {
-    private val createEventButton: Button
-    private val inPersonEventButton: Button
-    private val hybridEventButton: Button
-    private val virtualEventButton: Button
-    private val backButton: AgendaIconButton
+    private lateinit var createEventButton: Button
+    private lateinit var inPersonEventButton: Button
+    private lateinit var hybridEventButton: Button
+    private lateinit var virtualEventButton: Button
+    private lateinit var backButton: AgendaIconButton
     private var eventType: EventType? = EventType.InPerson
-    private val startDate: DateTime
-    private val endDate: DateTime
-    private val startTime: DateTime
-    private val endTime: DateTime
+    private lateinit var startDate: DateTime
+    private lateinit var endDate: DateTime
+    private lateinit var startTime: DateTime
+    private lateinit var endTime: DateTime
 
 
     private val newEventFormPanel: FormPanel<Event>
 
     init {
-        createEventButton = Button(tr("Create")){
-            width = 100.px
-            onClick {
-                saveEvent()
-            }
-        }
-        inPersonEventButton = Button(tr("In Person")){
-            width = 100.px
-        }
-        hybridEventButton = Button(tr("Hybrid")){
-            width = 100.px
-        }
-        virtualEventButton = Button(tr("Virtual")){
-            width = 100.px
-        }
+        buttonsInitialization()
+        dateSelectorsInitialization()
+        timeSelectorsInitialization()
 
-        inPersonEventButton.onClick {
-            eventType = EventType.InPerson
-            disableTypeButton(inPersonEventButton, hybridEventButton, virtualEventButton)
-        }
-        hybridEventButton.onClick {
-            eventType = EventType.Hybrid
-            disableTypeButton(hybridEventButton, inPersonEventButton, virtualEventButton)
-        }
-        virtualEventButton.onClick {
-            eventType = EventType.Virtual
-            disableTypeButton(virtualEventButton, hybridEventButton, inPersonEventButton)
-        }
-        backButton = AgendaIconButton(icon = "fas fa-arrow-left") {
-            onClick {
-                this@NewEventPanel.hide()
-                ConduitManager.showPreviousPage()
-            }
-        }
-
-        startDate = DateTime(format = "YYYY-MM-DD", label = tr("Start date")).apply {
-            input.input.autocomplete = Autocomplete.OFF
-            placeholder = tr("Enter date")
-            minDate = LocalDate()
-        }
-        endDate = DateTime(format = "YYYY-MM-DD", label = tr("End date")).apply {
-            input.input.autocomplete = Autocomplete.OFF
-            placeholder = tr("Enter date")
-            minDate = LocalDate()
-        }
-        startTime = DateTime(format = "HH:mm", label = tr("Start time")).apply {
-            input.input.autocomplete = Autocomplete.OFF
-            showToday = false
-        }
-        endTime = DateTime(format = "HH:mm", label = tr("End time")).apply {
-            input.input.autocomplete = Autocomplete.OFF
-            showToday = false
-        }
-        disableTypeButton(inPersonEventButton, hybridEventButton, virtualEventButton)
         newEventFormPanel = formPanel {
             width = 400.px
             margin = 20.px
@@ -146,40 +96,109 @@ class NewEventPanel(val state: AgendaAppState) : FormPanel<Event>() {
                     Text(label = tr("Event location"), maxlength = 100) {
                     autocomplete = Autocomplete.OFF
                 }, required = true)
-                add(
-                    Event::startDate,
-                    startDate, required = true
-                )
-                add(
-                    Event::startTime,
-                    startTime
-                )
-                add(
-                    Event::endDate,
-                    endDate, required = true
-                )
-                add(
-                    Event::endTime,
-                    endTime
-                )
+                add(Event::startDate, startDate, required = true)
+                add(Event::startTime, startTime)
+                add(Event::endDate, endDate, required = true)
+                add(Event::endTime, endTime)
                 validator = {
-                    val startDateValue = startDate.getValue()?.getTime()!!
-                    val endDateValue = endDate.getValue()?.getTime()!!
-                    if(startDateValue < endDateValue) {
-                        true
-                    } else if (startDateValue > endDateValue){
-                        false
-                    } else {
-                        var timeResult = true
-                        if (startTime.getValue() != null && endTime.getValue() != null) {
-                            timeResult = startTime.getValue()?.getTime()!! <= endTime.getValue()?.getTime()!!
-                        }
-                        timeResult
-                    }
+                    checkEventBeginBeforeEnd()
                 }
                 validatorMessage = { tr("Event start has to be set before the event end") }
                 add(createEventButton)
             }
+        }
+    }
+
+    /**
+     * Initializes used buttons.
+     */
+    private fun buttonsInitialization() {
+        createEventButton = Button(tr("Create")){
+            width = 100.px
+            onClick {
+                saveEvent()
+            }
+        }
+        inPersonEventButton = Button(tr("In Person")){
+            width = 100.px
+        }
+        hybridEventButton = Button(tr("Hybrid")){
+            width = 100.px
+        }
+        virtualEventButton = Button(tr("Virtual")){
+            width = 100.px
+        }
+
+        inPersonEventButton.onClick {
+            eventType = EventType.InPerson
+            disableTypeButton(inPersonEventButton, hybridEventButton, virtualEventButton)
+        }
+        hybridEventButton.onClick {
+            eventType = EventType.Hybrid
+            disableTypeButton(hybridEventButton, inPersonEventButton, virtualEventButton)
+        }
+        virtualEventButton.onClick {
+            eventType = EventType.Virtual
+            disableTypeButton(virtualEventButton, hybridEventButton, inPersonEventButton)
+        }
+        backButton = AgendaIconButton(icon = "fas fa-arrow-left") {
+            onClick {
+                this@NewEventPanel.hide()
+                ConduitManager.showPreviousPage()
+            }
+        }
+        disableTypeButton(inPersonEventButton, hybridEventButton, virtualEventButton)
+    }
+
+    /**
+     * Initializes used date selectors.
+     */
+    private fun dateSelectorsInitialization() {
+        startDate = DateTime(format = "YYYY-MM-DD", label = tr("Start date")).apply {
+            input.input.autocomplete = Autocomplete.OFF
+            placeholder = tr("Enter date")
+            minDate = LocalDate()
+        }
+        endDate = DateTime(format = "YYYY-MM-DD", label = tr("End date")).apply {
+            input.input.autocomplete = Autocomplete.OFF
+            placeholder = tr("Enter date")
+            minDate = LocalDate()
+        }
+    }
+
+    /**
+     * Initializes used time selectors.
+     */
+    private fun timeSelectorsInitialization() {
+        startTime = DateTime(format = "HH:mm", label = tr("Start time")).apply {
+            input.input.autocomplete = Autocomplete.OFF
+            showToday = false
+        }
+        endTime = DateTime(format = "HH:mm", label = tr("End time")).apply {
+            input.input.autocomplete = Autocomplete.OFF
+            showToday = false
+        }
+    }
+
+    /**
+     * Check if the start date and time is set before the end date and time.
+     */
+    fun checkEventBeginBeforeEnd(): Boolean {
+        if (startDate.getValue() == null || endDate.getValue() == null){
+            return false
+        }
+        val startDateValue = startDate.getValue()?.getTime()!!
+        val endDateValue = endDate.getValue()?.getTime()!!
+        if(startDateValue < endDateValue) {
+            return true
+        } else if (startDateValue > endDateValue){
+            return false
+        } else {
+            var timeResult = true
+            if (startTime.getValue() != null && endTime.getValue() != null) {
+                timeResult = startTime.getValue()?.getTime()!! <= endTime.getValue()?.getTime()!!
+            }
+            return timeResult
         }
     }
 

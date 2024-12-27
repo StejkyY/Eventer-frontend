@@ -218,6 +218,9 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
      * Check if the start date and time is set before the end date and time.
      */
     fun checkEventBeginBeforeEnd(): Boolean {
+        if (startDate.getValue() == null || endDate.getValue() == null){
+            return false
+        }
         val startDateValue = startDate.getValue()?.getTime()!!
         val endDateValue = endDate.getValue()?.getTime()!!
         if(startDateValue < endDateValue) {
