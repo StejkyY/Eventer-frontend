@@ -429,19 +429,25 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
                 add(Label(session.name) {
                     fontSize = 0.75.rem
                     fontWeight = FontWeight.BOLD
-                    textOverflow = TextOverflow.ELLIPSIS
+                    sessionLabelOverflowFormating(this)
                 })
                 add(textSeparator())
                 add(Label(session.startTime!!.toLocaleTimeString().dropLast(3) + " - " + endTime.toLocaleTimeString().dropLast(3)) {
                     fontSize = 0.75.rem
+                    sessionLabelOverflowFormating(this)
                 })
                 add(textSeparator())
                 add(Label(tr(session.type!!.name.toString())) {
                     fontSize = 0.75.rem
+                    textOverflow = TextOverflow.ELLIPSIS
+                    whiteSpace = WhiteSpace.NOWRAP
+                    overflow = Overflow.HIDDEN
+                    sessionLabelOverflowFormating(this)
                 })
                 add(textSeparator())
                 add(Label(session.location!!.name) {
                     fontSize = 0.75.rem
+                    sessionLabelOverflowFormating(this)
                 })
             } else {
                 vPanel {
@@ -468,6 +474,12 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
             }
         }
         return textsFormatted
+    }
+
+    private fun sessionLabelOverflowFormating(label: Label) {
+        label.textOverflow = TextOverflow.ELLIPSIS
+        label.whiteSpace = WhiteSpace.NOWRAP
+        label.overflow = Overflow.HIDDEN
     }
 
     /**

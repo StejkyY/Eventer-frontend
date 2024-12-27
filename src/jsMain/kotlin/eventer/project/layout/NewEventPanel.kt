@@ -57,7 +57,10 @@ class NewEventPanel(val state: AgendaAppState) : FormPanel<Event>() {
             border = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
             textAlign = TextAlign.CENTER
 
-            gridPanel (templateColumns = "1fr 1fr 1fr", alignItems = AlignItems.CENTER, justifyItems = JustifyItems.CENTER) {
+            gridPanel (
+                templateColumns = "1fr 1fr 1fr",
+                alignItems = AlignItems.CENTER,
+                justifyItems = JustifyItems.CENTER) {
                 add(backButton, 1, 1)
                 add(Label(tr("Create new event")) {
                     fontSize = 28.px
