@@ -42,6 +42,7 @@ sealed class AgendaAppAction: RAction {
     object logout: AgendaAppAction()
     object googleAccountUnlinked: AgendaAppAction()
     object microsoftAccountUnlinked: AgendaAppAction()
+    object languageChanged: AgendaAppAction()
     data class eventsLoaded(val events: List<Event>): AgendaAppAction()
     data class eventRolesLoaded(val roles: List<EventRole>): AgendaAppAction()
     data class eventLoaded(val event: Event): AgendaAppAction()
@@ -91,6 +92,10 @@ fun agendaAppReducer(state: AgendaAppState, action: AgendaAppAction): AgendaAppS
     }
     is AgendaAppAction.previousPage -> {
         state.copy(view = state.previousView, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
+    }
+    is AgendaAppAction.languageChanged -> {
+        println("kek")
+        state.copy()
     }
     is AgendaAppAction.eventLoaded -> {
         state.copy(selectedEvent = action.event)

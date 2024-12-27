@@ -67,8 +67,12 @@ class LoginPanel: SimplePanel() {
                     paddingTop = 20.px
                 }
 
-                add(Button(tr("Google")))
-                add(Button(tr("Facebook")))
+                add(Button(tr("Google")) {
+                    disabled = true
+                })
+                add(Button(tr("Facebook")){
+                    disabled = true
+                })
 
                 span {
                     +tr("Don't have an account yet?")

@@ -1,7 +1,9 @@
 package eventer.project.layout
 
+import eventer.project.state.AgendaAppAction
 import eventer.project.web.View
 import eventer.project.state.AgendaAppState
+import eventer.project.web.ConduitManager
 import io.kvision.core.*
 import io.kvision.dropdown.DD
 import io.kvision.dropdown.Direction
@@ -26,6 +28,7 @@ fun Container.menu(state: AgendaAppState) {
             onEvent {
                 change = {
                     I18n.language = self.value ?: "en"
+                    ConduitManager.agendaStore.dispatch(AgendaAppAction.languageChanged)
                 }
             }
         })

@@ -63,7 +63,13 @@ class RegisterPanel: SimplePanel() {
                     validatorMessage = { gettext("E-mail address does not have correct syntax.") },
                     validator = { it.getValue()?.matches(Regex("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) ?: false })
                 add(User::password,
-                    Password(label = tr("Password")) { maxlength = 64 },
+                    Password(label = tr("Password"))
+                    {
+                        maxlength = 64
+                        onInput {
+                            clearValidation()
+                        }
+                    },
                     required = true,
                     validatorMessage = { tr("Password does not meet criteria.") },
                     validator = { password ->
@@ -73,7 +79,13 @@ class RegisterPanel: SimplePanel() {
                                 password.getValue()?.any { it.isDigit() }!!
                     })
                 add(User::password2,
-                    Password(label = tr("Password again")) { maxlength = 64 },
+                    Password(label = tr("Password again"))
+                    {
+                        maxlength = 64
+                        onInput {
+                            clearValidation()
+                        }
+                    },
                     required = true,
                     validatorMessage = { gettext("Password does not meet criteria.") },
                     validator = { password ->

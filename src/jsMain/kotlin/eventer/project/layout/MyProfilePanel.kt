@@ -13,6 +13,8 @@ import io.kvision.form.text.Password
 import io.kvision.form.text.Text
 import io.kvision.html.Button
 import io.kvision.html.Label
+import io.kvision.html.Span
+import io.kvision.html.span
 import io.kvision.i18n.tr
 import io.kvision.modal.Confirm
 import io.kvision.panel.*
@@ -45,6 +47,7 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
     private val currentPasswordText: Text
     private val newPasswordText: Text
     private var changing: Changing? = null
+    private val passwordCriteriaText: Span
 
     private val profileFormPanel: FormPanel<User>
     private val passwordFormPanel: FormPanel<PasswordState>
@@ -59,6 +62,12 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
         padding = 20.px
         border = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
 
+        passwordCriteriaText = span {
+            +tr("Password needs to be atleast 8 characters long," +
+                    " contain atleast one upper case and one number")
+            fontSize = 10.px
+        }
+        passwordCriteriaText.hide()
         emailText = Text(label = tr("E-mail"), maxlength = 50) {
             disabled = true
         }
@@ -175,8 +184,9 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
                 emailText)
 
             add(passwordFormPanel)
-
+            add(passwordCriteriaText)
             hPanel (spacing = 10) {
+                marginTop = 10.px
                 add(changeEmailButton)
                 add(changePasswordButton)
             }
@@ -209,10 +219,12 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
             emailText.show()
             currentPasswordText.hide()
             newPasswordText.hide()
+            passwordCriteriaText.hide()
         } else {
             emailText.hide()
             currentPasswordText.show()
             newPasswordText.show()
+            passwordCriteriaText.show()
         }
     }
 
@@ -228,6 +240,7 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
         emailText.show()
         currentPasswordText.hide()
         newPasswordText.hide()
+        passwordCriteriaText.hide()
         changing = null
     }
 

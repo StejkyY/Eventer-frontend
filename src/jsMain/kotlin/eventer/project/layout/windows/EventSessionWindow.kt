@@ -20,6 +20,7 @@ import io.kvision.form.time.DateTime
 import io.kvision.html.Autocomplete
 import io.kvision.html.Button
 import io.kvision.html.ButtonStyle
+import io.kvision.i18n.gettext
 import io.kvision.i18n.tr
 import io.kvision.modal.Confirm
 import io.kvision.modal.Dialog
@@ -129,7 +130,11 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
         typeSelector.onChange {
             if(typeSelector.getValue() != null &&
                     typesList[typeSelector.selectedIndex].name!! in
-                        listOf("Break", "Workshop", "Session", "Lecture")) {
+                        listOf(
+                            gettext("Break"),
+                            gettext("Workshop"),
+                            gettext("Session"),
+                            gettext("Lecture"))) {
                 buttonRemoveType.hide()
             } else {
                 buttonRemoveType.show()

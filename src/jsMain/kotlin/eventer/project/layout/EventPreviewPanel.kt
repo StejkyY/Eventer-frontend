@@ -22,13 +22,13 @@ class EventPreviewPanel(state: AgendaAppState) : SimplePanel() {
     init {
         vPanel(spacing = 20) {
             width = 100.vw
-            height = 35.vh
+            height = 38.vh
             alignItems = AlignItems.CENTER
             background = Background(Color.name(Col.LIGHTGRAY))
             borderBottom = Border(1.px, BorderStyle.SOLID, Color.name(Col.BLACK))
 
             add(Label(state.selectedEvent?.name.toString()) {
-                marginTop = 3.perc
+                marginTop = 2.perc
                 fontSize = 40.px
             })
             hPanel(spacing = 5) {
@@ -46,13 +46,13 @@ class EventPreviewPanel(state: AgendaAppState) : SimplePanel() {
             hPanel(spacing = 20) {
                 verticalAlign = VerticalAlign.BASELINE
                 alignItems = AlignItems.CENTER
-                vPanel(spacing = 3) {
+                vPanel() {
                     alignItems = AlignItems.CENTER
                     add(Label(state.selectedEvent?.startDate?.toDateString()))
                     add(Label(state.selectedEvent?.startTime?.toLocaleTimeString()?.dropLast(3)))
                 }
                 add(Label(" – "))
-                vPanel(spacing = 3) {
+                vPanel() {
                     alignItems = AlignItems.CENTER
                     add(Label(state.selectedEvent?.endDate?.toDateString()))
                     add(Label(state.selectedEvent?.endTime?.toLocaleTimeString()?.dropLast(3)))
@@ -60,7 +60,7 @@ class EventPreviewPanel(state: AgendaAppState) : SimplePanel() {
             }
         }
         vPanel {
-            marginTop = 3.perc
+            paddingTop = 3.perc
             width = 100.vw
             alignItems = AlignItems.CENTER
 
@@ -76,7 +76,7 @@ class EventPreviewPanel(state: AgendaAppState) : SimplePanel() {
                 fontSize = 30.px
             })
             simplePanel {
-                marginTop = 2.perc
+                paddingTop = 3.perc
                 width = 80.vw
                 add(EventAgendaPanel(state, CalendarMode.PREVIEW))
             }

@@ -61,6 +61,7 @@ msgstr "Zpátky"
 msgid "Basic info"
 msgstr "Základní info"
 
+#: src/jsMain/kotlin/eventer/project/layout/EventSessionWindow.kt:134
 #: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:449
 #: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:427
 #: src/jsMain/kotlin/eventer/project/layout/SessionsExportManager.kt:54
@@ -117,9 +118,9 @@ msgstr "Vytvořit novou session"
 msgid "Current password"
 msgstr "Aktuální heslo"
 
-#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:202
-msgid "Day 1"
-msgstr "Den 1"
+#: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:200
+msgid "Day"
+msgstr "Den"
 
 #: src/jsMain/kotlin/eventer/project/layout/windows/EventSessionWindow.kt:74
 msgid "Delete"
@@ -290,6 +291,7 @@ msgstr "JSON formát"
 msgid "Last name"
 msgstr "Příjmení"
 
+#: src/jsMain/kotlin/eventer/project/layout/EventSessionWindow.kt:137
 #: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:449
 #: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:427
 #: src/jsMain/kotlin/eventer/project/layout/SessionsExportManager.kt:54
@@ -416,6 +418,7 @@ msgstr "Uložit změny"
 msgid "Search:"
 msgstr "Vyhledávání:"
 
+#: src/jsMain/kotlin/eventer/project/layout/EventSessionWindow.kt:136
 #: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:449
 #: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:427
 #: src/jsMain/kotlin/eventer/project/layout/SessionsExportManager.kt:54
@@ -489,6 +492,7 @@ msgstr "Uživatel registrován. Nyní se můžete přihlásit."
 msgid "Virtual"
 msgstr "Virtuální"
 
+#: src/jsMain/kotlin/eventer/project/layout/EventSessionWindow.kt:135
 #: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:449
 #: src/jsMain/kotlin/eventer/project/layout/EventAgendaPanel.kt:427
 #: src/jsMain/kotlin/eventer/project/layout/SessionsExportManager.kt:54

@@ -197,9 +197,10 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
      */
     private fun createDayButtons() {
         dayTextButtonList.clear()
+        val dayText = gettext("Day")
 
         for(i: Int in 0 until daysCount) {
-            val dayButton = AgendaTextButton(tr("Day ${i + 1}")) {
+            val dayButton = AgendaTextButton(tr("$dayText ${i + 1}")) {
                 onClick {
                     dayTextButtonList[selectedDayButtonIndex].enable()
                     disable()

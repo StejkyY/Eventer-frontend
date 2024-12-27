@@ -45,8 +45,6 @@ class EventsPanel(state: AgendaAppState) : SimplePanel() {
             }
         }
         gridPanel (templateColumns = "1fr 1fr 1fr", alignItems = AlignItems.CENTER, justifyItems = JustifyItems.CENTER)  {
-            gridColumnGap = 300
-            add(Label(), 1, 1)
             add(Label(tr("Events")) {
                 fontSize = 28.px
             }, 2 ,1)
