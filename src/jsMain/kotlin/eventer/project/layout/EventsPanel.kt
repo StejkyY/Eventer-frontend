@@ -25,8 +25,7 @@ import io.kvision.utils.syncWithList
 
 class EventsPanel(state: AgendaAppState) : SimplePanel() {
 
-    private val newEventButton: Button
-
+    private lateinit var newEventButton: Button
     private var filteredEvents = observableListOf<Event>()
 
     init {
@@ -36,14 +35,10 @@ class EventsPanel(state: AgendaAppState) : SimplePanel() {
         marginRight = auto
         padding = 20.px
         border = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-
         if(state.events != null ) filteredEvents.syncWithList(state.events)
 
-        newEventButton = AgendaPrimaryButton(tr("Create new event")) {
-            onClick {
-                RoutingManager.redirect(View.NEW_EVENT)
-            }
-        }
+        buttonsInitialization()
+
         gridPanel (templateColumns = "1fr 1fr 1fr", alignItems = AlignItems.CENTER, justifyItems = JustifyItems.CENTER)  {
             add(Label(tr("Events")) {
                 fontSize = 28.px
@@ -64,11 +59,6 @@ class EventsPanel(state: AgendaAppState) : SimplePanel() {
             spacing = 5
         ) {
             paddingTop = 20.px
-//            add(dropDown("My events", listOf(tr("Invited events") to "#/basic"), forDropDown = true) {
-//                paddingRight = 30.px
-//                paddingBottom = 15.px
-//                direction = Direction.DROPDOWN
-//            })
             add(Text(InputType.SEARCH) {
                 input.autocomplete = Autocomplete.OFF
                 placeholder = tr("Search:")
@@ -85,7 +75,6 @@ class EventsPanel(state: AgendaAppState) : SimplePanel() {
                     }
                 }
             })
-
         }
 
         hPanel {
@@ -95,7 +84,19 @@ class EventsPanel(state: AgendaAppState) : SimplePanel() {
             width = 100.perc
         }
 
-        table(types = setOf(TableType.BORDERLESS, TableType.HOVER)){
+        eventsTable()
+    }
+
+    private fun buttonsInitialization() {
+        newEventButton = AgendaPrimaryButton(tr("Create new event")) {
+            onClick {
+                RoutingManager.redirect(View.NEW_EVENT)
+            }
+        }
+    }
+
+    private fun eventsTable(): Table {
+        return Table(types = setOf(TableType.BORDERLESS, TableType.HOVER)) {
             height = 100.perc
             overflowY = Overflow.SCROLL
             marginTop = 20.px
@@ -107,16 +108,16 @@ class EventsPanel(state: AgendaAppState) : SimplePanel() {
             addHeaderCell(HeaderCell(""))
 
             bind(filteredEvents) { events ->
-                if(!filteredEvents.isEmpty()) {
-                    filteredEvents.forEach {event ->
+                if (!filteredEvents.isEmpty()) {
+                    filteredEvents.forEach { event ->
                         row {
                             cell(event.name)
                             cell(event.state.toString())
                             cell(event.startDate?.toLocaleDateString()!!)
                             cell(event.endDate?.toLocaleDateString()!!)
-                            if(event.userEventRole == null) cell("")
+                            if (event.userEventRole == null) cell("")
                             else cell(tr(event.userEventRole?.name.toString())) {
-                                if(event.userEventRole?.name == "Owner") {
+                                if (event.userEventRole?.name == "Owner") {
                                     this.fontWeight = FontWeight.BOLD
                                 }
                             }
