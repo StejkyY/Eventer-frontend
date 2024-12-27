@@ -84,9 +84,12 @@ class EventsPanel(state: AgendaAppState) : SimplePanel() {
             width = 100.perc
         }
 
-        eventsTable()
+        add(eventsTable())
     }
 
+    /**
+     * Initializes used buttons.
+     */
     private fun buttonsInitialization() {
         newEventButton = AgendaPrimaryButton(tr("Create new event")) {
             onClick {
@@ -95,6 +98,9 @@ class EventsPanel(state: AgendaAppState) : SimplePanel() {
         }
     }
 
+    /**
+     * Initializes table component with events as rows.
+     */
     private fun eventsTable(): Table {
         return Table(types = setOf(TableType.BORDERLESS, TableType.HOVER)) {
             height = 100.perc

@@ -15,7 +15,6 @@ import io.kvision.panel.flexPanel
 import io.kvision.utils.px
 
 fun Container.menu(state: AgendaAppState) {
-
     flexPanel(
         FlexDirection.ROW, FlexWrap.WRAP, JustifyContent.FLEXEND, AlignItems.CENTER,
         spacing = 10

@@ -34,20 +34,20 @@ enum class Changing {
 data class PasswordState(val currentPassword: String? = null, val newPassword: String? = null)
 
 class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
-    private val changeEmailButton: Button
-    private val changePasswordButton: Button
-    private val deleteAccountButton: Button
-    private val backButton: AgendaIconButton
-    private val emailText: Text
-    private val firstNameText: Text
-    private val lastNameText: Text
-    private val saveButton: Button
-    private val closeButton: Button
+    private lateinit var changeEmailButton: Button
+    private lateinit var changePasswordButton: Button
+    private lateinit var deleteAccountButton: Button
+    private lateinit var backButton: AgendaIconButton
+    private lateinit var emailText: Text
+    private lateinit var firstNameText: Text
+    private lateinit var lastNameText: Text
+    private lateinit var saveButton: Button
+    private lateinit var closeButton: Button
 
-    private val currentPasswordText: Text
-    private val newPasswordText: Text
+    private lateinit var currentPasswordText: Text
+    private lateinit var newPasswordText: Text
     private var changing: Changing? = null
-    private val passwordCriteriaText: Span
+    private lateinit var passwordCriteriaText: Span
 
     private val profileFormPanel: FormPanel<User>
     private val passwordFormPanel: FormPanel<PasswordState>
@@ -61,24 +61,84 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
         marginRight = auto
         padding = 20.px
         border = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
+        buttonsInitialization()
+        textFieldsInitialization()
 
-        passwordCriteriaText = span {
-            +tr("Password needs to be atleast 8 characters long," +
-                    " contain atleast one upper case and one number")
-            fontSize = 10.px
+        passwordFormPanel = formPanel {
+            add(PasswordState::currentPassword, currentPasswordText, required = true)
+            add(
+                PasswordState::newPassword, newPasswordText, required = true,
+                validatorMessage = { tr("Password does not meet criteria.") }) {
+                var result = false
+                if(it.getValue() != null) {
+                    result = it.getValue()!!.length >= 8 &&
+                            it.getValue()?.any{it.isUpperCase()}!! &&
+                                    it.getValue()?.any{it.isDigit()}!!
+                }
+                result
+            }
+
+            onChange {
+                saveButton.disabled = false
+            }
         }
-        passwordCriteriaText.hide()
-        emailText = Text(label = tr("E-mail"), maxlength = 50) {
-            disabled = true
+
+        vPanel {
+            gridPanel (
+                templateColumns = "1fr 1fr 1fr",
+                alignItems = AlignItems.CENTER,
+                justifyItems = JustifyItems.CENTER
+            ){
+                gridColumnGap = 50
+                add(backButton)
+                add(Label(tr("My profile")) {
+                    fontSize = 28.px
+                    width = 150.px
+                })
+                add(saveButton)
+                paddingBottom = 20.px
+            }
+            hPanel {
+                marginLeft = 0.px
+                marginRight = 0.px
+                border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))
+                width = 100.perc
+            }
         }
-        firstNameText = Text(label = tr("First name"), maxlength = 50)
-        lastNameText = Text(label = tr("Last name"), maxlength = 50)
-        currentPasswordText = Password(label = tr("Current password")) {
-            maxlength = 64
+
+        profileFormPanel = formPanel {
+            marginTop = 20.px
+            add(User::firstName, firstNameText)
+            add(User::lastName, lastNameText)
+            add(User::email, emailText)
+            add(passwordFormPanel)
+            add(passwordCriteriaText)
+
+            hPanel (spacing = 10) {
+                marginTop = 10.px
+                add(changeEmailButton)
+                add(changePasswordButton)
+            }
+            vPanel (spacing = 15) {
+                add(deleteAccountButton)
+                add(closeButton)
+                closeButton.hide()
+            }
+            if(state.profile != null) {
+                setData(state.profile)
+            }
+            currentPasswordText.hide()
+            newPasswordText.hide()
+            onChange {
+                saveButton.disabled = false
+            }
         }
-        newPasswordText = Password(label = tr("New password")) {
-            maxlength = 64
-        }
+    }
+
+    /**
+     * Initializes used buttons.
+     */
+    private fun buttonsInitialization() {
         changeEmailButton = Button(tr("Change email")){
             width = 180.px
             onClick {
@@ -124,85 +184,28 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
                 closeChanges()
             }
         }
+    }
 
-        passwordFormPanel = formPanel {
-            add(PasswordState::currentPassword, currentPasswordText, required = true)
-            add(
-                PasswordState::newPassword, newPasswordText, required = true,
-                validatorMessage = { tr("Password does not meet criteria.") }) {
-                var result = false
-                if(it.getValue() != null) {
-                    result = it.getValue()!!.length >= 8 &&
-                            it.getValue()?.any{it.isUpperCase()}!! &&
-                                    it.getValue()?.any{it.isDigit()}!!
-                }
-                result
-            }
-
-            onChange {
-                saveButton.disabled = false
-            }
+    /**
+     * Initializes used text input fields.
+     */
+    private fun textFieldsInitialization() {
+        passwordCriteriaText = span {
+            +tr("Password needs to be atleast 8 characters long," +
+                    " contain atleast one upper case and one number")
+            fontSize = 10.px
         }
-
-        vPanel {
-            gridPanel (
-                templateColumns = "1fr 1fr 1fr",
-                alignItems = AlignItems.CENTER,
-                justifyItems = JustifyItems.CENTER
-            ){
-                gridColumnGap = 50
-                add(backButton)
-                add(Label(tr("My profile")) {
-                    fontSize = 28.px
-                    width = 150.px
-                })
-                add(saveButton)
-                paddingBottom = 20.px
-            }
-            hPanel {
-                marginLeft = 0.px
-                marginRight = 0.px
-                border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-                width = 100.perc
-            }
+        passwordCriteriaText.hide()
+        emailText = Text(label = tr("E-mail"), maxlength = 50) {
+            disabled = true
         }
-
-
-
-        profileFormPanel = formPanel {
-            marginTop = 20.px
-            add(
-                    User::firstName,
-                    firstNameText
-                )
-            add(
-                    User::lastName,
-                    lastNameText
-            )
-            add(
-                User::email,
-                emailText)
-
-            add(passwordFormPanel)
-            add(passwordCriteriaText)
-            hPanel (spacing = 10) {
-                marginTop = 10.px
-                add(changeEmailButton)
-                add(changePasswordButton)
-            }
-            vPanel (spacing = 15) {
-                add(deleteAccountButton)
-                add(closeButton)
-                closeButton.hide()
-            }
-            if(state.profile != null) {
-                setData(state.profile)
-            }
-            currentPasswordText.hide()
-            newPasswordText.hide()
-            onChange {
-                saveButton.disabled = false
-            }
+        firstNameText = Text(label = tr("First name"), maxlength = 50)
+        lastNameText = Text(label = tr("Last name"), maxlength = 50)
+        currentPasswordText = Password(label = tr("Current password")) {
+            maxlength = 64
+        }
+        newPasswordText = Password(label = tr("New password")) {
+            maxlength = 64
         }
     }
 

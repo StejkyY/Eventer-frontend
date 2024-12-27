@@ -23,15 +23,18 @@ import io.kvision.utils.perc
 import io.kvision.utils.px
 
 class LoginPanel: SimplePanel() {
-//    private val googleButton: Button
-//    private val facebookButton: Button
-//    private val registerButton: Button
+    private lateinit var googleLoginButton: Button
+    private lateinit var microsoftLoginButton: Button
+    private lateinit var loginButton: Button
+    private lateinit var registerRedirectButton: Button
 
     private val loginFormPanel: FormPanel<UserCredentials>
     private val passwordInput: Password
 
     init {
         passwordInput = Password(label = tr("Password"))
+        buttonsInitialization()
+
         loginFormPanel = this.formPanel {
             marginTop = 5.perc
             width = 400.px
@@ -53,13 +56,7 @@ class LoginPanel: SimplePanel() {
                     autocomplete = Autocomplete.OFF
                 }, required = true)
                 add(UserCredentials::password, passwordInput, required = true)
-                add(Button(tr("Login")) {
-                    marginTop = 20.px
-                    onClick {
-                        processCredentials()
-                    }
-                })
-
+                add(loginButton)
 
                 span {
                     +tr("Or you can use")
@@ -67,12 +64,8 @@ class LoginPanel: SimplePanel() {
                     paddingTop = 20.px
                 }
 
-                add(Button(tr("Google")) {
-                    disabled = true
-                })
-                add(Button(tr("Facebook")){
-                    disabled = true
-                })
+                add(googleLoginButton)
+                add(microsoftLoginButton)
 
                 span {
                     +tr("Don't have an account yet?")
@@ -80,13 +73,7 @@ class LoginPanel: SimplePanel() {
                     paddingTop = 30.px
                 }
 
-                    add(Button(tr("Register")) {
-                        onClick {
-                            this@LoginPanel.hide()
-                            RoutingManager.redirect(View.REGISTER)
-                        }
-                    })
-                }
+                add(registerRedirectButton)
 
                 onEvent {
                     keydown = {
@@ -96,6 +83,33 @@ class LoginPanel: SimplePanel() {
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Initializes used buttons.
+     */
+    private fun buttonsInitialization() {
+        loginButton = Button(tr("Login")) {
+            marginTop = 20.px
+            onClick {
+                processCredentials()
+            }
+        }
+
+        googleLoginButton = Button(tr("Google")) {
+            disabled = true
+        }
+        microsoftLoginButton = Button(tr("Microsoft")){
+            disabled = true
+        }
+
+        registerRedirectButton = Button(tr("Register")) {
+            onClick {
+                this@LoginPanel.hide()
+                RoutingManager.redirect(View.REGISTER)
+            }
+        }
     }
 
     /**
