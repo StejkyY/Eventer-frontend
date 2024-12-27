@@ -6,19 +6,6 @@ import io.kvision.html.ButtonStyle
 import io.kvision.modal.Confirm
 import io.kvision.utils.px
 
-class UnsavedChangesConfirm(): Confirm() {
-
-    fun show(text: String, yesCallback: (() -> Unit)) {
-        show(
-            io.kvision.i18n.tr("Unsaved changes"),
-            text = text,
-            yesTitle = io.kvision.i18n.tr("Leave"),
-            noTitle = io.kvision.i18n.tr("Stay"),
-            cancelTitle = io.kvision.i18n.tr("Cancel"),
-            yesCallback = yesCallback)
-    }
-}
-
 class AgendaPrimaryButton(text: String, init: (AgendaPrimaryButton.() -> Unit)? = null) : Button(text = text, style = ButtonStyle.LIGHT) {
     init {
         this.border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))

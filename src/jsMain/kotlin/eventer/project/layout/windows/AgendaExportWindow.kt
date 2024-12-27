@@ -25,23 +25,12 @@ import org.w3c.files.BlobPropertyBag
 import web.dom.document
 
 class AgendaExportWindow : Modal(caption = tr("Agenda sessions export")) {
-    private val buttonJSONExport: Button
-    private val buttonCSVExport: Button
+    private lateinit var buttonJSONExport: Button
+    private lateinit var buttonCSVExport: Button
     private var sessionsMap: Map<Double, Map<Location, List<Session>>>? = null
 
     init {
-        buttonJSONExport = AgendaPrimaryButton(tr("Download")){
-            marginLeft = 5.px
-            onClick {
-                SessionsExportManager.JSONexport(sessionsMap!!)
-            }
-        }
-        buttonCSVExport = AgendaPrimaryButton(tr("Download")){
-            marginLeft = 5.px
-            onClick {
-                SessionsExportManager.CSVexport(sessionsMap!!)
-            }
-        }
+        buttonsInitilization()
 
         vPanel {
             hPanel {
@@ -58,6 +47,24 @@ class AgendaExportWindow : Modal(caption = tr("Agenda sessions export")) {
                     width = 100.px
                 })
                 add(buttonCSVExport)
+            }
+        }
+    }
+
+    /**
+     * Initializes used buttons.
+     */
+    private fun buttonsInitilization() {
+        buttonJSONExport = AgendaPrimaryButton(tr("Download")){
+            marginLeft = 5.px
+            onClick {
+                SessionsExportManager.JSONexport(sessionsMap!!)
+            }
+        }
+        buttonCSVExport = AgendaPrimaryButton(tr("Download")){
+            marginLeft = 5.px
+            onClick {
+                SessionsExportManager.CSVexport(sessionsMap!!)
             }
         }
     }

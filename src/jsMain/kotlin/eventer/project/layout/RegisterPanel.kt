@@ -61,7 +61,7 @@ class RegisterPanel: SimplePanel() {
                     Text(label = tr("E-mail"), maxlength = 50),
                     required = true,
                     validatorMessage = { gettext("E-mail address does not have correct syntax.") },
-                    validator = { it.getValue()?.matches(Regex("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")) ?: false })
+                    validator = {checkEmailSyntaxValid(it.getValue()!!)})
                 add(User::password,
                     Password(label = tr("Password"))
                     {
@@ -128,6 +128,13 @@ class RegisterPanel: SimplePanel() {
                 })
             }
         }
+    }
+
+    /**
+     * Checks if the given email string has valid syntax of an email.
+     */
+    private fun checkEmailSyntaxValid(email: String): Boolean {
+        return email.matches(Regex("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"))
     }
 
     /**

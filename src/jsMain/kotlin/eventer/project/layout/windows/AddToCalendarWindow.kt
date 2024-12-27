@@ -20,16 +20,52 @@ import io.kvision.utils.px
 import kotlinx.coroutines.launch
 
 class AddToCalendarWindow : Modal(caption = tr("Add sessions to calendar")) {
-    private val buttonGoogleCalendarLogin: Button
-    private val buttonOutlookLogin: Button
-    private var buttonAddToGoogleCalendar: Button
-    private var buttonAddToOutlookCalendar: Button
-    private var buttonUnlinkGoogleAccount: Button
-    private var buttonUnlinkMicrosoftAccount: Button
-    private var statusLoggedGoogle: Button
-    private var statusLoggedMicrosoft: Button
+    private lateinit var buttonGoogleCalendarLogin: Button
+    private lateinit var buttonOutlookLogin: Button
+    private lateinit var buttonAddToGoogleCalendar: Button
+    private lateinit var buttonAddToOutlookCalendar: Button
+    private lateinit var buttonUnlinkGoogleAccount: Button
+    private lateinit var buttonUnlinkMicrosoftAccount: Button
+    private lateinit var statusLoggedGoogle: Button
+    private lateinit var statusLoggedMicrosoft: Button
 
     init {
+        buttonsInitialization()
+        vPanel().bind(ConduitManager.agendaStore) { state ->
+            hPanel() {
+                alignItems = AlignItems.CENTER
+                add(Label(tr("Google Calendar:")) {
+                    width = 150.px
+                })
+                if(state.googleAccountSynced) {
+                    add(statusLoggedGoogle)
+                    add(buttonAddToGoogleCalendar)
+                    add(buttonUnlinkGoogleAccount)
+                } else {
+                    add(buttonGoogleCalendarLogin)
+                }
+            }
+            hPanel() {
+                alignItems = AlignItems.CENTER
+                marginTop = 10.px
+                add(Label(tr("Microsoft Outlook:")) {
+                    width = 150.px
+                })
+                if(state.microsoftAccountSynced) {
+                    add(statusLoggedMicrosoft)
+                    add(buttonAddToOutlookCalendar)
+                    add(buttonUnlinkMicrosoftAccount)
+                } else {
+                    add(buttonOutlookLogin)
+                }
+            }
+        }
+    }
+
+    /**
+     * Initializes used buttons.
+     */
+    private fun buttonsInitialization() {
         statusLoggedGoogle = Button(tr("Synced"), style = ButtonStyle.SUCCESS) {
             disabled = true
         }
@@ -96,36 +132,6 @@ class AddToCalendarWindow : Modal(caption = tr("Add sessions to calendar")) {
             onClick {
                 AppScope.launch {
                     ConduitManager.unlinkMicrosoftAccount()
-                }
-            }
-        }
-
-        vPanel().bind(ConduitManager.agendaStore) { state ->
-            hPanel() {
-                alignItems = AlignItems.CENTER
-                add(Label(tr("Google Calendar:")) {
-                    width = 150.px
-                })
-                if(state.googleAccountSynced) {
-                    add(statusLoggedGoogle)
-                    add(buttonAddToGoogleCalendar)
-                    add(buttonUnlinkGoogleAccount)
-                } else {
-                    add(buttonGoogleCalendarLogin)
-                }
-            }
-            hPanel() {
-                alignItems = AlignItems.CENTER
-                marginTop = 10.px
-                add(Label(tr("Microsoft Outlook:")) {
-                    width = 150.px
-                })
-                if(state.microsoftAccountSynced) {
-                    add(statusLoggedMicrosoft)
-                    add(buttonAddToOutlookCalendar)
-                    add(buttonUnlinkMicrosoftAccount)
-                } else {
-                    add(buttonOutlookLogin)
                 }
             }
         }

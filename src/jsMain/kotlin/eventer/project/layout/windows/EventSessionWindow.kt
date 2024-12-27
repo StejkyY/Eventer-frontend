@@ -39,22 +39,22 @@ import kotlin.js.Date
 
 class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgendaPanel) : Dialog<Session>(caption = tr("Session details"), animation = false) {
     private val sessionPanel: FormPanel<Session>
-    private val saveButton: Button
-    private val deleteButton: Button
-    private val timeSelector: DateTime
-    private val durationSelector: Select
-    private val typeSelector: Select
-    private val buttonNewType: Button
-    private val buttonRemoveType: Button
-    private val newTypeInputText: Text
-    private val backToTypeListButton: Button
+    private lateinit var saveButton: Button
+    private lateinit var deleteButton: Button
+    private lateinit var timeSelector: DateTime
+    private lateinit var durationSelector: Select
+    private lateinit var typeSelector: Select
+    private lateinit var buttonNewType: Button
+    private lateinit var buttonRemoveType: Button
+    private lateinit var newTypeInputText: Text
+    private lateinit var backToTypeListButton: Button
     private var selectingTypeByList: Boolean = true
-    private val locationSelector: Select
+    private lateinit var locationSelector: Select
     private var sessionDate: Date? = null
-    private val buttonNewLocation: Button
-    private val buttonRemoveLocation: Button
-    private val newLocationInputText: Text
-    private val backToLocationListButton: Button
+    private lateinit var buttonNewLocation: Button
+    private lateinit var buttonRemoveLocation: Button
+    private lateinit var newLocationInputText: Text
+    private lateinit var backToLocationListButton: Button
     private var selectingLocationByList: Boolean = true
     private var editingId: Int? = null
     private var parentAgendaPanel = eventAgendaPanel
@@ -66,123 +66,9 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
     init {
         typesList.syncWithList(state.sessionTypes!!)
         locationsList.syncWithList(state.selectedEventLocations!!)
-        saveButton = AgendaPrimaryButton(tr("Save")){
-            width = 100.px
-            onClick {
-                saveSession()
-            }
-        }
-        deleteButton = Button(tr("Delete"), style = ButtonStyle.DANGER) {
-                width = 100.px
-                onClick {
-                    deleteSession()
-                }
-        }
-        timeSelector = DateTime(format = "HH:mm", label = tr("Start time")) {
-            onChange {
-                val startTimeValue = this.getValue()
-                if (startTimeValue != null) {
-                    updateDurationOptions(startTimeValue)
-                }
-            }
-        }
-
-        val selectDurationOptionsList : MutableList<Pair<String, String>> = mutableListOf()
-
-        durationSelector = Select(
-            options = selectDurationOptionsList,
-            label = tr("Duration"),
-        )
-
-        typeSelector = Select(
-            label = tr("Type")
-        ).bind(typesList) { list ->
-            options = list.map { it.id.toString() to tr(it.name!!) }
-        }
-
-        newTypeInputText = Text(label = tr("New type"), maxlength = 50) {
-            autocomplete = Autocomplete.OFF
-        }
-
-        backToTypeListButton = AgendaPrimaryButton(tr("Back")) {
-            paddingTop = 5.px
-        }
-
-        newTypeInputText.hide()
-        backToTypeListButton.hide()
-
-        buttonNewType = AgendaPrimaryButton(tr("New type")) {
-            paddingTop = 5.px
-            maxWidth = 120.px
-            minWidth = 120.px
-            onClick {
-                showNewTypeInput()
-            }
-        }
-
-        buttonRemoveType = Button(tr("Delete selected"), style = ButtonStyle.DANGER) {
-            paddingTop = 5.px
-            onClick {
-                deleteSelectedType()
-            }
-        }
-
-        typeSelector.onChange {
-            if(typeSelector.getValue() != null &&
-                    typesList[typeSelector.selectedIndex].name!! in
-                        listOf(
-                            gettext("Break"),
-                            gettext("Workshop"),
-                            gettext("Session"),
-                            gettext("Lecture"))) {
-                buttonRemoveType.hide()
-            } else {
-                buttonRemoveType.show()
-            }
-        }
-
-        backToTypeListButton.onClick {
-            showTypeList()
-        }
-
-        locationSelector = Select(
-            label = tr("Location")
-        ).bind(locationsList) { list ->
-            paddingTop = 15.px
-            options = list.map { it.id.toString() to it.name!! }
-        }
-
-        newLocationInputText = Text(label = tr("New location"), maxlength = 50) {
-            paddingTop = 15.px
-            autocomplete = Autocomplete.OFF
-        }
-
-        buttonRemoveLocation = Button(tr("Delete selected"), style = ButtonStyle.DANGER) {
-            paddingTop = 5.px
-            onClick {
-                deleteSelectedLocation()
-            }
-        }
-
-        backToLocationListButton = AgendaPrimaryButton(tr("Back")) {
-            paddingTop = 5.px
-        }
-
-        newLocationInputText.hide()
-        backToLocationListButton.hide()
-
-        buttonNewLocation = AgendaPrimaryButton(tr("New location")) {
-            paddingTop = 5.px
-            maxWidth = 120.px
-            minWidth = 120.px
-            onClick {
-                showNewLocationInput()
-            }
-        }
-
-        backToLocationListButton.onClick {
-            showLocationList()
-        }
+        buttonsInitialization()
+        selectorsInitialization()
+        inputTextsInitialization()
 
         sessionPanel = formPanel  {
             alignItems = AlignItems.CENTER
@@ -245,6 +131,137 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
             }
             validatorMessage = { tr("Session time in the location is overlapping.") }
         }
+    }
+
+    /**
+     * Initializes used buttons.
+     */
+    private fun buttonsInitialization() {
+        saveButton = AgendaPrimaryButton(tr("Save")){
+            width = 100.px
+            onClick {
+                saveSession()
+            }
+        }
+        deleteButton = Button(tr("Delete"), style = ButtonStyle.DANGER) {
+            width = 100.px
+            onClick {
+                deleteSession()
+            }
+        }
+        backToTypeListButton = AgendaPrimaryButton(tr("Back")) {
+            paddingTop = 5.px
+            onClick {
+                showTypeList()
+            }
+        }
+
+        buttonNewType = AgendaPrimaryButton(tr("New type")) {
+            paddingTop = 5.px
+            maxWidth = 120.px
+            minWidth = 120.px
+            onClick {
+                showNewTypeInput()
+            }
+        }
+
+        buttonRemoveType = Button(tr("Delete selected"), style = ButtonStyle.DANGER) {
+            paddingTop = 5.px
+            onClick {
+                deleteSelectedType()
+            }
+        }
+
+        buttonRemoveLocation = Button(tr("Delete selected"), style = ButtonStyle.DANGER) {
+            paddingTop = 5.px
+            onClick {
+                deleteSelectedLocation()
+            }
+        }
+
+        backToLocationListButton = AgendaPrimaryButton(tr("Back")) {
+            paddingTop = 5.px
+            onClick {
+                showLocationList()
+            }
+        }
+
+        buttonNewLocation = AgendaPrimaryButton(tr("New location")) {
+            paddingTop = 5.px
+            maxWidth = 120.px
+            minWidth = 120.px
+            onClick {
+                showNewLocationInput()
+            }
+        }
+
+        backToTypeListButton.hide()
+        backToLocationListButton.hide()
+    }
+
+
+    /**
+     * Initializes used selectors.
+     */
+    private fun selectorsInitialization() {
+        timeSelector = DateTime(format = "HH:mm", label = tr("Start time")) {
+            onChange {
+                val startTimeValue = this.getValue()
+                if (startTimeValue != null) {
+                    updateDurationOptions(startTimeValue)
+                }
+            }
+        }
+
+        val selectDurationOptionsList : MutableList<Pair<String, String>> = mutableListOf()
+
+        durationSelector = Select(
+            options = selectDurationOptionsList,
+            label = tr("Duration"),
+        )
+
+        typeSelector = Select(
+            label = tr("Type")
+        ).bind(typesList) { list ->
+            options = list.map { it.id.toString() to tr(it.name!!) }
+        }
+
+        typeSelector.onChange {
+            if(typeSelector.getValue() != null &&
+                typesList[typeSelector.selectedIndex].name!! in
+                listOf(
+                    gettext("Break"),
+                    gettext("Workshop"),
+                    gettext("Session"),
+                    gettext("Lecture"))) {
+                buttonRemoveType.hide()
+            } else {
+                buttonRemoveType.show()
+            }
+        }
+
+        locationSelector = Select(
+            label = tr("Location")
+        ).bind(locationsList) { list ->
+            paddingTop = 15.px
+            options = list.map { it.id.toString() to it.name!! }
+        }
+    }
+
+    /**
+     * Initializes used input texts.
+     */
+    private fun inputTextsInitialization() {
+        newTypeInputText = Text(label = tr("New type"), maxlength = 50) {
+            autocomplete = Autocomplete.OFF
+        }
+        newLocationInputText = Text(label = tr("New location"), maxlength = 50) {
+            paddingTop = 15.px
+            autocomplete = Autocomplete.OFF
+        }
+
+        newTypeInputText.hide()
+        newLocationInputText.hide()
     }
 
     /**
