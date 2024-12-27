@@ -268,7 +268,10 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
      * Checks if the edited/new session is overlapping with atleast one of the sessions
      * during the selected time in the selected location.
      */
-    private fun checkLocationSessionsOverlap(location: Location, formSessionStartTime: LocalTime, formSessionDuration: Int) : Boolean {
+    private fun checkLocationSessionsOverlap(
+        location: Location,
+        formSessionStartTime: LocalTime,
+        formSessionDuration: Int) : Boolean {
         return sessionsMap?.get(sessionDate?.getTime())?.get(location)?.any{
             it != editingSession && checkFormSessionOverlap(it, formSessionStartTime, formSessionDuration)
         } ?: false

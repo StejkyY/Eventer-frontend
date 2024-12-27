@@ -28,11 +28,11 @@ enum class CalendarMode {
 
 class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): EventChildPanel() {
     private val dayTextButtonList: MutableList<AgendaTextButton> = mutableListOf()
-    private val dayNavigationButtonLeft: Button
-    private val dayNavigationButtonRight: Button
+    private lateinit var dayNavigationButtonLeft: Button
+    private lateinit var dayNavigationButtonRight: Button
     private var createNewSessionButton: Button? = null
-    private val buttonExport: Button
-    private val buttonAddToCalendar: Button
+    private lateinit var buttonExport: Button
+    private lateinit var buttonAddToCalendar: Button
     private val exportModalWindow: AgendaExportWindow = AgendaExportWindow()
     private val addToCalendarModalWindow: AddToCalendarWindow = AddToCalendarWindow()
     private var sessionDialogWindow = EventSessionWindow(state, this)
@@ -47,16 +47,64 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
 
 
     init {
-        if(mode == CalendarMode.PREVIEW) {
-            border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-        }
         daysCount = subtractTwoDates(state.selectedEvent?.endDate!!, state.selectedEvent.startDate!!) + 1
+
         formatSessions()
+        buttonsInitialization()
         changeDay(0)
+
         display = Display.FLEX
         flexDirection = FlexDirection.COLUMN
         height = 100.perc
+        if(mode == CalendarMode.PREVIEW) {
+            border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))
+        }
 
+        gridPanel (
+            templateColumns = "1fr 1fr 1fr",
+            alignItems = AlignItems.CENTER,
+            justifyItems = JustifyItems.CENTER)  {
+
+            createDayButtons()
+            if(mode == CalendarMode.EDIT) {
+                checkSessionsInDateRange()
+            }
+            marginTop = 10.px
+            add(hPanel (spacing = 10) {
+                add(buttonExport)
+                add(buttonAddToCalendar)
+            }, 1, 1)
+            add(dayButtonsPanel(), 2, 1)
+            if(mode == CalendarMode.EDIT) {
+                add(createNewSessionButton!!, 3, 1)
+            }
+        }
+        hPanel {
+            marginLeft = 0.px
+            marginRight = 0.px
+            marginTop = 10.px
+            border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))
+            width = 100.perc
+        }
+
+        sessionsPanel = createSessionsPanel()
+        timeline = createTimeline()
+
+        simplePanel {
+            height = 100.perc
+            position = Position.RELATIVE
+            overflow = Overflow.AUTO
+            flexGrow = 1
+
+            add(timeline)
+            add(sessionsPanel)
+        }
+    }
+
+    /**
+     * Initializes used buttons.
+     */
+    private fun buttonsInitialization() {
         if(mode == CalendarMode.EDIT) {
             createNewSessionButton = AgendaPrimaryButton(tr("Create new session")) {
                 marginLeft = 100.px
@@ -65,7 +113,6 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
                 }
             }
         }
-
         buttonExport = AgendaPrimaryButton(tr("Export")) {
             onClick {
                 if(!changesMade) {
@@ -97,42 +144,6 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
             }
         }
 
-        gridPanel (templateColumns = "1fr 1fr 1fr", alignItems = AlignItems.CENTER, justifyItems = JustifyItems.CENTER)  {
-            createDayButtons()
-            if(mode == CalendarMode.EDIT) {
-                checkSessionsInDateRange()
-            }
-            marginTop = 10.px
-            add(hPanel (spacing = 10) {
-                add(buttonExport)
-                add(buttonAddToCalendar)
-            }, 1, 1)
-            add(dayButtonsPanel(), 2, 1)
-            if(mode == CalendarMode.EDIT) {
-                add(createNewSessionButton!!, 3, 1)
-            }
-        }
-        hPanel {
-            marginLeft = 0.px
-            marginRight = 0.px
-            marginTop = 10.px
-            border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-            width = 100.perc
-        }
-
-        sessionsPanel = createSessionsPanel()
-        timeline = createTimeline()
-
-        simplePanel {
-            height = 100.perc
-            position = Position.RELATIVE
-            overflow = Overflow.AUTO
-
-            flexGrow = 1
-
-            add(timeline)
-            add(sessionsPanel)
-        }
     }
 
     /**

@@ -17,15 +17,73 @@ import io.kvision.utils.vh
 import io.kvision.utils.vw
 
 class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : SimplePanel() {
-    private val buttonBasicInfo: MenuTextButton
-    private val buttonDescription: MenuTextButton
-    private val buttonAgenda: MenuTextButton
-    private val eventPreviewButton: Button
+    private lateinit var buttonBasicInfo: MenuTextButton
+    private lateinit var buttonDescription: MenuTextButton
+    private lateinit var buttonAgenda: MenuTextButton
+    private lateinit var eventPreviewButton: Button
     private val unsavedChangesConfirmWindow: UnsavedChangesConfirm = UnsavedChangesConfirm()
-    private val saveButton: Button
-    private val backButton: Button
+    private lateinit var saveButton: Button
+    private lateinit var backButton: Button
 
     init {
+        buttonsInitialization()
+
+        hPanel {
+            paddingTop = 20.px
+            height = 100.perc
+            vPanel {
+                width = 13.vw
+                borderTop = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
+                borderBottom = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
+                spacing = 20
+                paddingTop = 20.px
+                add(backButton)
+                add(buttonBasicInfo)
+                add(buttonDescription)
+                add(buttonAgenda)
+            }
+            vPanel {
+                width = 85.vw
+                border = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
+                gridPanel (
+                    templateColumns = "1fr 1fr 1fr",
+                    alignItems = AlignItems.CENTER,
+                    justifyItems = JustifyItems.CENTER
+                ) {
+
+                    add(hPanel {
+                        add(eventPreviewButton)
+                    }, 1, 1)
+
+                    if(state.selectedEvent != null) {
+                        add(Label(state.selectedEvent.name) {
+                            fontSize = 28.px
+                        }, 2, 1)
+                    }
+
+                    add(saveButton,3, 1)
+                    paddingTop = 15.px
+                    paddingBottom = 15.px
+                }
+
+                hPanel {
+                    marginLeft = 0.px
+                    marginRight = 0.px
+                    border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))
+                    width = 100.perc
+                }
+                simplePanel {
+                    height = 75.vh
+                    add(childPanel)
+                }
+            }
+        }
+    }
+
+    /**
+     * Initializes used buttons.
+     */
+    private fun buttonsInitialization() {
         saveButton = AgendaPrimaryButton(tr("Save changes")) {
             disabled = true
             onClick {
@@ -86,55 +144,6 @@ class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : S
                 unsavedChangesConfirmWindow.show(
                     tr("You have unsaved changes, do you want to leave the page?"),
                     yesCallback = { goToAgendaPanel() })
-            }
-        }
-
-        hPanel {
-            paddingTop = 20.px
-            height = 100.perc
-            vPanel {
-                width = 13.vw
-                borderTop = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-                borderBottom = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-                spacing = 20
-                paddingTop = 20.px
-                add(backButton)
-                add(buttonBasicInfo)
-                add(buttonDescription)
-                add(buttonAgenda)
-            }
-            vPanel {
-                width = 85.vw
-                border = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-                gridPanel (
-                    templateColumns = "1fr 1fr 1fr", alignItems = AlignItems.CENTER, justifyItems = JustifyItems.CENTER
-                ) {
-
-                    add(hPanel {
-                        add(eventPreviewButton)
-                    }, 1, 1)
-
-                    if(state.selectedEvent != null) {
-                        add(Label(state.selectedEvent.name) {
-                            fontSize = 28.px
-                        }, 2, 1)
-                    }
-
-                    add(saveButton,3, 1)
-                    paddingTop = 15.px
-                    paddingBottom = 15.px
-                }
-
-                hPanel {
-                    marginLeft = 0.px
-                    marginRight = 0.px
-                    border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-                    width = 100.perc
-                }
-                simplePanel {
-                    height = 75.vh
-                    add(childPanel)
-                }
             }
         }
     }

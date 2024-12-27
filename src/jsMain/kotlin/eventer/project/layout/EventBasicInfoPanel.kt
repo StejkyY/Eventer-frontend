@@ -26,16 +26,16 @@ import kotlinx.coroutines.launch
 import kotlin.js.Date
 
 class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
-    private val inPersonEventButton: Button
-    private val hybridEventButton: Button
-    private val virtualEventButton: Button
-    private val duplicateEventButton: Button
-    private val deleteEventButton: Button
+    private lateinit var inPersonEventButton: Button
+    private lateinit var hybridEventButton: Button
+    private lateinit var virtualEventButton: Button
+    private lateinit var duplicateEventButton: Button
+    private lateinit var deleteEventButton: Button
     private val basicInfoFormPanel: FormPanel<Event>
-    private val startDate: DateTime
-    private val endDate: DateTime
-    private val startTime: DateTime
-    private val endTime: DateTime
+    private lateinit var startDate: DateTime
+    private lateinit var endDate: DateTime
+    private lateinit var startTime: DateTime
+    private lateinit var endTime: DateTime
     private var eventType = state.selectedEvent?.type
 
     init {
@@ -43,102 +43,9 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
         overflowY = Overflow.AUTO
         marginLeft = 40.px
 
-        inPersonEventButton = Button(tr("In Person")){
-            width = 100.px
-            onClick {
-                eventType = EventType.InPerson
-                newStateOnChange()
-            }
-        }
-        hybridEventButton = Button(tr("Hybrid")){
-            width = 100.px
-            onClick {
-                eventType = EventType.Hybrid
-                newStateOnChange()
-            }
-        }
-        virtualEventButton = Button(tr("Virtual")){
-            width = 100.px
-            onClick {
-                eventType = EventType.Virtual
-                newStateOnChange()
-            }
-        }
-
-        initDisableTypeButton()
-
-        inPersonEventButton.onClick {
-            disableTypeButton(inPersonEventButton, hybridEventButton, virtualEventButton)
-        }
-        hybridEventButton.onClick {
-            disableTypeButton(hybridEventButton, inPersonEventButton, virtualEventButton)
-        }
-        virtualEventButton.onClick {
-            disableTypeButton(virtualEventButton, hybridEventButton, inPersonEventButton)
-        }
-        duplicateEventButton = Button(tr("Duplicate event")){
-            width = 100.px
-            onClick {
-            }
-        }
-        deleteEventButton = Button(tr("Delete event"), style = ButtonStyle.DANGER){
-            width = 150.px
-            marginTop = 20.px
-            onClick {
-                deleteEvent()
-            }
-        }
-
-        startDate = DateTime(label = tr("Start date"), format = "YYYY-MM-DD") {
-            input.input.autocomplete = Autocomplete.OFF
-            width = 150.px
-            minDate = LocalDate()
-            showClear = false
-            onChange {
-                if(getValue()?.getTime()!! > state.selectedEvent?.startDate?.getTime()!!) {
-                    Confirm.show(
-                        caption = tr("Confirm changes"),
-                        text = tr("You will lose all sessions on days you removed. Do you want to continue?"),
-                        noCallback = { setValue(Date(state.selectedEvent.startDate.getTime()))} ,
-                        yesCallback = {newStateOnChange()})
-                } else {
-                    newStateOnChange()
-                }
-            }
-        }
-        endDate = DateTime(label = tr("End date"), format = "YYYY-MM-DD") {
-            input.input.autocomplete = Autocomplete.OFF
-            width = 150.px
-            minDate = LocalDate()
-            showClear = false
-            onChange {
-                if(getValue()?.getTime()!! < state.selectedEvent?.endDate?.getTime()!!) {
-                    Confirm.show(
-                        caption = tr("Confirm changes"),
-                        text = tr("You will lose all sessions on days you removed. Do you want to continue?"),
-                        noCallback = { setValue(Date(state.selectedEvent.endDate.getTime())) },
-                        yesCallback = {newStateOnChange()})
-                } else {
-                    newStateOnChange()
-                }
-            }
-        }
-        startTime = DateTime(label = tr("Start time"), format = "HH:mm").apply {
-            input.input.autocomplete = Autocomplete.OFF
-            width = 150.px
-            showToday = false
-            onChange {
-                newStateOnChange()
-            }
-        }
-        endTime = DateTime(label = tr("End time"), format = "HH:mm") {
-            input.input.autocomplete = Autocomplete.OFF
-            width = 150.px
-            showToday = false
-            onChange {
-                newStateOnChange()
-            }
-        }
+        buttonsInitialization()
+        dateSelectorsInitialization()
+        timeSelectorsInitialization()
 
         basicInfoFormPanel = formPanel {
             height = 100.perc
@@ -200,6 +107,112 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
         }
     }
 
+    /**
+     * Initializes used buttons.
+     */
+    private fun buttonsInitialization() {
+        inPersonEventButton = Button(tr("In Person")){
+            width = 100.px
+            onClick {
+                eventType = EventType.InPerson
+                disableTypeButton(inPersonEventButton, hybridEventButton, virtualEventButton)
+                newStateOnChange()
+            }
+        }
+        hybridEventButton = Button(tr("Hybrid")){
+            width = 100.px
+            onClick {
+                eventType = EventType.Hybrid
+                disableTypeButton(hybridEventButton, inPersonEventButton, virtualEventButton)
+                newStateOnChange()
+            }
+        }
+        virtualEventButton = Button(tr("Virtual")){
+            width = 100.px
+            onClick {
+                eventType = EventType.Virtual
+                disableTypeButton(virtualEventButton, hybridEventButton, inPersonEventButton)
+                newStateOnChange()
+            }
+        }
+
+        initDisableTypeButton()
+
+        duplicateEventButton = Button(tr("Duplicate event")){
+            width = 100.px
+            onClick {
+            }
+        }
+        deleteEventButton = Button(tr("Delete event"), style = ButtonStyle.DANGER){
+            width = 150.px
+            marginTop = 20.px
+            onClick {
+                deleteEvent()
+            }
+        }
+    }
+
+    /**
+     * Initializes used date selectors.
+     */
+    private fun dateSelectorsInitialization() {
+        startDate = DateTime(label = tr("Start date"), format = "YYYY-MM-DD") {
+            input.input.autocomplete = Autocomplete.OFF
+            width = 150.px
+            minDate = LocalDate()
+            showClear = false
+            onChange {
+                if(getValue()?.getTime()!! > state.selectedEvent?.startDate?.getTime()!!) {
+                    Confirm.show(
+                        caption = tr("Confirm changes"),
+                        text = tr("You will lose all sessions on days you removed. Do you want to continue?"),
+                        noCallback = { setValue(Date(state.selectedEvent.startDate.getTime()))} ,
+                        yesCallback = {newStateOnChange()})
+                } else {
+                    newStateOnChange()
+                }
+            }
+        }
+        endDate = DateTime(label = tr("End date"), format = "YYYY-MM-DD") {
+            input.input.autocomplete = Autocomplete.OFF
+            width = 150.px
+            minDate = LocalDate()
+            showClear = false
+            onChange {
+                if(getValue()?.getTime()!! < state.selectedEvent?.endDate?.getTime()!!) {
+                    Confirm.show(
+                        caption = tr("Confirm changes"),
+                        text = tr("You will lose all sessions on days you removed. Do you want to continue?"),
+                        noCallback = { setValue(Date(state.selectedEvent.endDate.getTime())) },
+                        yesCallback = {newStateOnChange()})
+                } else {
+                    newStateOnChange()
+                }
+            }
+        }
+    }
+
+    /**
+     * Initializes used time selectors.
+     */
+    private fun timeSelectorsInitialization() {
+        startTime = DateTime(label = tr("Start time"), format = "HH:mm").apply {
+            input.input.autocomplete = Autocomplete.OFF
+            width = 150.px
+            showToday = false
+            onChange {
+                newStateOnChange()
+            }
+        }
+        endTime = DateTime(label = tr("End time"), format = "HH:mm") {
+            input.input.autocomplete = Autocomplete.OFF
+            width = 150.px
+            showToday = false
+            onChange {
+                newStateOnChange()
+            }
+        }
+    }
 
     /**
      * Check if the start date and time is set before the end date and time.
