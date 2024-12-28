@@ -250,7 +250,6 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
             val updatedSession = sessionDialogWindow.editSession(
                 formattedEventSessionsMap.value,
                 session)
-
             if(updatedSession == null) {
                 return@launch
             }

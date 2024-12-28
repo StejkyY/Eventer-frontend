@@ -24,20 +24,6 @@ import kotlinx.serialization.Serializable
 import org.w3c.dom.get
 import org.w3c.dom.set
 
-//data class EditingEventState(val event: Event, val sessions: List<Session>, val locations: List<Location>) {
-//
-//    val defaultState: EditingEventState = this
-//
-//    fun getDefaultState(): EditingEventState {
-//        return defaultState
-//    }
-//}
-
-@Serializable
-enum class Sort {
-    FN, LN, E, F
-}
-
 enum class Provider {
     GOOGLE, MICROSOFT
 }
@@ -127,7 +113,7 @@ object ConduitManager {
 
     fun showEventPreviewPage(eventId: Int) {
         AppScope.launch {
-            loadEvent(eventId, false)
+            loadEvent(eventId)
             agendaStore.dispatch(AgendaAppAction.eventPreviewPage)
         }
     }
@@ -135,8 +121,11 @@ object ConduitManager {
     fun showPreviousPage() {
         if ((agendaStore.store.state.previousView == View.EVENT_BASIC_INFO ||
                     agendaStore.store.state.previousView == View.EVENT_DESCRIPTION ||
-                        agendaStore.store.state.previousView == View.EVENT_AGENDA) && agendaStore.store.state.selectedEvent != null) {
-            redirect("/event/${agendaStore.store.state.selectedEvent!!.id}${agendaStore.store.state.previousView.url}")
+                        agendaStore.store.state.previousView == View.EVENT_AGENDA)
+                            && agendaStore.store.state.selectedEvent != null) {
+            redirect("/event/${agendaStore.store.state.selectedEvent!!.id}" +
+                    agendaStore.store.state.previousView.url
+            )
         } else {
             redirect(agendaStore.store.state.previousView)
         }
@@ -258,36 +247,12 @@ object ConduitManager {
         val formattedSessionsMap = mutableMapOf<Double, Map<Location, List<Session>>>()
 
         for ((date, sessions) in allSessionsGroupedByDate) {
-            val sessionsGroupedByLocation = sessions.groupBy { it.location!! } .mapValues { (_, locationSessions) ->
-                locationSessions.sortedBy { it.dayOrder }
-            }
+            val sortedSessions = sessions.sortedBy { it.dayOrder }
+            val sessionsGroupedByLocation = sortedSessions.groupBy { it.location!! }
             formattedSessionsMap[date] = sessionsGroupedByLocation
         }
-
         agendaStore.dispatch(AgendaAppAction.formattedEventSessionsLoaded(formattedSessionsMap))
     }
-
-//    suspend fun addSessionList(sessionList: List<Session>) {
-//        Security.withAuth {
-//            for (session in sessionList) {
-//                sessionService.addSession(session)
-//            }
-//        }
-//    }
-//
-//    suspend fun updateSessionList(sessionList: List<Session>) {
-//        Security.withAuth {
-//            for (session in sessionList) sessionService.updateSession(session)
-//            getSessionsForEvent()
-//        }
-//    }
-//
-//    suspend fun removeSessionList(sessionList: List<Session>) {
-//        Security.withAuth {
-//            for (session in sessionList) sessionService.deleteSession(session.id!!)
-//            getSessionsForEvent()
-//        }
-//    }
 
     suspend fun addType(type: Type): Type? {
         try {
