@@ -20,32 +20,15 @@ import io.kvision.utils.vw
 class EventPreviewPanel(state: AgendaAppState) : SimplePanel() {
 
     init {
-        vPanel(spacing = 20) {
-            width = 100.vw
-            height = 38.vh
-            alignItems = AlignItems.CENTER
-            background = Background(Color.name(Col.LIGHTGRAY))
-            borderBottom = Border(1.px, BorderStyle.SOLID, Color.name(Col.BLACK))
-
-            add(Label(state.selectedEvent?.name.toString()) {
-                marginTop = 2.perc
-                fontSize = 40.px
-            })
-            hPanel(spacing = 5) {
-                verticalAlign = VerticalAlign.BASELINE
-                alignItems = AlignItems.CENTER
+        vPanel(spacing = 20, className = "event-preview-header") {
+            add(Label(state.selectedEvent?.name.toString(), className = "event-preview-main-label"))
+            hPanel(spacing = 5, className = "event-preview-header-text-aligned") {
                 add(Icon("fas fa-location-dot"))
-                add(Label(state.selectedEvent?.location.toString()) {
-                    fontSize = 20.px
-                })
+                add(Label(state.selectedEvent?.location.toString(), className = "event-preview-location-label"))
             }
             val typeString = gettext(state.selectedEvent?.type.toString())
-            add(Label(typeString) {
-                fontSize = 18.px
-            })
-            hPanel(spacing = 20) {
-                verticalAlign = VerticalAlign.BASELINE
-                alignItems = AlignItems.CENTER
+            add(Label(typeString, className = "event-preview-type-label"))
+            hPanel(spacing = 20, className = "event-preview-header-text-aligned") {
                 vPanel() {
                     alignItems = AlignItems.CENTER
                     add(Label(state.selectedEvent?.startDate?.toDateString()))
@@ -59,11 +42,7 @@ class EventPreviewPanel(state: AgendaAppState) : SimplePanel() {
                 }
             }
         }
-        vPanel {
-            paddingTop = 3.perc
-            width = 100.vw
-            alignItems = AlignItems.CENTER
-
+        vPanel(className = "event-preview-description") {
             vPanel {
                 width = 70.perc
                 add(Label(state.selectedEvent?.description, rich = true))
@@ -73,12 +52,8 @@ class EventPreviewPanel(state: AgendaAppState) : SimplePanel() {
         vPanel {
             paddingTop = 3.perc
             alignItems = AlignItems.CENTER
-            add(Label(tr("Agenda")) {
-                fontSize = 30.px
-            })
-            simplePanel {
-                paddingTop = 3.perc
-                width = 80.vw
+            add(Label(tr("Agenda"), className = "event-preview-agenda-label"))
+            simplePanel(className = "event-preview-agenda") {
                 add(EventAgendaPanel(state, CalendarMode.PREVIEW))
             }
         }

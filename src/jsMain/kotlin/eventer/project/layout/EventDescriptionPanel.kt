@@ -21,8 +21,7 @@ class EventDescriptionPanel(val state: AgendaAppState) : EventChildPanel() {
             maxlength = 2000
             inputHeight = 490.px
         }
-        descriptionFormPanel = formPanel {
-            width = 95.perc
+        descriptionFormPanel = formPanel(className = "event-description-panel") {
             add(Event::description, richText)
             if(state.selectedEvent != null) {
                 setData(state.selectedEvent)

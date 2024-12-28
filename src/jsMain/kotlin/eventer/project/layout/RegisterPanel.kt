@@ -37,22 +37,15 @@ class RegisterPanel: SimplePanel() {
     private val registerFormPanel: FormPanel<User>
 
     init {
+        textAlign = TextAlign.CENTER
         buttonsInitialization()
         textFieldsInitialization()
 
-        registerFormPanel = this.formPanel  {
-            width = 400.px
+        registerFormPanel = this.formPanel(className = "basic-form-panel")  {
             marginTop = 5.perc
-            marginLeft = auto
-            marginRight = auto
-            padding = 20.px
-            border = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-            textAlign = TextAlign.CENTER
 
             vPanel {
-                add(Label(tr("Register")) {
-                    fontSize = 28.px
-                })
+                add(Label(tr("Register"), className = "main-label"))
                 paddingBottom = 20.px
             }
 
@@ -87,10 +80,9 @@ class RegisterPanel: SimplePanel() {
                             clearRegisterFormPanelValidation(password.getValue()!!)
                         }
                     })
-                span {
+                span(className = "small-label") {
                     +tr("Password needs to be atleast 8 characters long," +
                             " contain atleast one upper case and one number")
-                    fontSize = 10.px
                 }
 
                 validator = {form ->
@@ -104,9 +96,8 @@ class RegisterPanel: SimplePanel() {
                 }
                 add(registerButton)
 
-                span {
+                span(className = "medium-label") {
                     +tr("Already have an account?")
-                    fontSize = 14.px
                     paddingTop = 30.px
                 }
 

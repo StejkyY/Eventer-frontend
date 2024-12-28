@@ -44,37 +44,25 @@ class NewEventPanel(val state: AgendaAppState) : FormPanel<Event>() {
     private val newEventFormPanel: FormPanel<Event>
 
     init {
+        textAlign = TextAlign.CENTER
         buttonsInitialization()
         dateSelectorsInitialization()
         timeSelectorsInitialization()
 
-        newEventFormPanel = formPanel {
-            width = 400.px
-            margin = 20.px
-            marginLeft = auto
-            marginRight = auto
-            padding = 20.px
-            border = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-            textAlign = TextAlign.CENTER
+        newEventFormPanel = formPanel(className = "basic-form-panel") {
 
             gridPanel (
                 templateColumns = "1fr 1fr 1fr",
                 alignItems = AlignItems.CENTER,
                 justifyItems = JustifyItems.CENTER) {
                 add(backButton, 1, 1)
-                add(Label(tr("Create new event")) {
-                    fontSize = 28.px
+                add(Label(tr("Create new event"), className = "main-label") {
                     width = 250.px
                 }, 2, 1)
                 paddingBottom = 15.px
             }
 
-            hPanel {
-                marginLeft = 0.px
-                marginRight = 0.px
-                border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-                width = 100.perc
-            }
+            hPanel(className = "separator") {}
 
             add(Event::name,
                 Text(label = tr("Event name"), maxlength = 100) {
@@ -116,21 +104,14 @@ class NewEventPanel(val state: AgendaAppState) : FormPanel<Event>() {
      * Initializes used buttons.
      */
     private fun buttonsInitialization() {
-        createEventButton = Button(tr("Create")){
-            width = 100.px
+        createEventButton = Button(tr("Create"), className = "basic-event-button"){
             onClick {
                 saveEvent()
             }
         }
-        inPersonEventButton = Button(tr("In Person")){
-            width = 100.px
-        }
-        hybridEventButton = Button(tr("Hybrid")){
-            width = 100.px
-        }
-        virtualEventButton = Button(tr("Virtual")){
-            width = 100.px
-        }
+        inPersonEventButton = Button(tr("In Person"), className = "basic-event-button")
+        hybridEventButton = Button(tr("Hybrid"), className = "basic-event-button")
+        virtualEventButton = Button(tr("Virtual"), className = "basic-event-button")
 
         inPersonEventButton.onClick {
             eventType = EventType.InPerson

@@ -34,9 +34,7 @@ class AddToCalendarWindow : Modal(caption = tr("Add sessions to calendar")) {
         vPanel().bind(ConduitManager.agendaStore) { state ->
             hPanel() {
                 alignItems = AlignItems.CENTER
-                add(Label(tr("Google Calendar:")) {
-                    width = 150.px
-                })
+                add(Label(tr("Google Calendar:"), className = "third-party-calendar-label"))
                 if(state.googleAccountSynced) {
                     add(statusLoggedGoogle)
                     add(buttonAddToGoogleCalendar)
@@ -48,9 +46,7 @@ class AddToCalendarWindow : Modal(caption = tr("Add sessions to calendar")) {
             hPanel() {
                 alignItems = AlignItems.CENTER
                 marginTop = 10.px
-                add(Label(tr("Microsoft Outlook:")) {
-                    width = 150.px
-                })
+                add(Label(tr("Microsoft Outlook:"), className = "third-party-calendar-label"))
                 if(state.microsoftAccountSynced) {
                     add(statusLoggedMicrosoft)
                     add(buttonAddToOutlookCalendar)
@@ -72,8 +68,7 @@ class AddToCalendarWindow : Modal(caption = tr("Add sessions to calendar")) {
         statusLoggedMicrosoft = Button(tr("Synced"), style = ButtonStyle.SUCCESS) {
             disabled = true
         }
-        buttonAddToGoogleCalendar = AgendaPrimaryButton(tr("Add sessions")) {
-            marginLeft = 5.px
+        buttonAddToGoogleCalendar = AgendaPrimaryButton(tr("Add sessions"), buttonClassName = "third-party-calendar-button") {
             onClick {
                 try {
                     AppScope.withProgress {
@@ -89,8 +84,7 @@ class AddToCalendarWindow : Modal(caption = tr("Add sessions to calendar")) {
                 }
             }
         }
-        buttonAddToOutlookCalendar = AgendaPrimaryButton(tr("Add sessions")) {
-            marginLeft = 5.px
+        buttonAddToOutlookCalendar = AgendaPrimaryButton(tr("Add sessions"), buttonClassName = "third-party-calendar-button") {
             onClick {
                 try {
                     AppScope.withProgress {
@@ -106,29 +100,31 @@ class AddToCalendarWindow : Modal(caption = tr("Add sessions to calendar")) {
                 }
             }
         }
-        buttonGoogleCalendarLogin = AgendaPrimaryButton(tr("Login")) {
-            marginLeft = 5.px
+        buttonGoogleCalendarLogin = AgendaPrimaryButton(tr("Login"), buttonClassName = "third-party-calendar-button") {
             onClick {
                 ExternalCalendarSessionsManager.googleCalendarAuthorize()
             }
         }
-        buttonOutlookLogin = AgendaPrimaryButton(tr("Login")) {
-            marginLeft = 5.px
+        buttonOutlookLogin = AgendaPrimaryButton(tr("Login"), buttonClassName = "third-party-calendar-button") {
             onClick {
                 ExternalCalendarSessionsManager.microsoftOutlookAuthorize()
             }
         }
 
-        buttonUnlinkGoogleAccount = Button(tr("Unlink"), style = ButtonStyle.DANGER) {
-            marginLeft = 5.px
+        buttonUnlinkGoogleAccount = Button(
+            tr("Unlink"),
+            style = ButtonStyle.DANGER,
+            className = "third-party-calendar-button") {
             onClick {
                 AppScope.launch {
                     ConduitManager.unlinkGoogleAccount()
                 }
             }
         }
-        buttonUnlinkMicrosoftAccount = Button(tr("Unlink"), style = ButtonStyle.DANGER) {
-            marginLeft = 5.px
+        buttonUnlinkMicrosoftAccount = Button(
+            tr("Unlink"),
+            style = ButtonStyle.DANGER,
+            className = "third-party-calendar-button") {
             onClick {
                 AppScope.launch {
                     ConduitManager.unlinkMicrosoftAccount()

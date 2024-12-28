@@ -33,7 +33,7 @@ enum class Changing {
 @Serializable
 data class PasswordState(val currentPassword: String? = null, val newPassword: String? = null)
 
-class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
+class MyProfilePanel(val state: AgendaAppState) : SimplePanel(className = "basic-form-panel") {
     private lateinit var changeEmailButton: Button
     private lateinit var changePasswordButton: Button
     private lateinit var deleteAccountButton: Button
@@ -55,12 +55,6 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
     private val toastContainer = ToastContainer(ToastContainerPosition.TOPRIGHT)
 
     init {
-        width = 400.px
-        margin = 20.px
-        marginLeft = auto
-        marginRight = auto
-        padding = 20.px
-        border = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
         buttonsInitialization()
         textFieldsInitialization()
 
@@ -91,19 +85,13 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
             ){
                 gridColumnGap = 50
                 add(backButton)
-                add(Label(tr("My profile")) {
-                    fontSize = 28.px
+                add(Label(tr("My profile"), className = "main-label") {
                     width = 150.px
                 })
                 add(saveButton)
                 paddingBottom = 20.px
             }
-            hPanel {
-                marginLeft = 0.px
-                marginRight = 0.px
-                border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-                width = 100.perc
-            }
+            hPanel(className = "separator") {}
         }
 
         profileFormPanel = formPanel {
@@ -139,14 +127,12 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
      * Initializes used buttons.
      */
     private fun buttonsInitialization() {
-        changeEmailButton = Button(tr("Change email")){
-            width = 180.px
+        changeEmailButton = Button(tr("Change email"), className = "profile-change-button"){
             onClick {
                 change(Changing.EMAIL)
             }
         }
-        changePasswordButton = Button(tr("Change password")){
-            width = 180.px
+        changePasswordButton = Button(tr("Change password"), className = "profile-change-button"){
             onClick {
                 change(Changing.PASSWORD)
             }
@@ -190,10 +176,9 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel() {
      * Initializes used text input fields.
      */
     private fun textFieldsInitialization() {
-        passwordCriteriaText = span {
+        passwordCriteriaText = span(className = "small-label") {
             +tr("Password needs to be atleast 8 characters long," +
                     " contain atleast one upper case and one number")
-            fontSize = 10.px
         }
         passwordCriteriaText.hide()
         emailText = Text(label = tr("E-mail"), maxlength = 50) {

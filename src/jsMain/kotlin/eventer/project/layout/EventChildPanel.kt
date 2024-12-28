@@ -3,7 +3,7 @@ package eventer.project.layout
 import io.kvision.html.Button
 import io.kvision.panel.SimplePanel
 
-abstract class EventChildPanel : SimplePanel() {
+abstract class EventChildPanel(childPanelClassName: String? = null) : SimplePanel(className = childPanelClassName) {
     private var saveButton: Button? = null
     var changesMade = false
 

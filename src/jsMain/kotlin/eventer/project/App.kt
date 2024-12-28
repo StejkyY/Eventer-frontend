@@ -25,6 +25,7 @@ val AppScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
 class App : Application() {
     init {
+        require("css/styles.css")
         Pace.init(require("pace-progressbar/themes/blue/pace-theme-minimal.css"))
         Pace.setOptions(PaceOptions(manual = true))
         ConduitManager.initialize()

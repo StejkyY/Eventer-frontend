@@ -23,36 +23,26 @@ import io.kvision.utils.perc
 import io.kvision.utils.px
 import io.kvision.utils.syncWithList
 
-class EventsPanel(state: AgendaAppState) : SimplePanel() {
+class EventsPanel(state: AgendaAppState) : SimplePanel(className = "events-panel") {
 
     private lateinit var newEventButton: Button
     private var filteredEvents = observableListOf<Event>()
 
     init {
-        width = 90.perc
-        margin = 20.px
-        marginLeft = auto
-        marginRight = auto
-        padding = 20.px
-        border = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
         if(state.events != null ) filteredEvents.syncWithList(state.events)
 
         buttonsInitialization()
 
-        gridPanel (templateColumns = "1fr 1fr 1fr", alignItems = AlignItems.CENTER, justifyItems = JustifyItems.CENTER)  {
-            add(Label(tr("Events")) {
-                fontSize = 28.px
-            }, 2 ,1)
+        gridPanel (
+            templateColumns = "1fr 1fr 1fr",
+            alignItems = AlignItems.CENTER,
+            justifyItems = JustifyItems.CENTER)  {
+            add(Label(tr("Events"), className = "main-label"), 2 ,1)
             add(newEventButton, 3, 1)
             paddingBottom = 20.px
         }
 
-        hPanel {
-            marginLeft = 0.px
-            marginRight = 0.px
-            border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-            width = 100.perc
-        }
+        hPanel(className = "separator") {}
 
         flexPanel(
             FlexDirection.ROW, FlexWrap.WRAP, JustifyContent.CENTER, AlignItems.CENTER,
@@ -77,12 +67,7 @@ class EventsPanel(state: AgendaAppState) : SimplePanel() {
             })
         }
 
-        hPanel {
-            marginLeft = 0.px
-            marginRight = 0.px
-            border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-            width = 100.perc
-        }
+        hPanel(className = "separator") {}
 
         add(eventsTable())
     }
@@ -102,10 +87,7 @@ class EventsPanel(state: AgendaAppState) : SimplePanel() {
      * Initializes table component with events as rows.
      */
     private fun eventsTable(): Table {
-        return Table(types = setOf(TableType.BORDERLESS, TableType.HOVER)) {
-            height = 100.perc
-            overflowY = Overflow.SCROLL
-            marginTop = 20.px
+        return Table(types = setOf(TableType.BORDERLESS, TableType.HOVER), className = "events-table") {
 
             addHeaderCell(HeaderCell(tr("Title")))
             addHeaderCell(HeaderCell(tr("Status")))

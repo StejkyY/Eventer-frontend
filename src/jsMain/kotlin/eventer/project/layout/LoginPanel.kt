@@ -21,6 +21,7 @@ import io.kvision.utils.ENTER_KEY
 import io.kvision.utils.auto
 import io.kvision.utils.perc
 import io.kvision.utils.px
+import js.decorators.DecoratorContextKind
 
 class LoginPanel: SimplePanel() {
     private lateinit var googleLoginButton: Button
@@ -32,22 +33,15 @@ class LoginPanel: SimplePanel() {
     private val passwordInput: Password
 
     init {
+        textAlign = TextAlign.CENTER
         passwordInput = Password(label = tr("Password"))
         buttonsInitialization()
 
-        loginFormPanel = this.formPanel {
+        loginFormPanel = this.formPanel(className = "basic-form-panel")  {
             marginTop = 5.perc
-            width = 400.px
-            marginLeft = auto
-            marginRight = auto
-            padding = 20.px
-            border = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-            textAlign = TextAlign.CENTER
 
             vPanel {
-                add(Label(tr("Login")) {
-                    fontSize = 28.px
-                })
+                add(Label(tr("Login"), className = "main-label"))
                 paddingBottom = 20.px
             }
 
@@ -58,18 +52,16 @@ class LoginPanel: SimplePanel() {
                 add(UserCredentials::password, passwordInput, required = true)
                 add(loginButton)
 
-                span {
+                span(className = "medium-label") {
                     +tr("Or you can use")
-                    fontSize = 14.px
                     paddingTop = 20.px
                 }
 
                 add(googleLoginButton)
                 add(microsoftLoginButton)
 
-                span {
+                span(className = "medium-label") {
                     +tr("Don't have an account yet?")
-                    fontSize = 14.px
                     paddingTop = 30.px
                 }
 

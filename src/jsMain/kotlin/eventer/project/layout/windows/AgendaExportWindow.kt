@@ -35,17 +35,13 @@ class AgendaExportWindow : Modal(caption = tr("Agenda sessions export")) {
         vPanel {
             hPanel {
                 alignItems = AlignItems.CENTER
-                add(Label(tr("JSON format")) {
-                    width = 100.px
-                })
+                add(Label(tr("JSON format"), className = "export-label"))
                 add(buttonJSONExport)
             }
             hPanel {
                 alignItems = AlignItems.CENTER
                 marginTop = 10.px
-                add(Label(tr("CSV format")) {
-                    width = 100.px
-                })
+                add(Label(tr("CSV format"), className = "export-label"))
                 add(buttonCSVExport)
             }
         }
@@ -55,14 +51,12 @@ class AgendaExportWindow : Modal(caption = tr("Agenda sessions export")) {
      * Initializes used buttons.
      */
     private fun buttonsInitilization() {
-        buttonJSONExport = AgendaPrimaryButton(tr("Download")){
-            marginLeft = 5.px
+        buttonJSONExport = AgendaPrimaryButton(tr("Download"), buttonClassName = "export-download-button"){
             onClick {
                 SessionsExportManager.JSONexport(sessionsMap!!)
             }
         }
-        buttonCSVExport = AgendaPrimaryButton(tr("Download")){
-            marginLeft = 5.px
+        buttonCSVExport = AgendaPrimaryButton(tr("Download"), buttonClassName = "export-download-button"){
             onClick {
                 SessionsExportManager.CSVexport(sessionsMap!!)
             }

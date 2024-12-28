@@ -6,7 +6,11 @@ import io.kvision.html.ButtonStyle
 import io.kvision.modal.Confirm
 import io.kvision.utils.px
 
-class AgendaPrimaryButton(text: String, init: (AgendaPrimaryButton.() -> Unit)? = null) : Button(text = text, style = ButtonStyle.LIGHT) {
+class AgendaPrimaryButton(
+    text: String,
+    buttonClassName: String? = null,
+    init: (AgendaPrimaryButton.() -> Unit)? = null)
+    : Button(text = text, style = ButtonStyle.LIGHT, className = buttonClassName) {
     init {
         this.border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))
         init?.invoke(this)

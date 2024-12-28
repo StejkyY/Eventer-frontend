@@ -25,7 +25,7 @@ import io.kvision.utils.px
 import kotlinx.coroutines.launch
 import kotlin.js.Date
 
-class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
+class EventBasicInfoPanel(val state: AgendaAppState): EventChildPanel(childPanelClassName = "event-basic-info-panel") {
     private lateinit var inPersonEventButton: Button
     private lateinit var hybridEventButton: Button
     private lateinit var virtualEventButton: Button
@@ -39,10 +39,6 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
     private var eventType = state.selectedEvent?.type
 
     init {
-        height = 100.perc
-        overflowY = Overflow.AUTO
-        marginLeft = 40.px
-
         buttonsInitialization()
         dateSelectorsInitialization()
         timeSelectorsInitialization()
@@ -66,22 +62,10 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
                                 newStateOnChange()
                             }
                         })
-                    add(
-                        Event::startDate,
-                        startDate
-                    )
-                    add(
-                        Event::endDate,
-                        endDate
-                    )
-                    add(
-                        Event::startTime,
-                        startTime
-                    )
-                    add(
-                        Event::endTime,
-                        endTime
-                    )
+                    add(Event::startDate, startDate)
+                    add(Event::endDate, endDate)
+                    add(Event::startTime, startTime)
+                    add(Event::endTime, endTime)
                     add(vPanel(alignItems = AlignItems.START) {
                         paddingBottom = 20.px
                         add(hPanel(spacing = 10){
@@ -111,24 +95,21 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
      * Initializes used buttons.
      */
     private fun buttonsInitialization() {
-        inPersonEventButton = Button(tr("In Person")){
-            width = 100.px
+        inPersonEventButton = Button(tr("In Person"), className = "basic-event-button"){
             onClick {
                 eventType = EventType.InPerson
                 disableTypeButton(inPersonEventButton, hybridEventButton, virtualEventButton)
                 newStateOnChange()
             }
         }
-        hybridEventButton = Button(tr("Hybrid")){
-            width = 100.px
+        hybridEventButton = Button(tr("Hybrid"), className = "basic-event-button"){
             onClick {
                 eventType = EventType.Hybrid
                 disableTypeButton(hybridEventButton, inPersonEventButton, virtualEventButton)
                 newStateOnChange()
             }
         }
-        virtualEventButton = Button(tr("Virtual")){
-            width = 100.px
+        virtualEventButton = Button(tr("Virtual"), className = "basic-event-button"){
             onClick {
                 eventType = EventType.Virtual
                 disableTypeButton(virtualEventButton, hybridEventButton, inPersonEventButton)
@@ -138,14 +119,10 @@ class EventBasicInfoPanel(val state: AgendaAppState) : EventChildPanel() {
 
         initDisableTypeButton()
 
-        duplicateEventButton = Button(tr("Duplicate event")){
-            width = 100.px
-            onClick {
-            }
-        }
-        deleteEventButton = Button(tr("Delete event"), style = ButtonStyle.DANGER){
-            width = 150.px
-            marginTop = 20.px
+        deleteEventButton = Button(
+            tr("Delete event"),
+            style = ButtonStyle.DANGER,
+            className = "event-delete-button"){
             onClick {
                 deleteEvent()
             }

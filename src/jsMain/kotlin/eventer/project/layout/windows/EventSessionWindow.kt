@@ -137,59 +137,53 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
      * Initializes used buttons.
      */
     private fun buttonsInitialization() {
-        saveButton = AgendaPrimaryButton(tr("Save")){
-            width = 100.px
+        saveButton = AgendaPrimaryButton(tr("Save"), buttonClassName = "basic-event-button"){
             onClick {
                 saveSession()
             }
         }
-        deleteButton = Button(tr("Delete"), style = ButtonStyle.DANGER) {
-            width = 100.px
+        deleteButton = Button(tr("Delete"), style = ButtonStyle.DANGER, className = "basic-event-button") {
             onClick {
                 deleteSession()
             }
         }
-        backToTypeListButton = AgendaPrimaryButton(tr("Back")) {
-            paddingTop = 5.px
+        backToTypeListButton = AgendaPrimaryButton(tr("Back"), buttonClassName = "sessions-window-back-button") {
             onClick {
                 showTypeList()
             }
         }
 
-        buttonNewType = AgendaPrimaryButton(tr("New type")) {
-            paddingTop = 5.px
-            maxWidth = 120.px
-            minWidth = 120.px
+        buttonNewType = AgendaPrimaryButton(tr("New type"), buttonClassName = "sessions-window-new-button") {
             onClick {
                 showNewTypeInput()
             }
         }
 
-        buttonRemoveType = Button(tr("Delete selected"), style = ButtonStyle.DANGER) {
-            paddingTop = 5.px
+        buttonRemoveType = Button(
+            tr("Delete selected"),
+            style = ButtonStyle.DANGER,
+            className = "sessions-window-delete-button") {
             onClick {
                 deleteSelectedType()
             }
         }
 
-        buttonRemoveLocation = Button(tr("Delete selected"), style = ButtonStyle.DANGER) {
-            paddingTop = 5.px
+        buttonRemoveLocation = Button(
+            tr("Delete selected"),
+            style = ButtonStyle.DANGER,
+            className = "sessions-window-delete-button") {
             onClick {
                 deleteSelectedLocation()
             }
         }
 
-        backToLocationListButton = AgendaPrimaryButton(tr("Back")) {
-            paddingTop = 5.px
+        backToLocationListButton = AgendaPrimaryButton(tr("Back"), buttonClassName = "sessions-window-back-button") {
             onClick {
                 showLocationList()
             }
         }
 
-        buttonNewLocation = AgendaPrimaryButton(tr("New location")) {
-            paddingTop = 5.px
-            maxWidth = 120.px
-            minWidth = 120.px
+        buttonNewLocation = AgendaPrimaryButton(tr("New location"), buttonClassName = "sessions-window-new-button") {
             onClick {
                 showNewLocationInput()
             }

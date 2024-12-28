@@ -20,13 +20,14 @@ import io.kvision.panel.*
 import io.kvision.state.*
 import io.kvision.types.LocalTime
 import io.kvision.utils.*
+import js.decorators.DecoratorContextKind
 import kotlinx.coroutines.launch
 
 enum class CalendarMode {
     EDIT, PREVIEW
 }
 
-class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): EventChildPanel() {
+class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): EventChildPanel(childPanelClassName = "event-agenda-panel") {
     private val dayTextButtonList: MutableList<AgendaTextButton> = mutableListOf()
     private lateinit var dayNavigationButtonLeft: Button
     private lateinit var dayNavigationButtonRight: Button
@@ -53,9 +54,6 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         buttonsInitialization()
         changeDay(0)
 
-        display = Display.FLEX
-        flexDirection = FlexDirection.COLUMN
-        height = 100.perc
         if(mode == CalendarMode.PREVIEW) {
             border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))
         }
@@ -81,23 +79,15 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
                 add(createNewSessionButton!!, 3, 1)
             }
         }
-        hPanel {
-            marginLeft = 0.px
-            marginRight = 0.px
+
+        hPanel(className = "separator") {
             marginTop = 10.px
-            border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-            width = 100.perc
         }
 
         sessionsPanel = createSessionsPanel()
         timeline = createTimeline()
 
-        simplePanel {
-            height = 100.perc
-            position = Position.RELATIVE
-            overflow = Overflow.AUTO
-            flexGrow = 1
-
+        simplePanel(className = "event-agenda-calendar") {
             add(timeline)
             add(sessionsPanel)
         }
@@ -377,13 +367,9 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
             marginLeft = 10.px
 
             for (hour in 0..23) {
-                val hourPanel = hPanel() {
-                    minHeight = 50.px
-
+                val hourPanel = hPanel(className = "event-agenda-hour-panel") {
                     val hourText = if (hour < 10) "0$hour:00 " else "$hour:00"
-                    add(Label(hourText) {
-                        paddingRight = 15.px
-                    })
+                    add(Label(hourText, className = "event-agenda-hour-label"))
                     val ceil = if (maxParallelSessionsCount > 3) {
                         maxParallelSessionsCount
                     } else {
@@ -391,17 +377,9 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
                     }
                     hPanel {
                         width = 100.perc
-                        for (i: Int in 0 until ceil)
-                            add(
-                                hPanel {
-                                    height = 1.px
-                                    marginLeft = 0.px
-                                    marginRight = 0.px
-                                    marginTop = 10.px
-                                    border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-                                    minWidth = 33.perc
-                                }
-                            )
+                        for (i: Int in 0 until ceil) {
+                            add(hPanel(className = "event-agenda-hour-line") {})
+                        }
                     }
                 }
                 add(hourPanel)
@@ -414,11 +392,7 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
      * Helper function for a text separator in the session block.
      */
     private fun textSeparator(): VPanel {
-        return vPanel {
-            marginLeft = 5.px
-            border = Border(1.px, BorderStyle.SOLID, Color.name(Col.BLACK))
-            marginRight = 5.px
-        }
+        return vPanel(className = "session-text-separator") {}
     }
 
     /**
@@ -428,50 +402,38 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
         val textsFormatted = hPanel {
             marginLeft = 5.px
             if(session.duration!! < 60) {
-                add(Label(session.name) {
-                    fontSize = 0.75.rem
+                add(Label(session.name, className = "session-label") {
                     fontWeight = FontWeight.BOLD
                     sessionLabelOverflowFormating(this)
                 })
                 add(textSeparator())
-                add(Label(session.startTime!!.toLocaleTimeString().dropLast(3) + " - " + endTime.toLocaleTimeString().dropLast(3)) {
-                    fontSize = 0.75.rem
+                add(Label(session.startTime!!.toLocaleTimeString().dropLast(3)
+                        + " - " + endTime.toLocaleTimeString().dropLast(3), className = "session-label") {
                     sessionLabelOverflowFormating(this)
                 })
                 add(textSeparator())
-                add(Label(tr(session.type!!.name.toString())) {
-                    fontSize = 0.75.rem
-                    textOverflow = TextOverflow.ELLIPSIS
-                    whiteSpace = WhiteSpace.NOWRAP
-                    overflow = Overflow.HIDDEN
+                add(Label(tr(session.type!!.name.toString()), className = "session-label") {
                     sessionLabelOverflowFormating(this)
                 })
                 add(textSeparator())
-                add(Label(session.location!!.name) {
-                    fontSize = 0.75.rem
+                add(Label(session.location!!.name, className = "session-label") {
                     sessionLabelOverflowFormating(this)
                 })
             } else {
                 vPanel {
-                    add(Label(session.name) {
-                        fontSize = 0.75.rem
+                    add(Label(session.name, className = "session-label") {
                         fontWeight = FontWeight.BOLD
                         textOverflow = TextOverflow.ELLIPSIS
                     })
-                    add(Label(session.startTime!!.toLocaleTimeString().dropLast(3) + " - " + endTime.toLocaleTimeString().dropLast(3)) {
-                        fontSize = 0.75.rem
-                    })
+                    add(Label(session.startTime!!.toLocaleTimeString().dropLast(3)
+                            + " - " + endTime.toLocaleTimeString().dropLast(3), className = "session-label"))
                 }
                 add(textSeparator())
                 vPanel {
                     marginLeft = 3.px
                     height = 95.perc
-                    add(Label(tr(session.type!!.name.toString())) {
-                        fontSize = 0.75.rem
-                    })
-                    add(Label(session.location!!.name) {
-                        fontSize = 0.75.rem
-                    })
+                    add(Label(tr(session.type!!.name.toString()), className = "session-label"))
+                    add(Label(session.location!!.name, className = "session-label"))
                 }
             }
         }
@@ -489,16 +451,11 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
      */
     private fun createSessionBlock(session: Session): SimplePanel {
         val endTime = addMinutesToJSDate(session.startTime!!, session.duration!!)
-        val sessionBlock = SimplePanel {
+        val sessionBlock = SimplePanel(className = "session-block") {
             top = ((session.startTime!!.getHours() * 60 + session.startTime!!.getMinutes()) * 5/6).px
             height = ((endTime.getHours() * 60 + endTime.getMinutes() - (session.startTime!!.getHours() * 60 + session.startTime!!.getMinutes())) * 5/6).px
             background = if(session.type!!.name == "Break" ) Background(Color.name(Col.LIGHTGREEN))
             else Background(Color.name(Col.SKYBLUE))
-            position = Position.ABSOLUTE
-            borderRadius = 5.px
-            borderTop = Border(1.px, BorderStyle.SOLID, color = Color.name(Col.WHITE))
-            borderLeft = Border(1.px, BorderStyle.SOLID, color = Color.name(Col.WHITE))
-            width = 100.perc
 
             if(mode == CalendarMode.EDIT) {
                 cursor = Cursor.POINTER
@@ -524,14 +481,7 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
      * Sets all the session in the created layout into the calendar component.
      */
     private fun createSessionsPanel(): HPanel {
-        val sessionPanel = HPanel().bind(formattedEventSessionsMap) { sessionsMap ->
-            top = 0.px
-            left = 0.px
-            width = 93.perc
-            marginLeft = 55.px
-            paddingLeft = 2.perc
-            marginTop = 11.px
-            position = Position.ABSOLUTE
+        val sessionPanel = HPanel(className = "sessions-panel").bind(formattedEventSessionsMap) { sessionsMap ->
             bind(selectedDate) { date ->
                 if(sessionsMap[date.getTime()] != null) {
                     for((_, sessions) in sessionsMap[date.getTime()]!!) {
@@ -541,10 +491,8 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
                             count == 2 -> 50.perc
                             else -> 33.perc
                         }
-                        val parallelVPanel: VPanel = vPanel {
-                            position = Position.RELATIVE
+                        val parallelVPanel: VPanel = vPanel(className = "sessions-parallel") {
                             minWidth = blockMinWidth
-                            height = 100.perc
                         }
 
                         sessions.forEachIndexed { index, session ->

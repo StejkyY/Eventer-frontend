@@ -32,20 +32,14 @@ class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : S
         hPanel {
             paddingTop = 20.px
             height = 100.perc
-            vPanel {
-                width = 13.vw
-                borderTop = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-                borderBottom = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
+            vPanel(className = "event-edit-menu") {
                 spacing = 20
-                paddingTop = 20.px
                 add(backButton)
                 add(buttonBasicInfo)
                 add(buttonDescription)
                 add(buttonAgenda)
             }
-            vPanel {
-                width = 85.vw
-                border = Border(2.px, BorderStyle.SOLID, Color.name(Col.SILVER))
+            vPanel(className = "event-edit-header") {
                 gridPanel (
                     templateColumns = "1fr 1fr 1fr",
                     alignItems = AlignItems.CENTER,
@@ -57,9 +51,7 @@ class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : S
                     }, 1, 1)
 
                     if(state.selectedEvent != null) {
-                        add(Label(state.selectedEvent.name) {
-                            fontSize = 28.px
-                        }, 2, 1)
+                        add(Label(state.selectedEvent.name, className = "main-label"), 2, 1)
                     }
 
                     add(saveButton,3, 1)
@@ -67,12 +59,7 @@ class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : S
                     paddingBottom = 15.px
                 }
 
-                hPanel {
-                    marginLeft = 0.px
-                    marginRight = 0.px
-                    border = Border(1.px, BorderStyle.SOLID, Color.name(Col.SILVER))
-                    width = 100.perc
-                }
+                hPanel(className = "separator"){}
                 simplePanel {
                     height = 75.vh
                     add(childPanel)
@@ -106,7 +93,6 @@ class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : S
         eventPreviewButton = AgendaPrimaryButton(tr("Preview")) {
             onClick {
                 if(!childPanel.changesMade) {
-//                    RoutingManager.redirect("/event/${state.selectedEvent?.id}${View.EVENT_PREVIEW.url}")
                     val previewUrl = "/event/${state.selectedEvent?.id}${View.EVENT_PREVIEW.url}"
                     setAttribute("href", previewUrl)
                     window.open(previewUrl, "_blank")?.focus()
@@ -175,21 +161,27 @@ class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : S
      * Redirects to the panel with basic info about the event.
      */
     private fun goToBasicInfoPanel() {
-        RoutingManager.redirect("/event/${ConduitManager.agendaStore.getState().selectedEvent?.id}${View.EVENT_BASIC_INFO.url}")
+        RoutingManager.redirect("/event/${ConduitManager.agendaStore.getState().selectedEvent?.id}" +
+                View.EVENT_BASIC_INFO.url
+        )
     }
 
     /**
      * Redirects to the panel with event's description.
      */
     private fun goToDescriptionPanel() {
-        RoutingManager.redirect("/event/${ConduitManager.agendaStore.getState().selectedEvent?.id}${View.EVENT_DESCRIPTION.url}")
+        RoutingManager.redirect("/event/${ConduitManager.agendaStore.getState().selectedEvent?.id}" +
+                View.EVENT_DESCRIPTION.url
+        )
     }
 
     /**
      * Redirects to the panel with event's agenda.
      */
     private fun goToAgendaPanel() {
-        RoutingManager.redirect("/event/${ConduitManager.agendaStore.getState().selectedEvent?.id}${View.EVENT_AGENDA.url}")
+        RoutingManager.redirect("/event/${ConduitManager.agendaStore.getState().selectedEvent?.id}" +
+                View.EVENT_AGENDA.url
+        )
     }
 
     private fun save() {

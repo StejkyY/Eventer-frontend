@@ -1,0 +1,245 @@
+.basic-form-panel {
+    width: 25%;
+    min-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    border: 2px solid silver;
+}
+
+.main-label {
+    font-size: 1.75em;
+}
+
+.small-label{
+    font-size: 0.625em;
+}
+
+.medium-label {
+    font-size: 0.875em;
+}
+
+.separator {
+    margin-left: 0;
+    margin-right: 0;
+    border: 1px solid silver;
+    width: 100%;
+}
+
+.basic-event-button {
+    width: 100px;
+}
+
+.profile-change-button {
+    width: 180px;
+}
+
+.events-panel {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    padding: 20px;
+    border: 2px solid silver;
+}
+
+.events-table {
+    height: 100%;
+    overflow-y: scroll;
+    margin-top: 20px;
+}
+
+.event-edit-menu {
+    width: 13vw;
+    border-top: 2px solid silver;
+    border-bottom: 2px solid silver;
+    padding-top: 20px;
+}
+
+.event-edit-header {
+    width: 85vw;
+    border: 2px solid silver;
+}
+
+.event-description-panel {
+    width: 95%;
+}
+
+.event-preview-header {
+    width: 100vw;
+    height: 38vh;
+    align-items: center;
+    background: lightgray;
+    border-bottom: 1px solid black;
+}
+
+.event-preview-header-text-aligned {
+    vertical-align: baseline;
+    align-items: center;
+}
+
+.event-preview-main-label {
+    margin-top: 2%;
+    font-size: 2.5em;
+}
+
+.event-preview-location-label {
+    font-size: 1.25em;
+}
+
+.event-preview-type-label {
+    font-size: 1.125em;
+}
+
+.event-preview-agenda-label {
+    font-size: 1.875em;
+}
+
+.event-preview-description {
+    padding-top: 3%;
+    width: 100vw;
+    align-items: center;
+}
+
+.event-preview-agenda {
+    padding-top: 3%;
+    width: 80vw;
+}
+
+.date-time-selector {
+    width: 150px;
+}
+
+.event-basic-info-panel {
+    height: 100%;
+    overflow-y: auto;
+    margin-left: 40px;
+}
+
+.event-delete-button {
+    width: 150px;
+    margin-top: 20px;
+}
+
+.event-agenda-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.event-agenda-calendar {
+    height: 100%;
+    position: relative;
+    overflow: auto;
+    flex-grow: 1;
+}
+
+.event-agenda-hour-panel {
+    min-height: 50px;
+}
+
+.event-agenda-hour-label {
+    padding-right: 15px;
+}
+
+.event-agenda-hour-line {
+    height: 1px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 10px;
+    border: 1px solid silver;
+    min-width: 33%;
+}
+
+.session-block {
+    position: absolute;
+    border-radius: 5px;
+    border-top: 1px solid silver;
+    border-left: 1px solid silver;
+    width: 100%;
+}
+
+.session-text-separator {
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 1px solid black;
+}
+
+.session-label {
+    font-size: 0.75em;
+}
+
+.sessions-panel {
+    top: 0;
+    left: 0;
+    width: 93%;
+    margin-left: 55px;
+    padding-left: 2%;
+    margin-top: 11px;
+    position: absolute;
+}
+
+.sessions-parallel {
+    height: 100%;
+    position: relative;
+}
+
+.sessions-window-delete-button {
+    padding-top: 5px;
+}
+
+.sessions-window-back-button {
+    padding-top: 5px;
+}
+
+.sessions-window-new-button {
+    padding-top: 5px;
+    min-width: 120px;
+    max-width: 120px;
+}
+
+.export-label {
+    width: 100px;
+}
+
+.export-download-button {
+    margin-left: 5px;
+}
+
+.third-party-calendar-label {
+    width: 150px;
+}
+
+.third-party-calendar-button {
+    margin-left: 5px;
+}
+
+.menu-text-button {
+    background: none;
+    color: inherit;
+    box-sizing: border-box;
+    border: 1px solid white;
+    border-radius: 0;
+}
+
+.menu-text-button:hover {
+    background: lightgray;
+}
+
+.menu-text-button:active {
+    background: white;
+}
+
+.agenda-icon-button {
+    background: none;
+    color: inherit;
+    border: none;
+}
+
+.agenda-text-button {
+    background: none;
+    color: inherit;
+    box-sizing: border-box;
+    border: 2px solid white;
+    border-radius: 0;
+}
