@@ -71,6 +71,7 @@ class EventPreviewPanel(state: AgendaAppState) : SimplePanel() {
         }
 
         vPanel {
+            paddingTop = 3.perc
             alignItems = AlignItems.CENTER
             add(Label(tr("Agenda")) {
                 fontSize = 30.px

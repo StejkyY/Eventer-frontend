@@ -15,6 +15,7 @@ import io.kvision.utils.perc
 import io.kvision.utils.px
 import io.kvision.utils.vh
 import io.kvision.utils.vw
+import kotlinx.browser.window
 
 class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : SimplePanel() {
     private lateinit var buttonBasicInfo: MenuTextButton
@@ -105,7 +106,10 @@ class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : S
         eventPreviewButton = AgendaPrimaryButton(tr("Preview")) {
             onClick {
                 if(!childPanel.changesMade) {
-                    RoutingManager.redirect("/event/${state.selectedEvent?.id}${View.EVENT_PREVIEW.url}")
+//                    RoutingManager.redirect("/event/${state.selectedEvent?.id}${View.EVENT_PREVIEW.url}")
+                    val previewUrl = "/event/${state.selectedEvent?.id}${View.EVENT_PREVIEW.url}"
+                    setAttribute("href", previewUrl)
+                    window.open(previewUrl, "_blank")?.focus()
                 } else {
                     ConduitManager.showErrorToast(tr("Changes need to be saved first."))
                 }

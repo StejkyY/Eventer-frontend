@@ -70,28 +70,28 @@ fun agendaAppReducer(state: AgendaAppState, action: AgendaAppAction): AgendaAppS
         state.copy(view = View.REGISTER)
     }
     is AgendaAppAction.eventsPage -> {
-        state.copy(appLoading = false, view = View.EVENTS, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
+        state.copy(appLoading = false, view = View.EVENTS, previousView = getPreviousView(state))
     }
     is AgendaAppAction.profilePage -> {
-        state.copy(appLoading = false, view = View.PROFILE, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
+        state.copy(appLoading = false, view = View.PROFILE, previousView = getPreviousView(state))
     }
     is AgendaAppAction.newEventPage -> {
-        state.copy(appLoading = false, view = View.NEW_EVENT, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
+        state.copy(appLoading = false, view = View.NEW_EVENT, previousView = getPreviousView(state))
     }
     is AgendaAppAction.eventPreviewPage -> {
-        state.copy(appLoading = false, view = View.EVENT_PREVIEW, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
+        state.copy(appLoading = false, view = View.EVENT_PREVIEW, previousView = getPreviousView(state))
     }
     is AgendaAppAction.eventBasicInfoPage -> {
-        state.copy(appLoading = false, view = View.EVENT_BASIC_INFO, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
+        state.copy(appLoading = false, view = View.EVENT_BASIC_INFO, previousView = getPreviousView(state))
     }
     is AgendaAppAction.eventDescriptionPage -> {
-        state.copy(appLoading = false, view = View.EVENT_DESCRIPTION, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
+        state.copy(appLoading = false, view = View.EVENT_DESCRIPTION, previousView = getPreviousView(state))
     }
     is AgendaAppAction.eventAgendaPage -> {
-        state.copy(appLoading = false, view = View.EVENT_AGENDA, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
+        state.copy(appLoading = false, view = View.EVENT_AGENDA, previousView = getPreviousView(state))
     }
     is AgendaAppAction.previousPage -> {
-        state.copy(view = state.previousView, previousView = if (state.view == View.LOGIN) state.previousView else state.view)
+        state.copy(view = state.previousView, previousView = getPreviousView(state))
     }
     is AgendaAppAction.languageChanged -> {
         println("kek")
@@ -138,5 +138,13 @@ fun agendaAppReducer(state: AgendaAppState, action: AgendaAppAction): AgendaAppS
     }
     is AgendaAppAction.microsoftAccountUnlinked -> {
         state.copy(microsoftAccountSynced = false)
+    }
+}
+
+fun getPreviousView(state: AgendaAppState): View {
+    if (state.view == View.LOGIN) {
+        return state.previousView
+    } else {
+        return state.view
     }
 }

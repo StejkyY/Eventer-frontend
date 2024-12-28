@@ -71,8 +71,10 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
             }
             marginTop = 10.px
             add(hPanel (spacing = 10) {
-                add(buttonExport)
-                add(buttonAddToCalendar)
+                if(mode == CalendarMode.EDIT) {
+                    add(buttonExport)
+                    add(buttonAddToCalendar)
+                }
             }, 1, 1)
             add(dayButtonsPanel(), 2, 1)
             if(mode == CalendarMode.EDIT) {
