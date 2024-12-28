@@ -42,7 +42,7 @@ class EventsPanel(state: AgendaAppState) : SimplePanel(className = "events-panel
             paddingBottom = 20.px
         }
 
-        hPanel(className = "separator") {}
+        hPanel(className = "separator-line") {}
 
         flexPanel(
             FlexDirection.ROW, FlexWrap.WRAP, JustifyContent.CENTER, AlignItems.CENTER,
@@ -67,7 +67,7 @@ class EventsPanel(state: AgendaAppState) : SimplePanel(className = "events-panel
             })
         }
 
-        hPanel(className = "separator") {}
+        hPanel(className = "separator-line") {}
 
         add(eventsTable())
     }

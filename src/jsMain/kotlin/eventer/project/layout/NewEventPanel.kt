@@ -62,7 +62,7 @@ class NewEventPanel(val state: AgendaAppState) : FormPanel<Event>() {
                 paddingBottom = 15.px
             }
 
-            hPanel(className = "separator") {}
+            hPanel(className = "separator-line") {}
 
             add(Event::name,
                 Text(label = tr("Event name"), maxlength = 100) {

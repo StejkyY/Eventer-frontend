@@ -80,7 +80,7 @@ class EventAgendaPanel(val state: AgendaAppState, val mode: CalendarMode): Event
             }
         }
 
-        hPanel(className = "separator") {
+        hPanel(className = "separator-line") {
             marginTop = 10.px
         }
 

@@ -59,7 +59,7 @@ class EventPanel(val state: AgendaAppState, val childPanel: EventChildPanel) : S
                     paddingBottom = 15.px
                 }
 
-                hPanel(className = "separator"){}
+                hPanel(className = "separator-line"){}
                 simplePanel {
                     height = 75.vh
                     add(childPanel)

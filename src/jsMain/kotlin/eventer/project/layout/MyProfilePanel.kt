@@ -91,7 +91,7 @@ class MyProfilePanel(val state: AgendaAppState) : SimplePanel(className = "basic
                 add(saveButton)
                 paddingBottom = 20.px
             }
-            hPanel(className = "separator") {}
+            hPanel(className = "separator-line") {}
         }
 
         profileFormPanel = formPanel {
