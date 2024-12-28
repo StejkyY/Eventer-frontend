@@ -222,12 +222,7 @@ class EventSessionWindow(val state: AgendaAppState, eventAgendaPanel: EventAgend
 
         typeSelector.onChange {
             if(typeSelector.getValue() != null &&
-                typesList[typeSelector.selectedIndex].name!! in
-                listOf(
-                    gettext("Break"),
-                    gettext("Workshop"),
-                    gettext("Session"),
-                    gettext("Lecture"))) {
+                typesList[typeSelector.selectedIndex].userId == null) {
                 buttonRemoveType.hide()
             } else {
                 buttonRemoveType.show()
